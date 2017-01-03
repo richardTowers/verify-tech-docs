@@ -50,6 +50,9 @@ Generate a new set of configuration data for every test run.
     team: <idasupport+onboarding@digital.cabinet-office.gov.uk>. We will
     add a firewall rule allowing access to the compliance tool.
 
+<a name="generate-self-signed-certificates"></a>
+
+
 3.  Generate self-signed certificates for use with the compliance tool
     only. You can use OpenSSL to generate self-signed certificates using
     the [guidelines provided by the Heroku Dev
@@ -58,6 +61,7 @@ Generate a new set of configuration data for every test run.
     `URI compliance-tool.RPPostUri` provided by your GOV.UK Verify
     engagement lead:
     
+    ```
         Content-Type: application/json
         {
             "rpEntityId":"[entityID for your service]",
@@ -70,19 +74,20 @@ Generate a new set of configuration data for every test run.
             "userAccountCreationAttributes":"[optional list of attributes the government service requires for new user account creation, see below]",
             "useSimpleProfile":"[optional, to use a simpler SAML profile that works with Shibboleth - defaults to false]"
         }
+    ``` 
 
     Replace the square brackets and their contents with your configuration data, taking account of the following:
-     
-    * the keys and certificates in the configuration data must be single-line strings of Base64-encoded data without the header and footer `BEGIN CERTIFICATE` and `END CERTIFICATE`
-    * `matchingServiceSigningPrivateCert`: this is required because the compliance tool sends a response to your service which contains an assertion signed by the Matching Service Adapter
-    
-    This key must be in PKCS\#8 PEM format:
+     * the keys and certificates in the configuration data must be single-line strings of Base64-encoded data without the header and footer `BEGIN CERTIFICATE` and `END CERTIFICATE`
+     * `matchingServiceSigningPrivateCert`: this is required because the compliance tool sends a response to your service which contains an assertion signed by the Matching Service Adapter
 
+        This key must be in PKCS\#8 PEM format:
+        
+        ```
         cat server.crt server.key > server.pem
 
         openssl pkcs8 -nocrypt -in server.pem -out server.pk8.pem -outform PEM -topk8
-    
-    * userAccountCreationAttributes`: provide this only if you want to test [new user account creation](#create-user-accounts-message-flow) – select from the full list of attributes \<list\_cua\_attributes\>
+        ```
+     * `userAccountCreationAttributes`: provide this only if you want to test [new user account creation](#create-user-accounts-message-flow) – select from the [full list of attributes](#list-attributes)
 
 5.  You receive a response similar to the following:
 
@@ -96,26 +101,21 @@ Generate a new set of configuration data for every test run.
     tool's SSO URI. Follow the redirect in the response to retrieve the
     result.
 
-> > **note**
-> >
-> > You may want to use an off-the-shelf tool to generate an
-> > authentication request.
+    > **Note:** You may want to use an off-the-shelf tool to generate an
+    > authentication request.
 
 8.  If the result contains `PASSED`, access the URI provided in
     `responseGeneratorLocation`. A list of test scenarios is displayed.
 9.  Access the `executeUri` for each test scenario you want to execute.
     The following test scenarios are provided:
+    * Basic successful match
+    * Basic no match
+    * No authentication context (this is when the user cancels the process)
+    * Authentication failed
+    * Requester error (this is when the request is invalid)
+    * Account creation
 
-> -   Basic successful match
-> -   Basic no match
-> -   No authentication context (this is when the user cancels the
->     process)
-> -   Authentication failed
-> -   Requester error (this is when the request is invalid)
-> -   Account creation
->
-> The above scenarios are the possible responses for step 8 in the
-> SAML message flow \<samlWorks\>.
+   The above scenarios are the possible responses for step 8 in the [SAML message flow](#how-saml-works).
 
 Test your matching service with the SAML compliance tool
 --------------------------------------------------------
@@ -123,18 +123,18 @@ Test your matching service with the SAML compliance tool
 1.  To set up the SAML compliance tool for matching service tests, POST
     the following JSON (via curl or similar) to the URL
     `<compliance-tool-host>/ms-test-run` provided by your GOV.UK Verify
-    engagement lead.
-
-> :
->
->     Content-Type: application/json
->      {
->      "matchingServiceEntityId": "[entityID of the matching service]",
->      "transactionEntityId": "[entityID of the transaction (service)]",
->      "matchingServiceEndpoint": "[the matching service's endpoint]",
->      "matchingServicePublicSigningCert": "[signing certificate to verify the response]",
->      "matchingServicePublicEncryptionCert": "[encryption certificate to encrypt the assertions]"
->      }
+    engagement lead:
+    
+    ```
+     Content-Type: application/json
+       {
+       "matchingServiceEntityId": "[entityID of the matching service]",
+       "transactionEntityId": "[entityID of the transaction (service)]",
+       "matchingServiceEndpoint": "[the matching service's endpoint]",
+       "matchingServicePublicSigningCert": "[signing certificate to verify the response]",
+       "matchingServicePublicEncryptionCert": "[encryption certificate to encrypt the assertions]"
+       }
+    ```
 
 2.  You receive a response similar to the following:
 
@@ -213,35 +213,22 @@ Test your matching service with the SAML compliance tool
             }
         }
 
-> where:
->
-> -   `persistentId` is mandatory
-> -   you must supply at least one other value in addition to
->     `persistentId`
-> -   the values of `addresses` and `surnames` are arrays
-> -   fields have optional `from` and `to` attributes in which you can
->     capture historical values – for example, if the user has changed
->     their surname, there's an additional entry for the old surname
->     with the `from` and `to` values defining the period for which the
->     name was valid; the new surname only has the `from` attribute,
->     containing the date from which it was valid
-> -   the `addresses` field that holds the current address contains a
->     `fromDate` attribute for the date from which the address is valid;
->     past addresses also contain the `toDate` attribute
-> -   the `cycle3Dataset` field is only present for a cycle 3 matching
->     attempt
-> -   the `uprn` (Unique Property Reference Number) is a unique
->     reference for each property in Great Britain, ensuring accuracy of
->     address data. This is an optional attribute that can contain up to
->     12 characters and should not have any leading zeros
+    where:
+    * `persistentId` is mandatory
+    * you must supply at least one other value in addition to `persistentId`
+    * the values of `addresses` and `surnames` are arrays
+    * fields have optional `from` and `to` attributes in which you can capture historical values – for example, if the user has changed their surname, there's an additional entry for the old surname with the `from` and `to` values defining the period for which the name was valid; the new surname only has the `from` attribute, containing the date from which it was valid
+    * the `addresses` field that holds the current address contains a `fromDate` attribute for the date from which the address is valid; past addresses also contain the `toDate` attribute
+    * the `cycle3Dataset` field is only present for a cycle 3 matching attempt
+    * the `uprn` (Unique Property Reference Number) is a unique reference for each property in Great Britain, ensuring accuracy of address data. This is an optional attribute that can contain up to 12 characters and should not have any leading zeros
 
 4.  When the SAML compliance tool receives your test matching dataset,
     it will POST an attribute query to your Matching Service Adapter.
-    This corresponds to step 4 in the SAML message flow \<samlWorks\>.
+    This corresponds to step 4 in the [SAML message flow](#how-saml-works).
 5.  Your Matching Service Adapter validates the query and sends a POST
     with a JSON request containing your test matching dataset to your
     local matching service. This corresponds to step 5 in the
-    SAML message flow \<samlWorks\>.
+    [SAML message flow](#how-saml-works).
 
 Example of a JSON request to your local matching service
 --------------------------------------------------------
@@ -324,4 +311,4 @@ Below is an example of a response from your local matching service:
      }`
 
 This response corresponds to step 6 in the
-SAML message flow \<samlWorks\>.
+[SAML message flow](#how-saml-works).

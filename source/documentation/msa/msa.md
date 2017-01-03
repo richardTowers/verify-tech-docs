@@ -2,27 +2,32 @@
 
 The Matching Service Adapter \<gloss\_msa\> is a software tool supplied
 free of charge by GOV.UK Verify. It simplifies communication between
-your local matching service and the GOV.UK Verify hub \<hub\>.
+your local matching service and the [GOV.UK Verify hub](#what-does-the-gov-uk-verify-hub-do).
 
 A matching service is composed of the Matching Service Adapter and a
-local matching service \<ms\>. Government services host their matching
+[local matching service](#local-matching-service). Government services host their matching
 service within their security domain.
 
 
-> >
-> > -   GOV.UK architecture \<arch\>
-> > -   matching cycles \<ms\_matchcyles\_diagram\>
-> > -   user account creation \<ms\_cua\_diagram\>"
+<a name="matching-service-diagram"></a>
+
+![image](/documentation/ms/matchingserviceGraphics.svg)
+
+For more details, see the diagrams:
+
+* [GOV.UK Verify architecture](#architecture-diagram)
+* [matching cycles](#matching-cycles-diagram)
+* [user account creation](#create-user-accounts-diagram)
 
 ## Why does GOV.UK Verify use the Matching Service Adapter?
 
-The hub uses Security Assertion Markup Language \<saml\> (SAML) as its
+The hub uses [Security Assertion Markup Language](#saml) (SAML) as its
 communication method. Government services usually use JSON (JavaScript
 Object Notation) for their local matching services. A SAML matching
 service interface is therefore required. The Matching Service Adapter
 converts SAML into JSON and vice versa. It also performs encryption,
 decryption, and signing of SAML messages. For more information, see the
-diagram showing the SAML message flow \<samlWorks\> within the GOV.UK
+diagram showing the [SAML message flow](#saml-flow-diagram) within the GOV.UK
 Verify federation.
 
 It can be difficult and expensive to implement a SAML matching service
@@ -39,14 +44,14 @@ your alternatives.
 
 To use the Matching Service Adapter, you need to:
 
-1.  Build your local matching service \<msBuild\> – you can use the
-    example of the JSON request \<samlCT\_JSONeg\> that the Matching
+1.  [Build your local matching service](#build-a-local-matching-service) – you can use the
+    [example of the JSON request](#example-of-a-json-request-to-your-local-matching-service) that the Matching
     Service Adapter posts to your service and the
-    JSON schema \<JSONschema\> for a matching request.
-2.  Install the Matching Service Adapter \<msa\_install\_msa\>.
-3.  Configure the Matching Service Adapter \<ConfigureMSA\>.
+    [JSON schema](#respond-to-json-matching-requests) for a matching request.
+2.  [Install the Matching Service Adapter](#install-the-matching-service-adapter).
+3.  [Configure the Matching Service Adapter](#configure-the-matching-service-adapter).
 
 You will then be able to run
-SAML compliance tests between the hub and your matching service \<samlCThubMSA\>.
+[SAML compliance tests between the hub and your matching service](#test-your-matching-service-with-the-saml-compliance-tool).
 
-For more information, see steps.
+For more information, see [Steps to integrate GOV.UK Verify in your service](#steps-to-integrate-gov-uk-verify-in-your-service).

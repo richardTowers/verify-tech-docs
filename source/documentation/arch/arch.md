@@ -6,6 +6,8 @@ government services. When a user wants to access a government service, a
 trusted identity provider performs the checks needed to verify the
 user’s identity.
 
+<a name="architecture-diagram"></a>
+
 Below is a high-level diagram of the GOV.UK Verify architecture.
 
 ![](/documentation/arch/arch_overview.svg)
@@ -18,7 +20,7 @@ The [GOV.UK Verify hub](#what-does-the-gov-uk-verify-hub-do) is the infrastructu
 
 The hub is at the centre of the GOV.UK Verify federation, providing a clear divide between identity providers and government services, avoiding a complex many-many integration. 
 
-This diagram shows integration with GOV.UK Verify hub (left) and many-many integration (right).
+This diagram shows integration with the GOV.UK Verify hub (left) and many-many integration (right).
 
 ![Diagram showing difference between GOV.UK Verify architecture and many-many integration. With GOV.UK Verify, the hub centralises communication between government services and identity providers. With many-many integration, there is no central hub. Each government service connects to each identity provider.](/documentation/arch/manyintegration.svg)
 
@@ -84,7 +86,7 @@ SAML but the local matching service managed by the government service
 usually uses JSON.
 
 For more information, see the
-diagram showing the [SAML message flow](#how-saml-works) within the GOV.UK
+diagram showing the [SAML message flow](#saml-flow-diagram) within the GOV.UK
 Verify federation.
 
 **PKI (Public Key Infrastructure)**

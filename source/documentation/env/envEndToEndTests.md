@@ -1,5 +1,4 @@
-Run end-to-end testing
-======================
+# Run end-to-end testing
 
 The integration environment accurately reflects hub behaviour in the
 production environment. You can use the integration environment to test
@@ -16,9 +15,7 @@ your [Stage
 4](http://alphagov.github.io/identity-assurance-documentation/stage4/Stage4.html#stage-4)
 gate review.
 
-> **important**
->
-> If you carry out penetration testing (pen testing) on your end-to-end
+> **Important:** If you carry out penetration testing (pen testing) on your end-to-end
 > system, you must not extend this to the hub domain. You must only run
 > penetration tests on your own system. If you think you have a valid
 > reason for running penetration tests in the hub domain, you must first
@@ -28,11 +25,9 @@ gate review.
 This diagram shows the end-to-end testing flow. See below for
 explanations.
 
-![End-to-end testing in the integration
-environment](envEndToEndTestsGraphic.svg)
+![](/documentation/env/envEndToEndTestsGraphic.svg)
 
-Setup for end-to-end testing
-----------------------------
+## Setup for end-to-end testing
 
 The integration environment is not accredited to use real user data, and
 it has no links to real identity providers. Carry out business analysis
@@ -43,18 +38,18 @@ local matching datastore in the integration environment.
 
 A test identity provider contains:
 
--   the user administration API – you need basic authentication
+* the user administration API – you need basic authentication
     credentials to manage test user data
--   a connection to the hub in the integration environment, which is
+* a connection to the hub in the integration environment, which is
     used for end-to-end testing – no authentication credentials are
     required
 
 Setup for end-to-end testing involves the following procedures:
 
-> -   create your authentication to manage test users \<CreateAuth\>
-> -   create test users \<CreateTestUsers\>
-> -   view test users \<view-test-users\>
-> -   delete test users \<delete-users\>
+* [create your authentication](#create-your-authentication) to manage test users
+* [create test users](#create-test-users)
+* [view test users](#view-test-users)
+* [delete test users](#delete-test-users)
 
 ### Create your authentication
 
@@ -63,19 +58,14 @@ can manage test users.
 
 1.  Request IP whitelisting for your hosts from GOV.UK Verify support at
     <idasupport+onboarding@digital.cabinet-office.gov.uk>.
-2.  Go to the password generation page:
+1.  Go to the password generation page:
     [](https://idp-stub-integration.ida.digital.cabinet-office.gov.uk/password-gen)
-3.  Store the password securely. Then email us the hash, along with a
+1.  Store the password securely. Then email us the hash, along with a
     username of your choice.
 
-> > **important**
-> >
-> > Don't email us the password. Send us the hash and your chosen
-> > username.
+    > **Important:** Don't email us the password. Send us the hash and your chosen username.
 
-> We'll use this hash and username to configure your authentication
-> credentials to the user administration API for the test identity
-> provider.
+   We'll use this hash and username to configure your authentication credentials to the user administration API for the test identity provider.
 
 ### Create test users
 
@@ -90,17 +80,15 @@ containing an array of user data. For example: :
 
 where:
 
--   `username` and `password` are your
+* `username` and `password` are your
     basic authentication credentials \<CreateAuth\>
--   `idp-name` is the name of the test identity provider
+* `idp-name` is the name of the test identity provider
 
-    > **note**
-    >
-    > You can find the name of the test identity provider by accessing
+    > **Note:** You can find the name of the test identity provider by accessing
     > the test identity provider once your service is connected to the
     > integration environment.
 
--   `create-user.json` is the name of the file containing an array of
+* `create-user.json` is the name of the file containing an array of
     test user data in JSON format, for example:
 
         [{
@@ -144,7 +132,8 @@ where:
     >
     > widths
     > :   4, 10
-    >
+
+
 ### View test users
 
 To view existing test users, GET the users resource from the relevant
@@ -167,33 +156,29 @@ want to delete. For example:
 
 where:
 
--   `user1` is the name of the test user you want to delete
--   `username` and `password` are your
+* `user1` is the name of the test user you want to delete
+* `username` and `password` are your
     basic authentication credentials \<CreateAuth\>
--   `idp-name` is the name of the test identity provider
+* `idp-name` is the name of the test identity provider
 
-Run end-to-end tests
---------------------
+## Run end-to-end tests
 
 As a minimum, test the following end-to-end user scenarios:
 
--   authentication success and authentication failure
--   match and no-match
--   all the possible outcomes of your matching service, including
-    cycle 3 \<ms\_mc3\> and user account creation \<ms\_cua\>, if
+* authentication success and authentication failure
+* match and no-match
+* all the possible outcomes of your matching service, including
+    [cycle 3](#cycle-3-user-asserted-match) and [user account creation](#create-user-accounts), if
     implemented
 
-> **note**
->
-> Run end-to-end tests for all the possible outcomes of your matching
-> service, including cycle 3 \<ms\_mc3\> and
-> user account creation \<ms\_cua\>, if implemented.
+  > **Note:** Run end-to-end tests for all the possible outcomes of your matching
+  > service, including [cycle 3](#cycle-3-user-asserted-match) and
+  > [user account creation](#create-user-accounts), if implemented.
 
-Tear down
----------
+## Tear down
 
 After each integration test run, we recommend that you
-delete the test users \<delete-users\>. Set up each integration test run
+[delete the test users](#delete-test-users). Set up each integration test run
 with newly created test users.
 
 When you've successfully completed testing in the integration

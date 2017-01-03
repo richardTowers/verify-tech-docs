@@ -8,7 +8,7 @@ SAML can be used as the basis of a system of federated identity. This
 allows entities within a federation to refer to a user's electronic
 identity, even if it is managed differently by each entity.
 
-## Why does GOV.UK Verify use SAML?
+**Why does GOV.UK Verify use SAML?**
 
 GOV.UK Verify uses SAML to securely exchange information within a
 federated system of identity.
@@ -17,7 +17,7 @@ SAML is a mature standard and is widely used by industry. SAML libraries
 and components are available for most programming languages and
 platforms.
 
-## What do you need to do?
+**What do you need to do?**
 
 You must [build a government service](#build-your-service) that sends SAML
 authentication requests to, and receives SAML responses from, the GOV.UK
@@ -28,7 +28,7 @@ decide [how to add the SAML funcionality to your service](#saml-integration).
 When you build your service, you must
 [run SAML compliance tests](#run-saml-compliance-tests).
 
-For more information, see [steps](#steps-to-integrate-with-gov-uk-verify).
+For more information, see [Steps to integrate GOV.UK Verify in your service](#steps-to-integrate-gov-uk-verify-in-your-service).
 
 
 <a name="saml-documents"></a>

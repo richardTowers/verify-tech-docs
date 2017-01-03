@@ -4,11 +4,9 @@ Build a local matching service
 Even if your service doesn’t need to perform matching, you must still
 build a local matching service because it also:
 
--   creates the hashed persistent identifier \<gloss\_hashpid\>
--   creates and signs the final assertion sent to your service - for
-    more information, see samlWorks
--   acts as the trust anchor \<gloss\_trustanchor\> for your service
-    because the final assertion is created in your service's security
+* creates the hashed persistent identifier \<gloss\_hashpid\>
+* creates and signs the final assertion sent to your service - for more information, see [How SAML works](#how-saml-works)
+* acts as the trust anchor \<gloss\_trustanchor\> for your service because the final assertion is created in your service's security
     domain
 
 Define your matching strategy
@@ -23,22 +21,20 @@ A local matching service carries out a risk-based match to find the
 local record. Exact matching of identity data is rarely possible for
 many reasons:
 
--   transcription errors
--   spelling mistakes
--   incorrect data in your service's data sources, for example, if
-    someone has moved house but not informed the service
--   use of shortened names or nicknames which refer to the same person,
-    for example, William Smith, Bill Smith and David William Smith
+* transcription errors
+* spelling mistakes
+* incorrect data in your service's data sources, for example, if someone has moved house but not informed the service
+* use of shortened names or nicknames which refer to the same person, for example, William Smith, Bill Smith and David William Smith
 
 Your local matching service must be able to handle these issues. You may
 decide to:
 
--   widen the initial query to make sure that relevant records are not
+* widen the initial query to make sure that relevant records are not
     missed, then narrow the query on the results to make sure false
     positives are not returned; for example, search for last name, date
     of birth, and postcode, then run further matching on the results and
     apply a confidence score
--   try synonym matching against combinations of first name and last
+* try synonym matching against combinations of first name and last
     name, possibly transposing them to maximise the chances of finding a
     match
 
@@ -46,36 +42,34 @@ decide to:
 
 When you define your matching strategy you need to:
 
--   prepare for matching with customer data aggregation and data
+* prepare for matching with customer data aggregation and data
     cleansing
--   define the confidence level required for a successful match and how
+* define the confidence level required for a successful match and how
     to score the confidence level, for example:
-    -   100% match confidence means that all elements from the matching
+    * 100% match confidence means that all elements from the matching
         dataset fully match the local record
-    -   80% match confidence might mean that the first name, last name,
+    * 80% match confidence might mean that the first name, last name,
         and date of birth match, but the address is showing a mismatch
--   define the rules for successful matching, which may include what to
+* define the rules for successful matching, which may include what to
     do with:
-    -   synonyms for first names, for example, **William** and **Bill**
-    -   transpositions of multiple part names, for example,
+    * synonyms for first names, for example, **William** and **Bill**
+    * transpositions of multiple part names, for example,
         **Anna-Marie**, **Jane** and **Anna, Marie-Jane**
-    -   transpositions errors of day and month in the date of birth, for
+    * transpositions errors of day and month in the date of birth, for
         example, **04/10/78** and **10/04/78**
--   define the level of 'fuzzy matching' that is acceptable when an
+* define the level of 'fuzzy matching' that is acceptable when an
     exact match is not found – this allows a match that, although not
     100%, is above a service-defined threshold
--   manage the risk of incorrect matching by defining what happens when:
-    -   there's no match – you can create a new account \<ms\_cua\> for
+* manage the risk of incorrect matching by defining what happens when:
+    * there's no match – you can [create a new account](#create-user-accounts) for
         the user
-    -   there are multiple matches – you can implement
-        matching cycle 3 \<ms\_mc3\>
--   analyse your data sources in the light of your matching strategy, so
+    * there are multiple matches – you can implement
+        [matching cycle 3](#cycle-3-user-asserted-match)
+* analyse your data sources in the light of your matching strategy, so
     you can test and refine your strategy before launching alpha or beta
     services
 
-> **note**
->
-> We recommend that you discuss your matching strategy with your
+> **Note:** We recommend that you discuss your matching strategy with your
 > engagement lead. They can organise technical support if needed.
 
 Respond to JSON matching requests
@@ -83,12 +77,10 @@ Respond to JSON matching requests
 
 Your service must respond to JSON matching requests from the matching
 service adapter. The matching service adapter makes these requests to
-the following URLs specified in the
-YAML configuration file \<yamlfile\>:
+the following URLs specified in the [YAML configuration file](#yaml-configuration-file):
 
--   `matchingServiceUri`
--   `unknownUserCreationServiceUri` (if you're
-    creating new user accounts \<ms\_cua\> when a match is not found)
+* `matchingServiceUri`
+* `unknownUserCreationServiceUri` (if you're [creating new user accounts](#create-user-accounts) when a match is not found)
 
 <a name="json-schema"></a>
 
@@ -164,10 +156,7 @@ Below is a [JSON schema](http://json-schema.org/) for a matching
 request. You can use this schema to validate incoming matching requests
 and as a reference when developing your local matching service.
 
-> **note**
->
-> The elements in `matchingDataset` are optional, so the code handling
-> this in your local matching service must be appropriately flexible.
+> **Note:** The elements in `matchingDataset` are optional, so the code handling this in your local matching service must be appropriately flexible.
 
     {
         "properties": {

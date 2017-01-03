@@ -8,33 +8,31 @@ The matching process consists of 3 matching cycles. The cycles are
 progressive attempts to match the user to the correct record in the
 government service's data sources:
 
--   Cycle 0: persistent identifier match
--   Cycle 1: matching dataset match
--   Cycle 3: user-asserted match
+* Cycle 0: persistent identifier match
+* Cycle 1: matching dataset match
+* Cycle 3: user-asserted match
 
-    > **Note**
-    >
-    > Cycle 2 is not currently implemented.
+> **Note:** Cycle 2 isn't currently implemented.
 
 The GOV.UK Verify hub issues a single call for matching cycles 0 and 1,
 then a subsequent call for matching cycle 3. In your
-matching strategy \<ms\_strat\>, you can run cycle 0 first. Then, if
+[matching strategy](#define-your-matching-strategy), you can run cycle 0 first. Then, if
 there is no match, you can run cycle 1 before returning the response to
 the Matching Service Adapter.
 
 If there's no match after the 3 cycles, you can
-create a new account \<ms\_cua\> for the user. Some services may decide
+[create a new account](#create-user-accounts) for the user. Some services may decide
 to create a new account after only 1 matching cycle. This applies to
 services where users are creating new digital accounts rather than
 relying on existing government service data sources.
 
 When an identity provider verifies a user's identity, they send an
-assertion to the Matching Service Adapter\<MSA\> via the hub \<hub\>.
+assertion to the [Matching Service Adapter](#matching-service-adapter) via the [hub](#what-does-the-gov-uk-verify-hub-do).
 This assertion contains information about the user's identity used in
 the different matching cycles. This information includes:
 
--   matching dataset \<gloss\_mds\>
--   persistent identifier \<gloss\_persid\>
+* matching dataset \<gloss\_mds\>
+* persistent identifier \<gloss\_persid\>
 
 ### Cycle 0: persistent identifier match
 
@@ -46,14 +44,13 @@ unique persistent identifier to that user. The identity provider sends
 the persistent identifier to the Matching Service Adapter, via the hub.
 The Matching Service Adapter then hashes the persistent identifier.
 
-> **Note**
->
-> A hashed persistent identifier refers to a combination of:
->
-> -   the user
-> -   the identity provider
-> -   the service the user is trying to access (added when the
->     persistent identifier is hashed)
+<a name="hashed-pid"></a>
+
+> **Note:** A hashed persistent identifier refers to a combination of:
+
+> * the user
+> * the identity provider
+> * the service the user is trying to access (added when the persistent identifier is hashed)
 
 Cycle 0 matches the user's hashed persistent identifier to an existing
 hashed persistent identifier in the local matching datastore. This
@@ -71,22 +68,20 @@ identity provider verifies the information in the matching dataset
 
 The matching dataset contains:
 
--   name
--   address
--   date of birth
--   gender (optional)
--   historical data, if available, for example previous addresses
+* name
+* address
+* date of birth
+* gender (optional)
+* historical data, if available, for example previous addresses
 
-> **Note**
->
-> It's optional for users to provide gender. Where provided, gender is
+> **Note:** It's optional for users to provide gender. Where provided, gender is
 > not verified by the identity provider. It's used for matching purposes
 > only.
 
 The identity provider supplies the matching dataset. Your local matching
 service can use any or all the details in the matching dataset to
 confirm a match between the user and their existing record. Your
-service's matching strategy \<ms\_strat\> specifies which details to
+service's [matching strategy](#define-your-matching-strategy) specifies which details to
 use.
 
 If the local matching service finds a match, it creates a correlation
@@ -98,9 +93,7 @@ enables cycle 0 matching to occur during subsequent transactions.
 Cycle 2 uses trusted attributes related to identity, for example, being
 a disabled badge holder, to enhance the matching process.
 
-> **Note**
->
-> Cycle 2 is not currently supported by GOV.UK Verify.
+> **Note:** Cycle 2 isn't currently implemented.
 
 ### Cycle 3: user-asserted match
 
@@ -123,70 +116,57 @@ Use this cycle to enhance cycle 1 and not as an alternative to cycle 1.
 Matching cycles: message flow
 -----------------------------
 
+<a name="matching-cycles-diagram"></a>
+
 This diagram shows the message flow for matching cycles 0, 1, and 3. The
 numbers identify each stage in the flow. See below for explanations.
 
-<a name="matching-cycles-diagram"></a>
 
-![image](matchingcyclesGraphics.svg)
+![image](/documentation/ms/matchingcyclesGraphics.svg)
 
-> **Note**
->
-> In this example, an identity provider has already verified a user's
+> **Note:** In this example, an identity provider has already verified a user's
 > identity. For more details of this process, see the
-> SAML message flow diagram \<samlWorks\>.
+> [SAML message flow diagram](#saml-flow-diagram).
 
 1.  The identity provider sends the following information to the hub:
+    * the user's identity information, known as the matching dataset \<gloss\_mds\>
+    * a unique persistent identifier \<gloss\_persid\> for the identity, created by the identity provider
 
-> -   the user's identity information, known as the
->     matching dataset \<gloss\_mds\>
-> -   a unique persistent identifier \<gloss\_persid\> for the identity,
->     created by the identity provider
-
-2.  The hub forwards the matching dataset and persistent identifier to
+1.  The hub forwards the matching dataset and persistent identifier to
     the Matching Service Adapter.
-3.  The Matching Service Adapter hashes the persistent identifier to
+1.  The Matching Service Adapter hashes the persistent identifier to
     make it meaningless to other services.
-4.  The Matching Service Adapter sends the
-    hashed persistent identifier  \<ms\_hashedpid\> and the matching
+1.  The Matching Service Adapter sends the
+    [hashed persistent identifier](#hashed-pid) and the matching
     dataset to the local matching service.
-5.  The local matching service runs cycle 0:
+1.  The local matching service runs cycle 0:
 
-> The local matching service tries to find a match between the user's
-> hashed persistent identifier and a hashed persistent identifier in the
-> local matching datastore. If cycle 0 finds a match, go to step 9.
+    The local matching service tries to find a match between the user's hashed persistent identifier and a hashed persistent identifier in the local matching datastore. If cycle 0 finds a match, go to step 9.
 
-6.  If cycle 0 finds no match, a `no-match` response is returned to the
+1.  If cycle 0 finds no match, a `no-match` response is returned to the
     Matching Service Adapter (6a) and the local matching service runs
     cycle 1:
+    
+    The local matching service tries to find a match between the user's matching dataset and a record in government service data sources. If cycle 1 finds a match, go to step 8.
 
-> The local matching service tries to find a match between the user's
-> matching dataset and a record in government service data sources. If
-> cycle 1 finds a match, go to step 8.
-
-7.  If cycle 1 finds no match, a `no-match` response is returned to the
+1.  If cycle 1 finds no match, a `no-match` response is returned to the
     Matching Service Adapter (7a) and the local matching service runs
     cycle 3:
 
-> The hub asks the user to provide additional information, for example,
-> their driving licence number and sends it to the Matching Service
-> Adapter. If cycle 3 finds no match, the matching service can
-> create a new account \<ms\_cua\> for the user, provided your matching
-> service supports this feature and your user journey seeks explicit
-> user consent.
+    The hub asks the user to provide additional information, for example, their driving licence number and sends it to the Matching Service Adapter. If cycle 3 finds no match, the matching service can [create a new account](#create-user-accounts) for the user, provided your matching service supports this feature and your user journey seeks explicit user consent.
 
-8.  If cycle 1 or cycle 3 finds a match, the local matching service
+1.  If cycle 1 or cycle 3 finds a match, the local matching service
     saves the hashed persistent identifier in the matching datastore
     along with the user's record. Future matches with cycle 0 will use
     this data when the same user returns, having been verified by the
     same identity provider.
-9.  The local matching service returns a JSON response, `match`, to the
+1.  The local matching service returns a JSON response, `match`, to the
     Matching Service Adapter to indicate that a match was found.
-10. The Matching Service Adapter creates a SAML response based on the
+1. The Matching Service Adapter creates a SAML response based on the
     JSON response, and forwards it to the government service via the
     GOV.UK Verify hub. The SAML response contains the hashed persistent
     identifier.
-11. The government service recovers the user's record from the matching
+1. The government service recovers the user's record from the matching
     datastore using the the user's persistent identifier. This allows
     the government service to interact with the user.
 

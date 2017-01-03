@@ -1,11 +1,8 @@
-Steps to integrate with GOV.UK Verify
-=====================================
+# Steps to integrate GOV.UK Verify in your service
 
-Development
------------
+## Development
 
-Integration
------------
+## Integration
 
-Maintenance
------------
+## Maintenance
+

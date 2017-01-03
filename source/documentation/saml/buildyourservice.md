@@ -1,7 +1,7 @@
-# Build your service
+## Build your service
 
 
-## Use extended validation certificates
+### Use extended validation certificates
 
 
 You must use extended validation (EV) certificates for all public
@@ -15,10 +15,10 @@ to protect
 data](https://www.ncsc.gov.uk/guidance/tls-external-facing-services)
 from the National Cyber Security Centre (NCSC).
 
-## SAML integration
+### SAML integration
 
 
-### Choose a product and framework
+#### Choose a product and framework
 
 Your government service must be able to send SAML authentication
 requests to, and receive SAML responses from, the GOV.UK Verify hub.
@@ -35,7 +35,7 @@ in the Government Service Design Manual.
 
 Contact your engagement lead if you need further information.
 
-### Use the SAML metadata
+#### Use the SAML metadata
 
 The SAML metadata contains the
 [SAML encryption and signing certificates](#data-encryption-and-signing) used
@@ -75,7 +75,7 @@ To use the federation metadata, you need two truststores:
  * the medatdata truststore, to check the integrity of the metdadata signing certificate
  * the ??? truststore, to check the integrity of the identity provider and hub certificates contained in the federation metadata
 
-**Handle responses using SAML metadata**
+####Handle responses using SAML metadataß
 
 Your service must be able to consume SAML responses that are issued by
 the GOV.UK Verify hub. You must use the Matching Service Adapter
@@ -96,8 +96,7 @@ metadata to do this.
     You can use the X509 signing certificate contained in the Matching
     Service Adapter metadata to validate this signature.
 
-> **Caution:**
-> Use this procedure with care. You must trust assertions signed by the
+> **Caution:** ßUse this procedure with care. You must trust assertions signed by the
 > Matching Service Adapter only. The GOV.Verify hub never issues
 > assertions for consumption by the service endpoint, so make sure that
 > it’s *not* possible to trust the hub to issue assertions.

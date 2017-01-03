@@ -1,15 +1,15 @@
-# How SAML works
+## How SAML works
 
 
 SAML messages take the form of requests and responses. Messages can
 contain assertions about the user's identity. GOV.UK Verify uses the
 following types of assertion:
 
--   identity assertions – contain information about the user
--   authentication context assertions – contain information related to
+* identity assertions – contain information about the user
+* authentication context assertions – contain information related to
     how authentication was carried out, for example, the
     level of assurance \<gloss\_loa\>
--   fraud event assertions – contain identifiers related to an
+* fraud event assertions – contain identifiers related to an
     identified fraud detected by the identity provider
 
 The SAML profile defines these assertions. See the
@@ -18,6 +18,8 @@ The SAML profile defines these assertions. See the
 All SAML messages that pass between the government service, the hub, and
 identity providers are sent via the user's browser.
 
+<a name="saml-flow-diagram"></a>
+
 This diagram shows the SAML message flow within the GOV.UK Verify
 federation. The numbers identify each stage in the flow. See below for
 explanations.
@@ -25,7 +27,7 @@ explanations.
 ![Diagram showing a SAML message flow in GOV.UK Verify architecture. Communication between government service, the hub, and identity providers is via SAML and passes through the user's browser. Communication between the hub and the Matching Service Adapter is via SAML using SOAP. Communication between the Matching Service Adapter, the local matching service, and the local matching data store is not SAML. The text below the image describes the SAML messages sent between entities in the federation](/documentation/saml/samlFlowGraphic.svg)
 
 1.  The government service sends a SAML authentication request to the
-    [GOV.UK Verify hub](##what-does-the-gov-uk-verify-hub-do). The request indicates that a user wants
+    [GOV.UK Verify hub](#what-does-the-gov-uk-verify-hub-do). The request indicates that a user wants
     to access the service and needs to verify their identity using
     GOV.UK Verify.
 

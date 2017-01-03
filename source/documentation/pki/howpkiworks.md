@@ -1,27 +1,25 @@
-How a PKI works
-===============
+# How a PKI works
 
-Public keys, private keys, and certificates
--------------------------------------------
+## Public keys, private keys, and certificates
 
 To encrypt and sign data, you need 2 pairs of keys:
 
--   public and private **encryption** keys
--   public and private **signing** keys
+* public and private **encryption** keys
+* public and private **signing** keys
 
 The keys consist of very long numbers linked in a particular way so the
 public key can be derived from the private key but not the other way
 around. Entities within a PKI generate their own keys. They always
 retain their private keys. However, they share their public keys with
 other entities to allow secure communication through
-encryption \<pki\_encrypt\_cert\> and signing \<pki\_sign\_cert\>.
+[encryption](#encryption-certificates) and [signing](#signing-certificates).
 
 Public keys are shared using certificates. A certificate is a file that
 contains:
 
--   a copy of the certificate owner's public key
--   information about the identity of the certificate owner
--   an indication of the purpose of the certificate, for example,
+* a copy of the certificate owner's public key
+* information about the identity of the certificate owner
+* an indication of the purpose of the certificate, for example,
     encryption or signing
 
 Certificates are issued and signed by a certificate authority. The
@@ -30,8 +28,7 @@ the PKI. An entity that receives data from a third party can request
 confirmation from the certificate authority that the third party's
 certificate is valid.
 
-Keys and certificates in the GOV.UK Verify federation
------------------------------------------------------
+## Keys and certificates in the GOV.UK Verify federation
 
 The IDAP PKI and GOV.UK Verify federation use the X509 standard for
 digital certificates.
@@ -40,23 +37,22 @@ In the GOV.UK Verify federation, the IDAP certificate authority issues
 and signs certificates. As a government service using GOV.UK Verify, you
 need to request 4 certificates:
 
--   encryption and signing certificates for your service
--   encryption and signing certificates for your Matching Service
+* encryption and signing certificates for your service
+* encryption and signing certificates for your Matching Service
     Adapter
 
 To obtain a certificate:
 
-1.  Generate pair of keys (private \<pki\_gen\_private\_key\> and
-    public \<pki\_gen\_csr\>). You must generate a pair of encryption
+1.  Generate pair of keys ([private](#generate-private-keys) and
+    [public](#generate-certificate-signing-requests)). You must generate a pair of encryption
     keys for each encryption certificate request and a pair of signing
     keys for each signing certificate request.
-2.  Submit a certificate signing request \<pki\_submit\_csr\> to the
+1.  [Submit a certificate signing request](#submit-certificate-signing-requests) to the
     IDAP certificate authority.
-3.  The certificate authority generates your certificate and sends it to
+1.  The certificate authority generates your certificate and sends it to
     you.
 
-![Request
-certificates](pkiIssueCertsGraphic.svg)
+![](/documentation/pki/pkiIssueCertsGraphic.svg)
 
 The certificate authority also issues certificates for the GOV.UK Verify
 hub and identity providers.
@@ -73,8 +69,7 @@ The sender extracts the public encryption key from the receiver's
 encryption certificate and uses it to encrypt a message. The receiver
 decrypts the message using their corresponding private encryption key.
 
-> ![Example of data
-> encryption](pkiEncryptionGraphic.svg)
+![](/documentation/pki/pkiEncryptionGraphic.svg)
 
 <a name="signing-certificates"></a>
 
@@ -87,30 +82,28 @@ signature, and then send the signed message. The receivers check the
 digital signature using your public signing key from your signing
 certificate.
 
-> ![Example of data
-> signing](pkiSigningGraphic.svg)
+![](/documentation/pki/pkiSigningGraphic.svg)
 
 You can use encryption and signing together or alone. For example:
 
-> **Signing alone**
->
-> > When a user indicates that they would like to verify their identity,
-> > the government service sends a message to the hub \<hub\>. The
-> > message is unencrypted because it contains no personal user
-> > information. However, the message is signed because the hub needs
-> > assurance that the message originated from the government service.
+**Signing alone**
 
-|
+When a user indicates that they would like to verify their identity,
+the government service sends a message to the [hub](#what-does-the-gov-uk-verify-hub-do). The
+message is unencrypted because it contains no personal user
+information. However, the message is signed because the hub needs
+assurance that the message originated from the government service.
 
-> **Encryption and signing**
->
-> > When a user has verified their identity, the identity provider sends
-> > a signed message to the hub containing the user's encrypted personal
-> > information. This ensures the confidentiality of the message and its
-> > origin.
+
+**Encryption and signing**
+
+When a user has verified their identity, the identity provider sends
+a signed message to the hub containing the user's encrypted personal
+information. This ensures the confidentiality of the message and its
+origin.
 
 A message can contain embedded messages which may be encrypted and/or
 signed by different entities within the GOV.UK Verify federation. For
 more information, see the
-diagram showing the SAML message flow \<samlWorks\> within the GOV.UK
+diagram showing the [SAML message flow](#saml-flow-diagram) within the GOV.UK
 Verify federation.
