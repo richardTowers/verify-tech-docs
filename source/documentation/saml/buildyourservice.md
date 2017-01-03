@@ -35,12 +35,13 @@ in the Government Service Design Manual.
 
 Contact your engagement lead if you need further information.
 
-#### Use the SAML metadata
+#### Configure and adapt your technology to respect the SAML profile
 
 The SAML metadata contains the
 [SAML encryption and signing certificates](#data-encryption-and-signing) used
 within the GOV.UK Verify federation. There are two sets of SAML
 metadata.
+
 
 **Matching Service Adapter metadata**
 
@@ -75,7 +76,7 @@ To use the federation metadata, you need two truststores:
  * the medatdata truststore, to check the integrity of the metdadata signing certificate
  * the ??? truststore, to check the integrity of the identity provider and hub certificates contained in the federation metadata
 
-####Handle responses using SAML metadataß
+####Handle responses using SAML metadata
 
 Your service must be able to consume SAML responses that are issued by
 the GOV.UK Verify hub. You must use the Matching Service Adapter
@@ -96,7 +97,7 @@ metadata to do this.
     You can use the X509 signing certificate contained in the Matching
     Service Adapter metadata to validate this signature.
 
-> **Caution:** ßUse this procedure with care. You must trust assertions signed by the
+> **Caution:** Use this procedure with care. You must trust assertions signed by the
 > Matching Service Adapter only. The GOV.Verify hub never issues
 > assertions for consumption by the service endpoint, so make sure that
 > it’s *not* possible to trust the hub to issue assertions.

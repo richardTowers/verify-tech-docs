@@ -22,9 +22,8 @@ ensures that any changes maintain backwards compatibility.
 Prerequisites:
 
 *   [build your local matching service](#build-your-service) – you can use the
-    [example of the JSON request](#respond-to-json-matching-requests) that the Matching
-    Service Adapter posts to your service and the
-    [JSON schema](json-schema) for a matching request
+    [example of the JSON request](#json-request) that the Matching
+    Service Adapter posts to your service and the [JSON schema](#json-schema) for a matching request
 *   [install](#install-the-matching-service-adapter) and [configure](#configure-the-matching-service-adapter) your
     Matching Service Adapter
 

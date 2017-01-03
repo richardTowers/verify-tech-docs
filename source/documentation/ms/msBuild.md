@@ -82,7 +82,7 @@ the following URLs specified in the [YAML configuration file](#yaml-configuratio
 * `matchingServiceUri`
 * `unknownUserCreationServiceUri` (if you're [creating new user accounts](#create-user-accounts) when a match is not found)
 
-<a name="json-schema"></a>
+<a name="json-request"></a>
 
 Below is a formatted example of a cycle 3 matching request that the
 Matching Service Adapter sends to your local matching service:
@@ -151,6 +151,8 @@ Matching Service Adapter sends to your local matching service:
             ]
         }
     }
+
+<a name="json-schema"></a>
 
 Below is a [JSON schema](http://json-schema.org/) for a matching
 request. You can use this schema to validate incoming matching requests
