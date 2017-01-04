@@ -104,7 +104,7 @@ For more details, see the diagrams:
     >  * user control - the user must give their informed consent to the information being sent
     >  * data minimisation – the service receives only the restricted set of attributes it needs, not the full matching dataset.
     
-    > For more information see the [Identity Assurance Principles](https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/361496/PCAG_IDA_Principles_3.1__4_.pdf).
+    > For more information see the [Identity Assurance Principles](https://www.gov.uk/government/consultations/draft-identity-assurance-principles/privacy-and-consumer-advisory-group-draft-identity-assurance-principles#the-nine-identity-assurance-principles).
 
 1.  Optionally, the government service creates a correlation between the
     matching dataset and the hashed persistent identifier in its matching

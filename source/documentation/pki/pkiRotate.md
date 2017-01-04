@@ -107,10 +107,7 @@ Use the procedure below if your service does not support 2 encryption keys simul
 
 ### Rotate your Matching Service Adapter signing key
 
-There are 2 [is this correct?] methods to rotate your Matching Service
-Adapter signing key. We recommend that you use SAML metadata as this
-minimises service downtime and reduces the complexity of the the key
-rotation procedure. For more information, see [Use the SAML metadata](#use-the-saml-metadata).
+There are 3 methods to rotate your Matching Service Adapter signing key. We recommend that you use SAML metadata as this minimises service downtime and reduces the complexity of the the key rotation procedure. For more information, see [Use the SAML metadata](#use-the-saml-metadata).
 
 ### Use SAML metadata
 
@@ -181,4 +178,16 @@ from your Matching Service Adapter.
 1.  The GOV.UK Verify operations team removes the old certificate from
     the GOV.UK Verify hub. This means that the GOV.UK Verify hub trusts
     SAML messages signed with the new private signing key only.
+
+#### Your service does not support 2 Matching Service Adapter signing keys
+
+Use the procedure below if your service does not support 2 Matching Service Adapter signing keys simultaneously. This involves service downtime during key rotation.
+
+1. Take your service offline.
+1. Replace the old certificate with the new certificate on your service endpoint. This means that your service trusts SAML messages signed with the new key.
+1. Replace the old private signing key with the new key on the Matching Service Adapter. This means that SAML is now signed with the new key.
+1. Inform the GOV.UK Verify operations team that the new key is live.
+1. The GOV.UK Verify operations team removes the old certificate from the GOV.UK Verify hub. This means that the GOV.UK Verify hub trusts SAML messages signed with the new private signing key only.
+1. Put your service back online.
+   
 

@@ -70,6 +70,8 @@ An identity provider issues credentials to a user to allow the user to be authen
 
 A set of techniques for guaranteeing the integrity and confidentiality of data transmitted over a public network. This is done by a combination of encryption and signing.
 
+See [encryption certificate](#glossary-encryption-certificate) and [signing certificate](#glossary-signing-certificate).
+
 <a name="glossary-encryption-certificate"></a>
 
 **encryption certificate**
@@ -80,7 +82,7 @@ Contains the receiver’s public key that the sender uses to encrypt a message. 
 
 **entityID**
 
-A unique identifier for each entity within the GOV.UK Verify federation. Government services, Matching Service Adapters, the GOV.UK Verify [hub](#glossary-hub), and identity providers all have their own entityIDs. The entityID is used within messages and metadata to refer to an entity. The entityID is formatted as a URL  but is not necessarily resolvable. For example, the entityID of the GOV.UK Verify hub is: \https://signin.service.gov.uk.
+A unique identifier for each entity within the GOV.UK Verify federation. Government services, Matching Service Adapters, the GOV.UK Verify [hub](#glossary-hub), and identity providers all have their own entityIDs. The entityID is used within messages and metadata to refer to an entity. The entityID is formatted as a URL  but is not necessarily resolvable. For example, the entityID of the GOV.UK Verify hub is: https://signin.service.gov.uk.
 
 <a name="glossary-data-matching"></a>
 
@@ -98,13 +100,13 @@ The Data Protection Act controls how personal information is used by organisatio
 
 **document checking service (DCS)**
 
-A service supplementary to GOV.UK Verify that allows an identity provider to validate user documents against government records.
+A service supplementary to GOV.UK Verify that allows identity providers to validate user documents against government records.
 
 <a name="glossary-GPG"></a>
 
 **Good Practice Guides (GPGs 43, 44, 45, 46 and 56 in relation to identity assurance)**
 
-Documents that have been developed collaboratively with HMG departments, private sector representatives and the UK National Technical Authority for Information Assurance (CESG) to ensure that the business, technical and security demands across the sectors can be met. The guides are intended to ensure that the delivery of trusted online user transactions will take place in accordance with the Identity Assurance Principles.
+Documents that have been developed collaboratively with HMG departments, private sector representatives and the UK National Technical Authority for Information Assurance to ensure that the business, technical and security demands across the sectors can be met. The guides are intended to ensure that the delivery of trusted online user transactions will take place in accordance with the [Identity Assurance Principles](#glossary-identity-assurance-principles).
 
 **Good Practice Guide 43 (GPG 43)**
 
@@ -151,7 +153,8 @@ The ability to prove, to a certain level of confidence, that a user trying to ac
 
 **Identity Assurance Principles**
 
-The principles that set out how the government's identity assurance approach should be configured to meet the privacy and consumer expectations of its users. They are published by the Privacy and Consumer Advisory Group and are amended or replaced from time to time.
+The [Identity Assurance Principles](https://www.gov.uk/government/consultations/draft-identity-assurance-principles/privacy-and-consumer-advisory-group-draft-identity-assurance-principles#the-nine-identity-assurance-principles) set out how the government's identity assurance approach should be configured to meet the privacy and consumer expectations of its users. They are published by the [Privacy and Consumer Advisory Group](#glossary-privacy-consumer-advisory-group) and are amended or replaced from time to time.
+
 
 <a name="glossary-identity-provider"></a>
 
@@ -159,7 +162,7 @@ The principles that set out how the government's identity assurance approach sho
 
 Private sector organisations, paid by the government, to verify that a user is who they say they are and assert verified data that identifies them to a government service.
 
-The organisations are certified as meeting relevant industry security standards and identity assurance standards published by the Cabinet Office and CESG (the UK's national technical authority).
+The organisations are certified as meeting relevant industry security standards and identity assurance standards published by the Cabinet Office and the [National Cyber Security Centre](https://www.ncsc.gov.uk/) (NCSC).
 
 <a name="glossary-integration-environment"></a>
 
@@ -217,12 +220,12 @@ Cycle 0 allows the matching service to match the hashed [hashed persistent ident
 
 Checks if there’s a match for the user’s identity in the government service’s data sources, using the [matching dataset](#glossary-matching-dataset) to search for a match.
 
-**Matching cycle 2**
+**matching cycle 2**
 
 Additional matching cycle where trusted [attributes](#glossary-attributes) are used to enhance the matching process. Cycle 2 is currently not supported by GOV.UK Verify.
 
 
-**Matching cycle 3**
+**matching cycle 3**
 
 Asks the user for some additional information, for example, driving licence number, to complete a match. This cycle enhances cycle 1 and may not be required for all matches.
 
@@ -241,7 +244,7 @@ A dataset containing a verified user’s:
 
 It may also contain historical values for these attributes. 
 
-The [identity provider](glossary-identity-provider) that verified the user's identity provides the matching dataset. The identity provider verifies the information in the matching dataset (except gender). The hub forwards it to the government service’s [matching-service](#glossary-matching-service) so the government service can perform matching.
+The [identity provider](#glossary-identity-provider) that verified the user's identity provides the matching dataset. The identity provider verifies the information in the matching dataset (except gender). The hub forwards the matching dataset to the government service’s [matching-service](#glossary-matching-service) so the government service can perform matching.
 
 It’s optional for users to provide gender. Where provided, gender is not verified by the identity provider. It’s used for matching purposes only.
 
@@ -267,13 +270,20 @@ The process through which new government services integrate with GOV.UK Verify. 
 
 **persistent identifier** 
 
-A unique identifier which refers to a combination of a user and the identity provider that verified the user’s identity. Persistent identifiers are generated by identity providers. They are constructed using pseudo-random values that have no discernible correspondence with the user’s actual identifier, for example, their email address.
+A unique identifier which refers to a combination of:
+
+* a user 
+* the identity provider that verified the user’s identity
+
+Identity providers generate persistent identifiers. They use pseudo-random values that have no discernible correspondence with the user’s actual identifier, for example, their email address.
 
 See [hashed persistent identifier](#glossary-hashed-PID).
 
+<a name="glossary-privacy-consumer-advisory-group"></a>
+
 **Privacy and Consumer Advisory Group (PCAG)**
 
-Established to help government develop an approach to identity assurance and develop the Identity Assurance Principles.
+Established to help government develop an approach to identity assurance and develop the [Identity Assurance Principles](#glossary-identity-assurance-principles).
 
 **private beta**
 
@@ -283,7 +293,7 @@ The initial version of a government service that is available to a small number 
 
 **private key**
 
-A long string of data used in  [cryptography](#glossary-cryptography). Generating a certificate signing request creates a corresponding [public key](#glossary-pubilc-key).
+A long string of data used in  [cryptography](#glossary-cryptography). Generating a certificate signing request creates a corresponding [public key](#glossary-public-key).
 
 **public beta**
 

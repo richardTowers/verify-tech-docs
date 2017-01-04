@@ -49,7 +49,7 @@ minimum. Approvers must be in a senior role within your organisation,
 for example, a project manager with responsibility for security.
 Requesters and approvers should be different people.
 
-The service manager must provide the following details for all
+Your service manager must provide the following details for all
 requesters and approvers:
 
 * first name
@@ -57,7 +57,7 @@ requesters and approvers:
 * email address
 * telephone number
 
-Your service manager must send these details to idappki@digital.cabinet-office.gov.uk from their email address. 
+Your service manager must send these details to <idappki@digital.cabinet-office.gov.uk> from their email address. 
 
 You may want to set up a group mailbox to make sure you receive your
 certificates and renewal notices when your requesters or approvers
@@ -106,7 +106,7 @@ controls include:
 
 For further advice and guidance, contact the government’s [National
 Technical Authority for Information Assurance
-(CESG)](https://www.cesg.gov.uk/).
+(NCSC)](https://www.ncsc.gov.uk/).
 
 ### Generate certificate signing requests
 
@@ -143,7 +143,7 @@ Some prompts appear in the terminal. Enter the following information:
   * SAML [encryption](#encryption-certificates) certificate: `<servicename> SAML Encryption <version>`
   * SAML [signing](#signing-certificates) certificate: `<servicename> SAML Signing <version>`
 
-    > **Note:** *Common Name* must not contain underscores.
+    > **Note:** **Common Name** must not contain underscores.
 
 * **Email Address**: the requester or group email address (if you've set
     one up)
@@ -162,8 +162,8 @@ the corresponding private key files.
 > **Important:** Before you submit a certificate signing request, your service manager
 > must:
 
->  * send the [requester's details](#name-your-certificate-requesters-and-approvers) to the IDAP certificate authority
->  * request the 'GOV.UK Verify Certification Process for (Relying Party) Subscribers' document containing the certificate authority URLs from <idappki@digital.cabinet-office.gov.uk>
+>  * [send the requester's details](#name-your-certificate-requesters-and-approvers) to the IDAP certificate authority
+>  * request the **GOV.UK Verify Certification Process for (Relying Party) Subscribers** document containing the certificate authority URLs from <idappki@digital.cabinet-office.gov.uk>
 
 1.  Open the URL for the required certificate authority:
     * the IDAP test certificate authority issues certificates for non-production environments such as the integration environment; test certificates are valid for 2 years

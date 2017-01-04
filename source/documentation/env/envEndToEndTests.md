@@ -32,7 +32,7 @@ explanations.
 The integration environment is not accredited to use real user data, and
 it has no links to real identity providers. Carry out business analysis
 to identify user identities that cause potential problem scenarios
-during matching. Then, in the user administration API, create test users
+during matching. Then, in the user administration application programming interface (API) create test users
 that will test these scenarios. You must also add the test users to your
 local matching datastore in the integration environment.
 
@@ -59,13 +59,13 @@ can manage test users.
 1.  Request IP whitelisting for your hosts from GOV.UK Verify support at
     <idasupport+onboarding@digital.cabinet-office.gov.uk>.
 1.  Go to the password generation page:
-    [](https://idp-stub-integration.ida.digital.cabinet-office.gov.uk/password-gen)
-1.  Store the password securely. Then email us the hash, along with a
-    username of your choice.
+    [https://idp-stub-integration.ida.digital.cabinet-office.gov.uk/password-gen](https://idp-stub-integration.ida.digital.cabinet-office.gov.uk/password-gen)
+1.  Store the password securely. 
+1.  Email us the hash, along with a username of your choice.
 
     > **Important:** Don't email us the password. Send us the hash and your chosen username.
 
-   We'll use this hash and username to configure your authentication credentials to the user administration API for the test identity provider.
+    We'll use this hash and username to configure your authentication credentials to the user administration API for the test identity provider.
 
 #### Create test users
 
@@ -73,10 +73,12 @@ This procedure describes how to create test users in bulk and load them
 into the test identity provider. You must add the same test users to
 your local matching datastore in the integration environment.
 
-Make an http POST to the user administration API with a JSON document
-containing an array of user data. For example: :
+Make an HTTP POST to the user administration API with a JSON document
+containing an array of user data. For example:
 
-    curl --user '{username}:{password}' -H 'Content-Type: application/json' -d @create-user.json https://idp-stub-integration.ida.digital.cabinet-office.gov.uk/{idp-name}/users
+```
+ curl --user '{username}:{password}' -H 'Content-Type: application/json' -d @create-user.json https://idp-stub-integration.ida.digital.cabinet-office.gov.uk/{idp-name}/users
+```
 
 where:
 
@@ -122,16 +124,67 @@ where:
             }]
         }]
 
-    Possible values are shown in the following table.
+Possible values are shown in the following table.
 
-    > file
-    > :   possibleValues.csv
-    >
-    > header-rows
-    > :   1
-    >
-    > widths
-    > :   4, 10
+<table>
+  <tbody>
+    <tr>
+      <th>Attribute</th>
+      <th >Vaue</th>
+    </tr>
+    <tr>
+      <td valign="middle">levelOfAssurance</td>
+      <td >Level of assurance must be one of the following values:<br>
+         <ul>
+          <li>LEVEL_X</li>
+          <li>LEVEL_1</li>
+          <li>LEVEL_2</li>          
+          <li>LEVEL_3</li>
+          <li>LEVEL_3</li>
+         </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>firstName<br>
+      surnames<br>
+      dateOfBirth<br>
+      </td>
+      <td >These attributes can contain the following fields:<br>
+         <ul>
+          <li>value (variable type)</li>
+          <li>DateTime from (the time when this value started - eg changed name to this - Optional)</li>
+          <li>DateTime to (The time after which this value ended - eg changed name from this - Optional)</li>          
+          <li>boolean verified</li>
+         </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>gender</td>
+      <td >Gender must be one of the following values:<br>
+         <ul>
+          <li>FEMALE</li>
+          <li>MALE</li>
+          <li>NOT_SPECIFIED</li>
+         </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>address</td>
+      <td >Address consists of:<br>
+         <ul>
+          <li>boolean verified</li>
+          <li>DateTime fromDate</li>
+          <li>DateTime toDate (Optional)</li>
+          <li>String postCode (Optional)</li>
+          <li>List&#60;String&#62; lines</li>
+          <li>String internationalPostCode (Optional)</li>
+          <li>String uprn (Optional)</li>
+         </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 
 
 #### View test users
@@ -170,10 +223,6 @@ As a minimum, test the following end-to-end user scenarios:
 * all the possible outcomes of your matching service, including
     [cycle 3](#cycle-3-user-asserted-match) and [user account creation](#create-user-accounts), if
     implemented
-
-  > **Note:** Run end-to-end tests for all the possible outcomes of your matching
-  > service, including [cycle 3](#cycle-3-user-asserted-match) and
-  > [user account creation](#create-user-accounts), if implemented.
 
 ### Tear down
 
