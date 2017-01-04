@@ -26,21 +26,24 @@ certificates from the IDAP certificate authority:
 
     > **Important:** Certificates will not be approved unless your service manager has completed the above steps.
 
-1.  The technical delivery team
+1.  The technical team
     [generates a private key](#generate-private-keys) in the form of a
     file.
-1.  From the private key, the technical delivery team
+1.  From the private key, the technical team
     [generates the certificate signing request](#generate-certificate-signing-requests) file
     containing a corresponding public key.
-1.  The technical delivery team
+1.  The technical team
     [submits the certificate signing request](#submit-certificate-signing-requests) file to
     the appropriate certificate authority.
 
 ### Name your certificate requesters and approvers
 
-Before requesting certificates, your service manager must name the
-certificate requesters for your service, and delegate approvers for the
-requesters. Requesters are the people who actually make the requests.
+Before you request certificates, your service manager must name the people who will be:
+
+* certificate requesters for your service
+* approvers for the requesters
+
+Requesters are the people who actually make the requests.
 For security reasons, we advise you keep the number of requesters to a
 minimum. Approvers must be in a senior role within your organisation,
 for example, a project manager with responsibility for security.
@@ -54,8 +57,7 @@ requesters and approvers:
 * email address
 * telephone number
 
-Send these details to <idappki@digital.cabinet-office.gov.uk> from the
-service manager’s email address.
+Your service manager must send these details to idappki@digital.cabinet-office.gov.uk from their email address. 
 
 You may want to set up a group mailbox to make sure you receive your
 certificates and renewal notices when your requesters or approvers
@@ -128,26 +130,26 @@ filename as they have different extensions (.key and .csr).
 
 Some prompts appear in the terminal. Enter the following information:
 
-* *Country Name*: 2-letter code for your country, for example, GB for
+* **Country Name**: 2-letter code for your country, for example, GB for
     Great Britain
-* *State*: county or city
-* *Locality*: city or town
-* *Organisation Name*: this must match your contractual or programme
+* **State**: county or city
+* **Locality**: city or town
+* **Organisation Name**: this must match your contractual or programme
     status
-* *Organisation Unit*: your unit within the organisation, for example,
+* **Organisation Unit**: your unit within the organisation, for example,
     the name of your government service
-* *Common Name*: one of the following, depending on the type of
+* **Common Name**: one of the following, depending on the type of
     certificate.
   * SAML [encryption](#encryption-certificates) certificate: `<servicename> SAML Encryption <version>`
   * SAML [signing](#signing-certificates) certificate: `<servicename> SAML Signing <version>`
 
     > **Note:** *Common Name* must not contain underscores.
 
-* *Email Address*: the requester or group email address (if you've set
+* **Email Address**: the requester or group email address (if you've set
     one up)
-* *Extra attributes* (optional):
-  * *A challenge password*: if you provide this, the certificate authority may request it when you submit the certificate signing request
-  * *An optional company name*
+* **Extra attributes** (optional):
+  * **A challenge password**: if you provide this, the certificate authority may request it when you submit the certificate signing request
+  * **An optional company name**
 
 ### Store certificate signing request files
 
