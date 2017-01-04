@@ -1,6 +1,6 @@
 # Matching Service Adapter
 
-The Matching Service Adapter \<gloss\_msa\> is a software tool supplied
+The [Matching Service Adapter](#glossary-MSA) is a software tool supplied
 free of charge by GOV.UK Verify. It simplifies communication between
 your local matching service and the [GOV.UK Verify hub](#what-does-the-gov-uk-verify-hub-do).
 
@@ -11,19 +11,18 @@ service within their security domain.
 
 <a name="matching-service-diagram"></a>
 
-![image](/documentation/ms/matchingserviceGraphics.svg)
+![Diagram showing that a matching service is composed of a Matching Service Adapter and a local matching service](/documentation/ms/matchingserviceGraphics.svg)
 
 For more details, see the diagrams:
 
 * [GOV.UK Verify architecture](#architecture-diagram)
 * [matching cycles](#matching-cycles-diagram)
-* [user account creation](#create-user-accounts-diagram)
+* [create user accounts](#create-user-accounts-diagram)
 
-## Why does GOV.UK Verify use the Matching Service Adapter?
+**Why does GOV.UK Verify use the Matching Service Adapter?**
 
-The hub uses [Security Assertion Markup Language](#saml) (SAML) as its
-communication method. Government services usually use JSON (JavaScript
-Object Notation) for their local matching services. A SAML matching
+The hub uses SAML as its
+communication method. Government services usually use JSON for their local matching services. A SAML matching
 service interface is therefore required. The Matching Service Adapter
 converts SAML into JSON and vice versa. It also performs encryption,
 decryption, and signing of SAML messages. For more information, see the
@@ -35,7 +34,7 @@ interface. GOV.UK Verify provides the Matching Service Adapter so you
 can concentrate on the business logic and matching rules for your local
 matching service.
 
-## What do you need to do? 
+**What do you need to do?**
 
 We recommend that you use the Matching Service Adapter. If you do not
 want to, please contact the [GOV.UK Verify support
@@ -54,4 +53,4 @@ To use the Matching Service Adapter, you need to:
 You will then be able to run
 [SAML compliance tests between the hub and your matching service](#test-your-matching-service-with-the-saml-compliance-tool).
 
-For more information, see [Steps to integrate GOV.UK Verify in your service](#steps-to-integrate-gov-uk-verify-in-your-service).
+For more information, see [Steps to integrate GOV.UK Verify into your service](#steps-to-integrate-gov-uk-verify-into-your-service).

@@ -1,4 +1,4 @@
-# Install the Matching Service Adapter
+## Install the Matching Service Adapter
 
 **Prerequisite:** The Matching Service Adapter requires Java 8. Make
 sure you have the latest version of the JRE (Java Runtime Environment)
@@ -10,12 +10,12 @@ installed.
     [<idasupport+onboarding@digital.cabinet-office.gov.uk>](mailto:idasupport+onboarding@digital.cabinet-office.gov.uk)
     to request access to the secure site where you can download the
     Matching Service Adapter.
-2.  Download the Matching Service Adapter to your host. It contains:
+1.  Download the Matching Service Adapter to your host. It contains:
     * a jar (java archive) file
-    * a truststore \<gloss\_truststore\> file and a metadata truststore file for non-production environments (the SAML compliance tool and the integration environment)
+    * a [truststore](#glossary-truststore) file and a metadata truststore file for non-production environments (the SAML compliance tool and the integration environment)
     * a truststore file and a metadata truststore file for the production environment
 
-3.  To extract the files and move the truststore files to the
+1.  To extract the files and move the truststore files to the
     environment where you want to use the Matching Service Adapter, run
     the following commands:
 
@@ -27,9 +27,9 @@ installed.
     where:
     * `[filename]` is the name of the tar file
     * `[xxx]` is the build number
-    * `[path to truststore directory...]` is the location of the truststore – you specify this when configuring the Matching Service Adapter (see the configuration options `storeUri:` and `trustStorePath:` in the [YAML file](#yaml-configuration-file)
+    * `[path to truststore directory...]` is the location of the truststore – you specify this when configuring the Matching Service Adapter (see the configuration options `storeUri:` and `trustStorePath:` in the [YAML file](#yaml-configuration-file))
 
-## Versioning
+### Versioning
 
 Typically, GOV.UK Verify releases a new version of the Matching Service
 Adapter every 2 or 3 months. Some releases are essential updates, and we
@@ -38,7 +38,7 @@ may remove support for older versions. To keep updated, contact the
 team](mailto:idasupport+onboarding@digital.cabinet-office.gov.uk) to
 ensure you are on the Matching Service Adapter email distribution list.
 
-# Obtain certificates for your Matching Service Adapter
+## Obtain certificates for your Matching Service Adapter
 
 Your Matching Service Adapter needs a signing certificate and an
 encryption certificate. You must use different certificates for each
@@ -51,9 +51,9 @@ To obtain certificates:
 * [request certificates](#request-certificates) from the IDAP certificate
     authority for the integration and production environments
 
-# Configure the Matching Service Adapter
+## Configure the Matching Service Adapter
 
-## Create a YAML configuration file
+### Create a YAML configuration file
 
 When you [start the Matching Service Adapter](#start-the-matching-service-adapter), you need
 to supply a YAML configuration file.
@@ -181,7 +181,7 @@ appropriate environment.
      isCertificateChainValidationRequired: true
      encryptionDisabled: false
 
-## Adapt the YAML configuration file
+### Adapt the YAML configuration file
 
 Make the following changes to the YAML configuration file. Variations
 are indicated where appropriate for the SAML compliance tool and
@@ -207,8 +207,8 @@ integration and production environments.
     in URI format. You create your own URI, possibly to reflect the name
     of your service, for example: `https://<service name>/MSA`
 
-    > **Note:** It's good practice to use the Matching Service Adapter's URI (i.e.
-    > the URI where the hub will send Matching Requests) as its entity ID,
+    > **Note:** It's good practice to use the Matching Service Adapter's URI (that is,
+    > the URI where the hub will send matching requests) as its entity ID,
     > but this isn't mandatory.
 
 1.  In `metadata:`, use the `uri:` parameter to specify the location
@@ -254,7 +254,7 @@ integration and production environments.
     Adapter’s performance (optional), supply the required metrics: type,
     host, port, prefix and frequency of the reporter.
 
-# Start the Matching Service Adapter
+## Start the Matching Service Adapter
 
 To start using the Matching Service Adapter, run the following command,
 supplying the path to your configuration file:
@@ -267,7 +267,7 @@ To help [build your local matching service](#build-a-local-matching-service), yo
 [example of the JSON request](#example-of-a-json-request-to-your-local-matching-service) that the Matching Service
 Adapter posts to your service.
 
-# Monitoring
+## Monitoring
 
 Health checks run every 60 seconds to ensure that the Matching Service
 Adapter is functioning correctly. They test:
@@ -276,7 +276,7 @@ Adapter is functioning correctly. They test:
 * that the Matching Service Adapter accepts the hub signature
 * that the hub accepts the Matching Service Adapter signature
 
-# Configure HTTPS Proxies
+## Configure HTTPS Proxies
 
 The Matching Service Adapter supports HTTP and HTTPS proxies configured
 by Java properties.
@@ -284,26 +284,18 @@ by Java properties.
 For information on configuring HTTPS proxies, see
 [<http://docs.oracle.com/javase/8/docs/technotes/guides/net/proxies.html>](http://docs.oracle.com/javase/8/docs/technotes/guides/net/proxies.html).
 
-# Secure your Matching Service Adapter
+## Secure your Matching Service Adapter
 
-## Matching Service Adapter TLS certificates
+### Matching Service Adapter TLS certificates
 
 GOV.UK Verify trusts the following root certificate authorities for
 HTTPS connections to your matching service:
 
-  ------------------------------------------------------------------------
-  Root certificate  Common name      X509v3 subject key identifier
-  authority                          
-  ----------------- ---------------- -------------------------------------
-  AddTrust External AddTrust         AD:BD:98:7A:34:B4:26:F7:FA:C4:26:54:E
-  CA Root           External CA Root F:03:BD:E0:24:CB:54:1A
-
-  GeoTrust Global   GeoTrust Global  C0:7A:98:68:8D:89:FB:AB:05:64:0C:11:7
-  CA                CA               D:AA:7D:65:B8:CA:CC:4E
-
-  QuoVadis Root CA  QuoVadis Root CA 1A:84:62:BC:48:4C:33:25:04:D4:EE:D0:F
-  2                 2                6:03:C4:19:46:D1:94:6B
-  ------------------------------------------------------------------------
+|Root certificate authority |Common name  |X509v3 subject key identifier  |
+|:---|:---|:---|
+|AddTrust External CA Root  |AddTrust External CA Root  |AD:BD:98:7A:34:B4:26:F7:FA:C4:26:54:EF:03:BD:E0:24:CB:54:1A |
+|GeoTrust Global CA  |GeoTrust Global CA |C0:7A:98:68:8D:89:FB:AB:05:64:0C:11:7D:AA:7D:65:B8:CA:CC:4E  |
+|QuoVadis Root CA 2   | QuoVadis Root CA 2  |1A:84:62:BC:48:4C:33:25:04:D4:EE:D0:F6:03:C4:19:46:D1:94:6B|
 
 If you want to use a root certificate authority for your matching
 service that isn’t in the above table, raise a ticket with us by sending
@@ -315,7 +307,7 @@ When you raise a ticket, indicate the chain of trust with your SSL/TLS
 certificate. You will also need the chain of trust when you configure
 your server.
 
-## Connect your Matching Service Adapter to the internet securely
+### Connect your Matching Service Adapter to the internet securely
 
 Your Matching Service Adapter must only respond to matching requests
 from the GOV.UK Verify hub, otherwise there’s a risk of user data being
@@ -328,20 +320,17 @@ To ensure that only the GOV.UK Verify hub can access the Matching
 Service Adapter, make sure your Matching Service Adapter:
 
 * is only exposed as HTTPS endpoints
-* only uses strong recent versions of TLS (for example TLS 1.2); turn
-    off obsolete and insecure versions (for example SSLv1, SSLv2, and
-    SSLv3)
+* only uses strong recent versions of TLS (for example TLS 1.2); turn off obsolete and insecure versions (for example SSLv1, SSLv2, and SSLv3)
 * supports multiple strong cipher suites
 
-    > **Note:** GOV.UK Verify will remove support for TLS cipher suites if serious
-    > weaknesses become known. Having multiple suites provides
-    > resilience.
+  > **Note:** GOV.UK Verify will remove support for TLS cipher suites if serious
+  > weaknesses become known. Having multiple suites provides
+  > resilience.
 
 * allows requests and health checks only from the IP addresses of hub
     services provided by your engagement lead
 
-    > **Note:** Each Matching Service Adapter should communicate with only 1 hub
-    > service (SAML compliance tool, integration environment, or
-    > production environment).
+  > **Note:** Each Matching Service Adapter should communicate with only 1 hub
+  > service (SAML compliance tool, integration environment, or production environment).
 
 

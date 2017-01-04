@@ -1,4 +1,4 @@
-# Request access to environments
+## Request access to environments
 
 To access the integration and production environments, fill in the
 'Request access to an environment' form. Your GOV.UK Verify engagement
@@ -133,7 +133,7 @@ Fill in the form as indicated below:
 
     Enter an alternative service name, for example *access your personal 
     tax account*. This appears on the *Other ways to...* content in the 
-    hub, which appears when a user can't verify their identity using
+    hub, which appears when a user can't prove their identity using
     GOV.UK Verify. If you don't provide an alternative service name, the
     GOV.UK Verify team sets it to the service display name by default.
 

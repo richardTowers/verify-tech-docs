@@ -1,6 +1,6 @@
-# How a PKI works
+## How a PKI works
 
-## Public keys, private keys, and certificates
+### Public keys, private keys, and certificates
 
 To encrypt and sign data, you need 2 pairs of keys:
 
@@ -23,12 +23,12 @@ contains:
     encryption or signing
 
 Certificates are issued and signed by a certificate authority. The
-certificate authority acts as the trust anchor \<gloss\_trustanchor\> in
+certificate authority acts as the [trust anchor](#glossary-trust-anchor) in
 the PKI. An entity that receives data from a third party can request
 confirmation from the certificate authority that the third party's
 certificate is valid.
 
-## Keys and certificates in the GOV.UK Verify federation
+### Keys and certificates in the GOV.UK Verify federation
 
 The IDAP PKI and GOV.UK Verify federation use the X509 standard for
 digital certificates.
@@ -52,13 +52,12 @@ To obtain a certificate:
 1.  The certificate authority generates your certificate and sends it to
     you.
 
-![](/documentation/pki/pkiIssueCertsGraphic.svg)
+![Diagram with an overview of how to generate certificates. Generate a private key. Generate a public key from the private key. Generate a certificate signing request containing the public key. Send the certificate signing request to the IDAP certificate authority. The certificate authority generates the certificate and sends it to you](/documentation/pki/pkiIssueCertsGraphic.svg)
 
 The certificate authority also issues certificates for the GOV.UK Verify
 hub and identity providers.
 
-Data encryption and signing
----------------------------
+### Data encryption and signing
 
 <a name="encryption-certificates"></a>
 
@@ -69,7 +68,7 @@ The sender extracts the public encryption key from the receiver's
 encryption certificate and uses it to encrypt a message. The receiver
 decrypts the message using their corresponding private encryption key.
 
-![](/documentation/pki/pkiEncryptionGraphic.svg)
+![Diagram with an overview of how data encryption works. The GOV.UK Verify hub extracts the Matching Service Adapter public encryption key from the Matching Service Adapter encryption certificate.  The GOV.UK Verify hub encrypts data and sends it to the Matching Service Adapter. The Matching Service Adapter decrypts the data using the Matching Service Adapter private encryption key](/documentation/pki/pkiEncryptionGraphic.svg)
 
 <a name="signing-certificates"></a>
 
@@ -82,14 +81,14 @@ signature, and then send the signed message. The receivers check the
 digital signature using your public signing key from your signing
 certificate.
 
-![](/documentation/pki/pkiSigningGraphic.svg)
+![Diagram with an overview of how data signing works. The government service signs data using their private signing key. The government service sends the signed data to the GOV.UK Verify hub. The hub checks the signature using the government service public signing key](/documentation/pki/pkiSigningGraphic.svg)
 
-You can use encryption and signing together or alone. For example:
+You can use encryption and signing together or alone.
 
 **Signing alone**
 
-When a user indicates that they would like to verify their identity,
-the government service sends a message to the [hub](#what-does-the-gov-uk-verify-hub-do). The
+When a user indicates that they would like to prove their identity,
+the government service sends a message to the GOV.UK Verify hub. The
 message is unencrypted because it contains no personal user
 information. However, the message is signed because the hub needs
 assurance that the message originated from the government service.

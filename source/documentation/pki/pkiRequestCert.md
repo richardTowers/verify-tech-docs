@@ -1,4 +1,4 @@
-# Request certificates
+## Request certificates
 
 To use an integration or production environment, you need to request 4
 certificates from the IDAP certificate authority:
@@ -36,7 +36,7 @@ certificates from the IDAP certificate authority:
     [submits the certificate signing request](#submit-certificate-signing-requests) file to
     the appropriate certificate authority.
 
-## Name your certificate requesters and approvers
+### Name your certificate requesters and approvers
 
 Before requesting certificates, your service manager must name the
 certificate requesters for your service, and delegate approvers for the
@@ -70,7 +70,7 @@ requester, no certificate will be issued.
 > **Important:** Make sure you notify the IDAP certificate authority when you want to
 > remove or add someone to the list.
 
-## Generate private keys
+### Generate private keys
 
 Run the following command from a Linux (or OSX) command line:
 
@@ -106,7 +106,7 @@ For further advice and guidance, contact the government’s [National
 Technical Authority for Information Assurance
 (CESG)](https://www.cesg.gov.uk/).
 
-## Generate certificate signing requests
+### Generate certificate signing requests
 
 Use a private key to create a certificate signing request. This request
 will contain the corresponding public key.
@@ -169,26 +169,26 @@ the corresponding private key files.
 
     For security reasons, the certificate authority URLs are not publicly available. You can find them in the 'GOV.UK Verify CertificationProcess for (Relying Party) Subscribers' document.
 
-1.  Click *ENROL* to begin the submission.
-1.  Click *Choose file* and select your certificate signing request
+1.  Select **ENROL** to begin the submission.
+1.  Select **Choose file** and select your certificate signing request
     file.
-1.  Click *Submit*. A screen opens, requesting more details. Several
+1.  Select **Submit**. A screen opens, requesting more details. Several
     fields are pre-populated with information taken from the certificate
     signing request file.
-1.  Under *Applicant Details*, enter the details of the approved
+1.  Under **Applicant Details**, enter the details of the approved
     certificate requester.
 1.  Enter the requester or group email address (if you've set one up).
     The certificate authority sends signed certificates and renewal
     notices to this email address.
-1.  Under *Certificate Profile*, select the appropriate certificate
+1.  Under **Certificate Profile**, select the appropriate certificate
     type. This must match the intended use of the certificate, for
     example, if you’re submitting a signing certificate, you must select
-    *SAML Signing*. If you select the wrong certificate type, it won’t
+    **SAML Signing**. If you select the wrong certificate type, it won’t
     be valid for GOV.UK Verify.
-1.  Enter a *Challenge Phrase*, which must be unique and known only to
+1.  Enter a **Challenge Phrase**, which must be unique and known only to
     the requester. This will be used during the renewal process to check
     the authority of the requester.
-1.  Click *Submit*.
+1.  Select **Submit**.
 
 The IDAP PKI registrar runs checks on the certificate request to ensure
 that the information it contains complies with the information

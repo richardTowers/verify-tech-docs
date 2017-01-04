@@ -1,4 +1,4 @@
-# Run end-to-end testing
+## Run end-to-end testing
 
 The integration environment accurately reflects hub behaviour in the
 production environment. You can use the integration environment to test
@@ -25,9 +25,9 @@ gate review.
 This diagram shows the end-to-end testing flow. See below for
 explanations.
 
-![](/documentation/env/envEndToEndTestsGraphic.svg)
+![Image showing, on one side, the test government service consisting of the government service, Matching Service Adapter, local matching service and local matching datastore.  On the other side, the integration environment consisting of the GOV.UK Verify hub and test identity providers. The test identity providers contain test users. Step 1: create test users. Step 2: End-to-end testing where you test authentication success and failure, and match or no-match scenarios. Step 3: Tear down where you delete test users](/documentation/env/envEndToEndTestsGraphic.svg)
 
-## Setup for end-to-end testing
+### Setup for end-to-end testing
 
 The integration environment is not accredited to use real user data, and
 it has no links to real identity providers. Carry out business analysis
@@ -51,7 +51,7 @@ Setup for end-to-end testing involves the following procedures:
 * [view test users](#view-test-users)
 * [delete test users](#delete-test-users)
 
-### Create your authentication
+#### Create your authentication
 
 This procedure describes how to obtain a username and password so you
 can manage test users.
@@ -67,7 +67,7 @@ can manage test users.
 
    We'll use this hash and username to configure your authentication credentials to the user administration API for the test identity provider.
 
-### Create test users
+#### Create test users
 
 This procedure describes how to create test users in bulk and load them
 into the test identity provider. You must add the same test users to
@@ -81,7 +81,7 @@ containing an array of user data. For example: :
 where:
 
 * `username` and `password` are your
-    basic authentication credentials \<CreateAuth\>
+    basic [authentication credentials](#create-your-authentication)
 * `idp-name` is the name of the test identity provider
 
     > **Note:** You can find the name of the test identity provider by accessing
@@ -134,7 +134,7 @@ where:
     > :   4, 10
 
 
-### View test users
+#### View test users
 
 To view existing test users, GET the users resource from the relevant
 test identity provider. For example:
@@ -144,9 +144,9 @@ test identity provider. For example:
 where `idp-name` is the name of the test identity provider.
 
 The test users are returned in JSON format. To view the page you must
-provide your basic authentication credentials \<CreateAuth\>.
+provide your basic [authentication credentials](#create-your-authentication).
 
-### Delete test users
+#### Delete test users
 
 To delete test users from the test identity provider, POST a JSON
 document to the user administration API containing the usernames you
@@ -158,10 +158,10 @@ where:
 
 * `user1` is the name of the test user you want to delete
 * `username` and `password` are your
-    basic authentication credentials \<CreateAuth\>
+    basic [authentication credentials](#create-your-authentication)
 * `idp-name` is the name of the test identity provider
 
-## Run end-to-end tests
+### Run end-to-end tests
 
 As a minimum, test the following end-to-end user scenarios:
 
@@ -175,7 +175,7 @@ As a minimum, test the following end-to-end user scenarios:
   > service, including [cycle 3](#cycle-3-user-asserted-match) and
   > [user account creation](#create-user-accounts), if implemented.
 
-## Tear down
+### Tear down
 
 After each integration test run, we recommend that you
 [delete the test users](#delete-test-users). Set up each integration test run

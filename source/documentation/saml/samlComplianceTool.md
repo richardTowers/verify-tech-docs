@@ -1,5 +1,5 @@
-Run SAML compliance tests
-=========================
+## Run SAML compliance tests
+
 
 The purpose of SAML compliance tests is to ensure that the service
 you're building is compliant with the [SAML
@@ -21,7 +21,7 @@ ensures that any changes maintain backwards compatibility.
 
 Prerequisites:
 
-*   [build your local matching service](#build-your-service) – you can use the
+*   [build your local matching service](#build-a-local-matching-service) – you can use the
     [example of the JSON request](#json-request) that the Matching
     Service Adapter posts to your service and the [JSON schema](#json-schema) for a matching request
 *   [install](#install-the-matching-service-adapter) and [configure](#configure-the-matching-service-adapter) your
@@ -35,8 +35,8 @@ Use the SAML compliance test to:
 After SAML compliance tests, you can run
 [end-to-end testing](#run-end-to-end-testing) in the integration environment.
 
-Test your service with the SAML compliance tool
------------------------------------------------
+### Test your service with the SAML compliance tool
+
 
 To use the compliance tool, you need configuration data (see step 4).
 Generate a new set of configuration data for every test run.
@@ -45,18 +45,18 @@ Generate a new set of configuration data for every test run.
     3](http://alphagov.github.io/identity-assurance-documentation/stage3/Stage3.html)
     gate review, your GOV.UK Verify engagement lead will give you access
     to the compliance tool.
-2.  Send the IP addresses of your hosts to the GOV.UK Verify support
+1.  Send the IP addresses of your hosts to the GOV.UK Verify support
     team: <idasupport+onboarding@digital.cabinet-office.gov.uk>. We will
     add a firewall rule allowing access to the compliance tool.
 
-<a name="generate-self-signed-certificates"></a>
+    <a name="generate-self-signed-certificates"></a>
 
 
-3.  Generate self-signed certificates for use with the compliance tool
+1.  Generate self-signed certificates for use with the compliance tool
     only. You can use OpenSSL to generate self-signed certificates using
     the [guidelines provided by the Heroku Dev
     Center](https://devcenter.heroku.com/articles/ssl-certificate-self#prerequisites).
-4.  POST the following JSON (via curl, or similar) to the
+1.  POST the following JSON (via curl, or similar) to the
     `URI compliance-tool.RPPostUri` provided by your GOV.UK Verify
     engagement lead:
     
@@ -88,24 +88,24 @@ Generate a new set of configuration data for every test run.
         ```
      * `userAccountCreationAttributes`: provide this only if you want to test [new user account creation](#create-user-accounts-message-flow) – select from the [full list of attributes](#list-attributes)
 
-5.  You receive a response similar to the following:
+1.  You receive a response similar to the following:
 
         Status 200 Created
 
-6.  Consume the GOV.UK Verify hub's metadata from the URL
+1.  Consume the GOV.UK Verify hub's metadata from the URL
     `compliance-tool.MetadataUri` provided by your GOV.UK Verify
     engagement lead. This metadata contains the compliance tool single
     sign-on (SSO) URI.
-7.  Generate an authentication request and POST it to the compliance
+1.  Generate an authentication request and POST it to the compliance
     tool's SSO URI. Follow the redirect in the response to retrieve the
     result.
 
     > **Note:** You may want to use an off-the-shelf tool to generate an
     > authentication request.
 
-8.  If the result contains `PASSED`, access the URI provided in
+1.  If the result contains `PASSED`, access the URI provided in
     `responseGeneratorLocation`. A list of test scenarios is displayed.
-9.  Access the `executeUri` for each test scenario you want to execute.
+1.  Access the `executeUri` for each test scenario you want to execute.
     The following test scenarios are provided:
     * Basic successful match
     * Basic no match
@@ -114,10 +114,10 @@ Generate a new set of configuration data for every test run.
     * Requester error (this is when the request is invalid)
     * Account creation
 
-   The above scenarios are the possible responses for step 8 in the [SAML message flow](#how-saml-works).
+   The above scenarios are the possible responses for step 8 in the [SAML message flow](#how-saml-works-with-gov-uk-verify).
 
-Test your matching service with the SAML compliance tool
---------------------------------------------------------
+### Test your matching service with the SAML compliance tool
+
 
 1.  To set up the SAML compliance tool for matching service tests, POST
     the following JSON (via curl or similar) to the URL
@@ -135,12 +135,12 @@ Test your matching service with the SAML compliance tool
        }
     ```
 
-2.  You receive a response similar to the following:
+1.  You receive a response similar to the following:
 
         Status 201 Created
         Location: .../ms-test-run/8fd7782f-efac-48b2-8171-3e4da9553d19
 
-3.  POST your test matching dataset (see example below) to the
+1.  POST your test [matching dataset](#glossary-matching-dataset) (see example below) to the
     `Location` field in the above response
     (`.../ms-test-run/8fd7782f-efac-48b2-8171-3e4da9553d19` in the above
     example).
@@ -221,16 +221,15 @@ Test your matching service with the SAML compliance tool
     * the `cycle3Dataset` field is only present for a cycle 3 matching attempt
     * the `uprn` (Unique Property Reference Number) is a unique reference for each property in Great Britain, ensuring accuracy of address data. This is an optional attribute that can contain up to 12 characters and should not have any leading zeros
 
-4.  When the SAML compliance tool receives your test matching dataset,
+1.  When the SAML compliance tool receives your test matching dataset,
     it will POST an attribute query to your Matching Service Adapter.
-    This corresponds to step 4 in the [SAML message flow](#how-saml-works).
-5.  Your Matching Service Adapter validates the query and sends a POST
+    This corresponds to step 4 in the [SAML message flow](#how-saml-works-with-gov-uk-verify).
+1.  Your Matching Service Adapter validates the query and sends a POST
     with a JSON request containing your test matching dataset to your
     local matching service. This corresponds to step 5 in the
-    [SAML message flow](#how-saml-works).
+    [SAML message flow](#how-saml-works-with-gov-uk-verify).
 
-Example of a JSON request to your local matching service
---------------------------------------------------------
+### Example of a JSON request to your local matching service
 
 Below is a formatted example of a cycle 3 matching request that the
 Matching Service Adapter sends to your local matching service:
@@ -310,4 +309,4 @@ Below is an example of a response from your local matching service:
      }`
 
 This response corresponds to step 6 in the
-[SAML message flow](#how-saml-works).
+[SAML message flow](#how-saml-works-with-gov-uk-verify).

@@ -1,16 +1,15 @@
-Build a local matching service
-==============================
+## Build a local matching service
+
 
 Even if your service doesn’t need to perform matching, you must still
 build a local matching service because it also:
 
-* creates the hashed persistent identifier \<gloss\_hashpid\>
-* creates and signs the final assertion sent to your service - for more information, see [How SAML works](#how-saml-works)
-* acts as the trust anchor \<gloss\_trustanchor\> for your service because the final assertion is created in your service's security
+* creates the [hashed persistent identifier](#glossary-hashed-PID)
+* creates and signs the final assertion sent to your service - for more information, see [How SAML works with GOV.UK Verify](#how-saml-works-with-gov-uk-verify)
+* acts as the [trust anchor](#glossary-trust-anchor) for your service because the final assertion is created in your service's security
     domain
 
-Define your matching strategy
------------------------------
+### Define your matching strategy
 
 A matching strategy defines the most efficient and effective way of
 matching assured identities to your service records. The strategy
@@ -38,7 +37,7 @@ decide to:
     name, possibly transposing them to maximise the chances of finding a
     match
 
-### Matching considerations
+**Matching considerations**
 
 When you define your matching strategy you need to:
 
@@ -72,8 +71,7 @@ When you define your matching strategy you need to:
 > **Note:** We recommend that you discuss your matching strategy with your
 > engagement lead. They can organise technical support if needed.
 
-Respond to JSON matching requests
----------------------------------
+### Respond to JSON matching requests
 
 Your service must respond to JSON matching requests from the matching
 service adapter. The matching service adapter makes these requests to

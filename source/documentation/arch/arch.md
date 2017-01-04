@@ -3,16 +3,25 @@
 
 GOV.UK Verify lets users prove their identity online so they can access
 government services. When a user wants to access a government service, a
-trusted identity provider performs the checks needed to verify the
+trusted identity provider performs the checks needed to prove the
 user’s identity.
 
 <a name="architecture-diagram"></a>
 
 Below is a high-level diagram of the GOV.UK Verify architecture.
 
-![](/documentation/arch/arch_overview.svg)
+![Diagram showing GOV.UK Verify architecture. The hub is at the centre. It is connected to the government service, identity providers, and the Matching Service Adapter. Communication with the hub is via SAML with PKI. The Matching Service Adapter is connected to a local matching service, which is connected to a local matching datastore. Communication between these elements is not via SAML. The text below the image describes all elements in the architectur](/documentation/arch/arch_overview.svg)
 
-The main elements of GOV.UK Verify architecture are listed below.
+For more details, see the diagrams:
+
+* [SAML message flow](#saml-flow-diagram)
+* [matching cycles](#matching-cycles-diagram)
+* [create user accounts](#create-user-accounts-diagram)
+
+
+##Elements in GOV.UK Verify architecture
+
+The main elements in GOV.UK Verify architecture are listed below.
 
 **GOV.UK Verify hub**
 
@@ -26,11 +35,11 @@ This diagram shows integration with the GOV.UK Verify hub (left) and many-many i
 
 The hub is stateless, which means that it doesn't store any part of the message exchange any longer than a session. Also, it ensures privacy as it doesn't hold any identity data.
 
-The hub ensures that the required level of assurance \<gloss\_loa\> is observed.
+The hub ensures that the required [level of assurance](#glossary-level-of-assurance) is observed.
 
 > **Note:**
 > GOV.UK Verify currently supports
-> level of assurance 2 \<gloss\_loa2\> only.
+> [level of assurance 2](#glossary-level-of-assurance-2) only.
 
 
 **Identity provider**
@@ -66,7 +75,7 @@ service.
 The [Matching Service Adapter](#matching-service-adapter) is a software tool provided by
 GOV.UK Verify. It simplifies communication between your local matching
 service and the GOV.UK Verify hub. The Matching Service Adapter
-converts SAML into JSON (JavaScript Object Notation) and vice versa.
+converts Security Assertion Markup Language (SAML) into JavaScript Object Notation (JSON) and vice versa.
 
 
 **Local matching service**
@@ -78,7 +87,7 @@ identifier for UK citizens, locating the record involves matching user
 information (for example name, address, date of birth) against the
 service’s records.
 
-**SAML (Security Assertion Markup Language)**
+**Security Assertion Markup Language (SAML)**
 
 [SAML](#saml) is a data format for exchanging information securely.
 All exchanges between the entities in the GOV.UK Verify federation use

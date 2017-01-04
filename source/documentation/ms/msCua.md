@@ -1,10 +1,6 @@
-Create user accounts
-====================
+## Create user accounts
 
-You can create a new account for the user based on the hashed persistent
-identifier and a subset of attributes from the matching dataset. It's
-optional to set up your matching service to support the creation of new
-accounts.
+You can create a new account for the user based on the [hashed persistent identifier](#glossary-hashed-PID) and a subset of attributes from the [matching dataset](#glossary-matching-dataset). It's optional to set up your matching service to support the creation of new accounts.
 
 > **Important:** Before creating a user account you must request explicit user consent.
 
@@ -62,15 +58,20 @@ accounts.
 
     > **Note:** You cannot use historical data to create user accounts.
 
-Create user accounts: message flow
-----------------------------------
+### Create user accounts: message flow
 
 <a name="create-user-accounts-diagram"></a>
 
 This diagram shows the message flow for creating user accounts. The
 numbers identify each stage in the flow. See below for explanations.
 
-![image](/documentation/ms/accountcreationGraphic.svg)
+![Diagram showing user account creation. The Matching Service Adapter converts between SAML and JSON. The Matching Service Adapter contains a fully qualified URL to which the hub makes unknown user attribute query requests. The text below the image describes the steps](/documentation/ms/accountcreationGraphic.svg)
+
+For more details, see the diagrams:
+
+* [GOV.UK Verify architecture](#architecture-diagram)
+* [SAML message flow](#saml-flow-diagram)
+* [matching cycles](#matching-cycles-diagram)
 
 > **Note:** In this example, all 3 [matching cycles](#matching-cycles) failed to
 > find a match for the user in the government service records. See the
@@ -82,19 +83,18 @@ numbers identify each stage in the flow. See below for explanations.
     GOV.UK Verify hub.
 1.  The GOV.UK Verify hub:
       * checks that your matching service supports the creation of new user accounts
-      * identifies the attributes you previously specified as necessary to
-      * create a new user account
+      * identifies the attributes you previously specified as necessary to create a new user account
 
-4.  If your service supports the creation of new user accounts, the hub
+1.  If your service supports the creation of new user accounts, the hub
     sends an unknown user attribute query to the Matching Service
     Adapter. It contains the:
-     * hashed persistent identifier
-     * matching dataset
+     * [hashed persistent identifier](#glossary-hashed-PID)
+     * [matching dataset](#glossary-matching-dataset) 
      * list of attributes to extract from the matching dataset
 
-5.  The Matching Service Adapter extracts the required attributes from
+1.  The Matching Service Adapter extracts the required attributes from
     the matching dataset (if available).
-6.  The Matching Service Adapter sends the extracted attributes and the
+1.  The Matching Service Adapter sends the extracted attributes and the
     hashed persistent identifier to your service via the GOV.UK Verify
     hub.
 
@@ -106,11 +106,11 @@ numbers identify each stage in the flow. See below for explanations.
     
     > For more information see the [Identity Assurance Principles](https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/361496/PCAG_IDA_Principles_3.1__4_.pdf).
 
-7.  Optionally, the government service creates a correlation between the
-    matching dataset and hashed persistent identifier in its matching
+1.  Optionally, the government service creates a correlation between the
+    matching dataset and the hashed persistent identifier in its matching
     datastore. This will be used for matching cycle 0 when the same user
     returns.
-8.  Optionally, the government service creates a new account based on
+1.  Optionally, the government service creates a new account based on
     the attributes extracted from the matching dataset.
 
     > **Important:** If you create a new account you must gain consent from the user first.

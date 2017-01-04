@@ -1,4 +1,4 @@
-# Steps to integrate GOV.UK Verify in your service
+# Steps to integrate GOV.UK Verify into your service
 
 ## Development
 
@@ -20,7 +20,7 @@
         </ol><br>
         Outcome: your service can send SAML authentication requests to, and receive SAML responses from, the GOV.UK Verify hub.<br><br>
 
-        For more information, see <a href="#how-saml-works">How SAML works</a>.
+        For more information, see <a href="#how-saml-works-with-gov-uk-verify">How SAML works with GOV.UK Verify</a>.
       </td>
     </tr>
     <tr>
@@ -60,7 +60,7 @@
          </ol><br>
         Outcome: your service and matching service can consume and produce valid SAML.<br><br>
 
-        For more information, see <a href="#how-saml-works">How SAML works</a>.
+        For more information, see <a href="#how-saml-works-with-gov-uk-verify">How SAML works with GOV.UK Verify</a>.
       </td>
     </tr>
   </tbody>
@@ -87,10 +87,10 @@
       <td align="center"><b>Request access to the integration environment.</b> <br><br>
          To do this:<br><br>
          <ol>
-          <li>Send the GOV.UK Verify operations team the IP address where you’ll host the Matching Service Adapter.</li><br>
-          This allows GOV.UK Verify to put in place firewall rules so the hub can communicate with the Matching Service Adapter.<br><br>
-          <li>Send the GOV.UK Verify operations team the IP addresses of the browsers you’ll use when testing in the integration environment.</li><br>
-          Access to the hub and the test identity providers in the integration environment is restricted by IP address.<br><br>
+          <li>Send the GOV.UK Verify operations team the IP address where you’ll host the Matching Service Adapter.</li>
+          This allows GOV.UK Verify to put in place firewall rules so the hub can communicate with the Matching Service Adapter.<br>
+          <li>Send the GOV.UK Verify operations team the IP addresses of the browsers you’ll use when testing in the integration environment.</li>
+          Access to the hub and the test identity providers in the integration environment is restricted by IP address.<br>
           <li><a href="#request-certificates">Obtain signed certificates</a> for the integration environment from the IDAP test certificate authority.</li>
           <li>Send the GOV.UK Verify operations team your signed certificates for the integration environment.</li>
           <li>Fill in the ‘<a href="#request-access-to-environments">Request access to an environment</a>' form.</li>
@@ -132,8 +132,8 @@
       <td align="center"><b>Request access to the production environment.</b> <br><br>
          To do this:<br><br>
          <ol>
-          <li>Send the GOV.UK Verify operations team the IP address where you’ll host the Matching Service Adapter.</li><br>
-          This allows GOV.UK Verify to put in place firewall rules so the hub can communicate with the Matching Service Adapter.<br><br>
+          <li>Send the GOV.UK Verify operations team the IP address where you’ll host the Matching Service Adapter.</li>
+          This allows GOV.UK Verify to put in place firewall rules so the hub can communicate with the Matching Service Adapter.<br>
           <li><a href="#request-certificates">Obtain signed certificates</a> for the production environment from the IDAP certificate authority.</li>
           <li>Send the GOV.UK Verify operations team your signed certificates for the production environment.</li>
           <li>Fill in the ‘<a href="#request-access-to-environments">Request access to an environment</a>' form.</li>
@@ -151,7 +151,7 @@
          <ol>
           <li><a href="#install-the-matching-service-adapter">Download and install the Matching Service Adapter.</a></li>
           <li><a href="#configure-the-matching-service-adapter">Configure the Matching Service Adapter for the production environment.</a> </li>  
-          <li>Connect your service to the production environment by accessing the federation metadata.</li>  
+          <li>Connect your service to the production environment by <a href="#access-the-saml-metadata">accessing the federation metadata.</a>.</li>  
         </ol><br>
         Outcome: your service is ready to go live.<br><br>
 
@@ -174,7 +174,7 @@
     <tr>
       <td>1</td>
       <td align="center"><b>Rotate your keys.</b> <br><br>
-        When the certificates containing your public keys are due to expire, <a href="#rotate-your-keys">run the key rotation process</a>  to replace your keys and certificates.<br><br>
+        When the certificates containing your public keys are due to expire, <a href="#rotate-your-keys">replace your keys and certificates</a>.<br><br>
         Outcome: the encryption and signing certificates for your service and Matching Service Adapter are up to date.<br><br>
 
         For more information, see <a href="#how-a-pki-works">How a PKI works</a>.

@@ -12,22 +12,22 @@ domain. A matching service is composed of the
 
 <a name="matching-service-diagram"></a>
 
-![image](/documentation/ms/matchingserviceGraphics.svg)
+![Diagram showing that a matching service is composed of a Matching Service Adapter and a local matching service](/documentation/ms/matchingserviceGraphics.svg)
 
 For more details, see the diagrams:
 
 * [GOV.UK Verify architecture](#architecture-diagram)
 * [matching cycles](#matching-cycles-diagram)
-* [user account creation](#create-user-accounts-diagram)
+* [create user accounts](#create-user-accounts-diagram)
 
 
-## Why does GOV.UK Verify use a matching service?
+**Why does GOV.UK Verify use a matching service?**
 
 UK citizens do not have a unique identifier. Government services need to
 match other information about the user, for example address or date of
 birth, against their data sources.
 
-## What do you need to do?
+**What do you need to do?**
 
 As a government service, it's your responsibility to develop and
 [build your local matching service](#build-a-local-matching-service). You need to understand
@@ -45,4 +45,4 @@ you need further help with building a local matching service, contact
 your engagement lead or the [GOV.UK Verify
 team](http://rp-environment-request.ida.digital.cabinet-office.gov.uk/contact_form).
 
-For more information, see [Steps to integrate GOV.UK Verify in your service](#steps-to-integrate-gov-uk-verify-in-your-service).
+For more information, see [Steps to integrate GOV.UK Verify into your service](#steps-to-integrate-gov-uk-verify-into-your-service).
