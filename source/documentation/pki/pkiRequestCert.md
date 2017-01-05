@@ -8,33 +8,20 @@ certificates from the IDAP certificate authority:
 
 > **Notes:**
 >
-> * Only certificates approved by the IDAP certificate authority can
->   be used with GOV.UK Verify.
-> * The procedure to request certificates for your integration and
->   production environments are the same, except for the
->   [URL to use for enrolment](#submit-certificate-signing-requests).
+> * Only certificates approved by the IDAP certificate authority can be used with GOV.UK Verify.
+> * The procedure to request certificates for your integration and production environments are the same, except for the [URL to use for enrolment](#submit-certificate-signing-requests).
 > * You must make a separate request for each certificate.
 
 **To request certificates:**
 
-1.  Your service manager sends the
-    [contact details of your certificate requesters](#name-your-certificate-requesters-and-approvers)
-    to the certificate authority.
-1.  Your service manager sends the
-    [contact details of your approvers](#name-your-certificate-requesters-and-approvers)for
-    the certificate requesters, to the certificate authority.
+1. Your service manager sends the [contact details of your certificate requesters](#name-your-certificate-requesters-and-approvers) to the certificate authority.
+1. Your service manager sends the [contact details of your approvers](#name-your-certificate-requesters-and-approvers) for the certificate requesters, to the certificate authority.
 
     > **Important:** Certificates will not be approved unless your service manager has completed the above steps.
 
-1.  The technical team
-    [generates a private key](#generate-private-keys) in the form of a
-    file.
-1.  From the private key, the technical team
-    [generates the certificate signing request](#generate-certificate-signing-requests) file
-    containing a corresponding public key.
-1.  The technical team
-    [submits the certificate signing request](#submit-certificate-signing-requests) file to
-    the appropriate certificate authority.
+1. The technical team [generates a private key](#generate-private-keys) in the form of a file.
+1. From the private key, the technical team [generates the certificate signing request](#generate-certificate-signing-requests) file containing a corresponding public key.
+1. The technical team [submits the certificate signing request](#submit-certificate-signing-requests) file to the appropriate certificate authority.
 
 ### Name your certificate requesters and approvers
 
@@ -80,11 +67,8 @@ Run the following command from a Linux (or OSX) command line:
 
 where:
 
-* `2048` ensures that the private key meets the RSA 2048 standard
-    required by the IDAP certificate authority
-* `<file name>` is a meaningful name, for example
-    `MyserviceDevSamlSigning1.key` or
-    `MyserviceUatMsaSamlEncryption3.key`
+* `2048` ensures that the private key meets the RSA 2048 standard required by the IDAP certificate authority
+* `<file name>` is a meaningful name, for example `MyserviceDevSamlSigning1.key` or `MyserviceUatMsaSamlEncryption3.key`
 
 We advise you to establish a naming convention for all your PKI files.
 Typically, this includes the name of your service or the Matching
@@ -120,9 +104,7 @@ Run the following command from a Linux (or OSX) command line:
 where:
 
 * `<file name>.key` is the name of the private key file you generated
-* `<file name>.csr` is a meaningful name, for example
-    `MyserviceDevSamlSigning3.csr` or
-    `MyserviceUatMsaSamlEncryption3.csr`
+* `<file name>.csr` is a meaningful name, for example `MyserviceDevSamlSigning3.csr` or `MyserviceUatMsaSamlEncryption3.csr`
 
 We advise you to establish a naming convention for all your PKI files.
 The private key and certificate signing request files can have the same
@@ -130,23 +112,18 @@ filename as they have different extensions (.key and .csr).
 
 Some prompts appear in the terminal. Enter the following information:
 
-* **Country Name**: 2-letter code for your country, for example, GB for
-    Great Britain
+* **Country Name**: 2-letter code for your country, for example, GB for Great Britain
 * **State**: county or city
 * **Locality**: city or town
-* **Organisation Name**: this must match your contractual or programme
-    status
-* **Organisation Unit**: your unit within the organisation, for example,
-    the name of your government service
-* **Common Name**: one of the following, depending on the type of
-    certificate.
+* **Organisation Name**: this must match your contractual or programme status
+* **Organisation Unit**: your unit within the organisation, for example, the name of your government service
+* **Common Name**: one of the following, depending on the type of certificate.
   * SAML [encryption](#encryption-certificates) certificate: `<servicename> SAML Encryption <version>`
   * SAML [signing](#signing-certificates) certificate: `<servicename> SAML Signing <version>`
 
     > **Note:** **Common Name** must not contain underscores.
 
-* **Email Address**: the requester or group email address (if you've set
-    one up)
+* **Email Address**: the requester or group email address (if you've set one up)
 * **Extra attributes** (optional):
   * **A challenge password**: if you provide this, the certificate authority may request it when you submit the certificate signing request
   * **An optional company name**
@@ -165,32 +142,20 @@ the corresponding private key files.
 >  * [send the requester's details](#name-your-certificate-requesters-and-approvers) to the IDAP certificate authority
 >  * request the **GOV.UK Verify Certification Process for (Relying Party) Subscribers** document containing the certificate authority URLs from <idappki@digital.cabinet-office.gov.uk>
 
-1.  Open the URL for the required certificate authority:
+1. Open the URL for the required certificate authority:
     * the IDAP test certificate authority issues certificates for non-production environments such as the integration environment; test certificates are valid for 2 years
     * the IDAP certificate authority issues certificates for production environments; production certificates are valid for 6 months
 
     For security reasons, the certificate authority URLs are not publicly available. You can find them in the 'GOV.UK Verify CertificationProcess for (Relying Party) Subscribers' document.
 
-1.  Select **ENROL** to begin the submission.
-1.  Select **Choose file** and select your certificate signing request
-    file.
-1.  Select **Submit**. A screen opens, requesting more details. Several
-    fields are pre-populated with information taken from the certificate
-    signing request file.
-1.  Under **Applicant Details**, enter the details of the approved
-    certificate requester.
-1.  Enter the requester or group email address (if you've set one up).
-    The certificate authority sends signed certificates and renewal
-    notices to this email address.
-1.  Under **Certificate Profile**, select the appropriate certificate
-    type. This must match the intended use of the certificate, for
-    example, if you’re submitting a signing certificate, you must select
-    **SAML Signing**. If you select the wrong certificate type, it won’t
-    be valid for GOV.UK Verify.
-1.  Enter a **Challenge Phrase**, which must be unique and known only to
-    the requester. This will be used during the renewal process to check
-    the authority of the requester.
-1.  Select **Submit**.
+1. Select **ENROL** to begin the submission.
+1. Select **Choose file** and select your certificate signing request file.
+1. Select **Submit**. A screen opens, requesting more details. Several fields are pre-populated with information taken from the certificate signing request file.
+1. Under **Applicant Details**, enter the details of the approved certificate requester.
+1. Enter the requester or group email address (if you've set one up). The certificate authority sends signed certificates and renewal notices to this email address.
+1. Under **Certificate Profile**, select the appropriate certificate type. This must match the intended use of the certificate, for example, if you’re submitting a signing certificate, you must select **SAML Signing**. If you select the wrong certificate type, it won’t be valid for GOV.UK Verify.
+1. Enter a **Challenge Phrase**, which must be unique and known only to the requester. This will be used during the renewal process to check the authority of the requester.
+1. Select **Submit**.
 
 The IDAP PKI registrar runs checks on the certificate request to ensure
 that the information it contains complies with the information
@@ -202,5 +167,4 @@ the requester provided.
 
 You will receive your certificate within 5 working days.
 
-The email address to contact the registrar is
-<idappki@digital.cabinet-office.gov.uk>.
+The email address to contact the registrar is <idappki@digital.cabinet-office.gov.uk>.

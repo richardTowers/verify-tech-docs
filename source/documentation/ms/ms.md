@@ -35,8 +35,7 @@ As a government service, it's your responsibility to develop and
 
 To help build your local matching service, you can use the:
 
-* [example of a JSON request](#json-request) that the Matching
-    Service Adapter posts to your service
+* [example of a JSON request](#json-request) that the Matching Service Adapter posts to your service
 * [JSON schema](#json-schema) for a matching request
 
 Some government services don't have experience of matching verified

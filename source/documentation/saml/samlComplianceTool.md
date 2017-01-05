@@ -6,8 +6,8 @@ you're building is compliant with the [SAML
 profile](https://www.gov.uk/government/publications/identity-assurance-hub-service-saml-20-profile).
 This guarantees that:
 
-*   your service will work with GOV.UK Verify
-*   user data will remain secure within the GOV.UK Verify federation
+* your service will work with GOV.UK Verify
+* user data will remain secure within the GOV.UK Verify federation
 
 Your service and matching service need to consume and produce SAML
 messages in a variety of different scenarios. The SAML compliance tool
@@ -21,16 +21,13 @@ ensures that any changes maintain backwards compatibility.
 
 Prerequisites:
 
-*   [build your local matching service](#build-a-local-matching-service) – you can use the
-    [example of the JSON request](#json-request) that the Matching
-    Service Adapter posts to your service and the [JSON schema](#json-schema) for a matching request
-*   [install](#install-the-matching-service-adapter) and [configure](#configure-the-matching-service-adapter) your
-    Matching Service Adapter
+* [build your local matching service](#build-a-local-matching-service) – you can use the [example of the JSON request](#json-request) that the Matching Service Adapter posts to your service and the [JSON schema](#json-schema) for a matching request
+* [install](#install-the-matching-service-adapter) and [configure](#configure-the-matching-service-adapter) your Matching Service Adapter
 
 Use the SAML compliance test to:
 
-*   [test your service](#test-your-service-with-the-saml-compliance-tool)
-*   [test your matching service](#test-your-matching-service-with-the-saml-compliance-tool)
+* [test your service](#test-your-service-with-the-saml-compliance-tool)
+* [test your matching service](#test-your-matching-service-with-the-saml-compliance-tool)
 
 After SAML compliance tests, you can run
 [end-to-end testing](#run-end-to-end-testing) in the integration environment.
@@ -41,24 +38,14 @@ After SAML compliance tests, you can run
 To use the compliance tool, you need configuration data (see step 4).
 Generate a new set of configuration data for every test run.
 
-1.  On completion of a successful [Stage
-    3](http://alphagov.github.io/identity-assurance-documentation/stage3/Stage3.html)
-    gate review, your GOV.UK Verify engagement lead will give you access
-    to the compliance tool.
-1.  Send the IP addresses of your hosts to the GOV.UK Verify support
-    team: <idasupport+onboarding@digital.cabinet-office.gov.uk>. We will
-    add a firewall rule allowing access to the compliance tool.
+1. On completion of a successful [Stage 3](http://alphagov.github.io/identity-assurance-documentation/stage3/Stage3.html) gate review, your GOV.UK Verify engagement lead will give you access to the compliance tool.
+1. Send the IP addresses of your hosts to the GOV.UK Verify support team: <idasupport+onboarding@digital.cabinet-office.gov.uk>. We will add a firewall rule allowing access to the compliance tool.
 
     <a name="generate-self-signed-certificates"></a>
 
 
-1.  Generate self-signed certificates for use with the compliance tool
-    only. You can use OpenSSL to generate self-signed certificates using
-    the [guidelines provided by the Heroku Dev
-    Center](https://devcenter.heroku.com/articles/ssl-certificate-self#prerequisites).
-1.  POST the following JSON (via curl, or similar) to the
-    `URI compliance-tool.RPPostUri` provided by your GOV.UK Verify
-    engagement lead:
+1. Generate self-signed certificates for use with the compliance tool only. You can use OpenSSL to generate self-signed certificates using the [guidelines provided by the Heroku Dev Center](https://devcenter.heroku.com/articles/ssl-certificate-self#prerequisites).
+1. POST the following JSON (via curl, or similar) to the `URI compliance-tool.RPPostUri` provided by your GOV.UK Verify engagement lead:
     
     ```
         Content-Type: application/json
@@ -88,7 +75,7 @@ Generate a new set of configuration data for every test run.
         ```
      * `userAccountCreationAttributes`: provide this only if you want to test [new user account creation](#create-user-accounts-message-flow) – select from the [full list of attributes](#list-attributes)
 
-1.  You receive a response similar to the following:
+1. You receive a response similar to the following:
 
         Status 200 Created
 
@@ -119,10 +106,7 @@ Generate a new set of configuration data for every test run.
 ### Test your matching service with the SAML compliance tool
 
 
-1.  To set up the SAML compliance tool for matching service tests, POST
-    the following JSON (via curl or similar) to the URL
-    `<compliance-tool-host>/ms-test-run` provided by your GOV.UK Verify
-    engagement lead:
+1. To set up the SAML compliance tool for matching service tests, POST the following JSON (via curl or similar) to the URL `<compliance-tool-host>/ms-test-run` provided by your GOV.UK Verify engagement lead:
     
     ```
      Content-Type: application/json
@@ -135,15 +119,12 @@ Generate a new set of configuration data for every test run.
        }
     ```
 
-1.  You receive a response similar to the following:
+1. You receive a response similar to the following:
 
         Status 201 Created
         Location: .../ms-test-run/8fd7782f-efac-48b2-8171-3e4da9553d19
 
-1.  POST your test [matching dataset](#glossary-matching-dataset) (see example below) to the
-    `Location` field in the above response
-    (`.../ms-test-run/8fd7782f-efac-48b2-8171-3e4da9553d19` in the above
-    example).
+1. POST your test [matching dataset](#glossary-matching-dataset) (see example below) to the `Location` field in the above response (`.../ms-test-run/8fd7782f-efac-48b2-8171-3e4da9553d19` in the above example).
 
         {
             "levelOfAssurance": "LEVEL_2",
@@ -221,13 +202,8 @@ Generate a new set of configuration data for every test run.
     * the `cycle3Dataset` field is only present for a cycle 3 matching attempt
     * the `uprn` (Unique Property Reference Number) is a unique reference for each property in Great Britain, ensuring accuracy of address data. This is an optional attribute that can contain up to 12 characters and should not have any leading zeros
 
-1.  When the SAML compliance tool receives your test matching dataset,
-    it will POST an attribute query to your Matching Service Adapter.
-    This corresponds to step 4 in the [SAML message flow](#how-saml-works-with-gov-uk-verify).
-1.  Your Matching Service Adapter validates the query and sends a POST
-    with a JSON request containing your test matching dataset to your
-    local matching service. This corresponds to step 5 in the
-    [SAML message flow](#how-saml-works-with-gov-uk-verify).
+1. When the SAML compliance tool receives your test matching dataset, it will POST an attribute query to your Matching Service Adapter. This corresponds to step 4 in the [SAML message flow](#how-saml-works-with-gov-uk-verify).
+1. Your Matching Service Adapter validates the query and sends a POST with a JSON request containing your test matching dataset to your local matching service. This corresponds to step 5 in the [SAML message flow](#how-saml-works-with-gov-uk-verify).
 
 ### Example of a JSON request to your local matching service
 

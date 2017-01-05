@@ -4,20 +4,13 @@
 sure you have the latest version of the JRE (Java Runtime Environment)
 installed.
 
-1.  When you have successfully completed a gate review for [Stage 3:
-    Planning](http://alphagov.github.io/identity-assurance-documentation/stage3/Stage3.html),
-    email
-    [<idasupport+onboarding@digital.cabinet-office.gov.uk>](mailto:idasupport+onboarding@digital.cabinet-office.gov.uk)
-    to request access to the secure site where you can download the
-    Matching Service Adapter.
-1.  Download the Matching Service Adapter to your host. It contains:
+1. When you have successfully completed a gate review for [Stage 3: Planning](http://alphagov.github.io/identity-assurance-documentation/stage3/Stage3.html), email [<idasupport+onboarding@digital.cabinet-office.gov.uk>](mailto:idasupport+onboarding@digital.cabinet-office.gov.uk) to request access to the secure site where you can download the Matching Service Adapter.
+1. Download the Matching Service Adapter to your host. It contains:
     * a jar (java archive) file
     * a [truststore](#glossary-truststore) file and a metadata truststore file for non-production environments (the SAML compliance tool and the integration environment)
     * a truststore file and a metadata truststore file for the production environment
 
-1.  To extract the files and move the truststore files to the
-    environment where you want to use the Matching Service Adapter, run
-    the following commands:
+1. To extract the files and move the truststore files to the environment where you want to use the Matching Service Adapter, run the following commands:
 
         tar -xf [filename].tar.gz
         unzip ida-msa-[xxx].zip
@@ -46,10 +39,8 @@ environment.
 
 To obtain certificates:
 
-* [generate self-signed certificates](#generate-self-signed-certificates) for use
-    with the compliance tool
-* [request certificates](#request-certificates) from the IDAP certificate
-    authority for the integration and production environments
+* [generate self-signed certificates](#generate-self-signed-certificates) for use with the compliance tool
+* [request certificates](#request-certificates) from the IDAP certificate authority for the integration and production environments
 
 ## Configure the Matching Service Adapter
 
@@ -187,7 +178,7 @@ Make the following changes to the YAML configuration file. Variations
 are indicated where appropriate for the SAML compliance tool and
 integration and production environments.
 
-1.  Enter port numbers for the server application and admin ports.
+1. Enter port numbers for the server application and admin ports.
 
     > **Note:** If the Matching Service Adapter will be handling SSL termination
     > (typically this will be handled by a proxy/load balancer like
@@ -197,38 +188,28 @@ integration and production environments.
     > information, see the guidance in the [DropWizard configuration
     > manual](http://dropwizard.github.io/dropwizard/0.8.2/docs/manual/configuration.html#https).
 
-1.  Enter the URIs for your matching service and Matching Service
-    Adapter in `matchingServiceUri:` and
-    `matchingServiceAdapterLocation:` respectively.
-1.  If you're creating new user accounts when a match is not found (see
-    ms\_cua), enter the user account creation URI in
-    `unknownUserCreationServiceUri:`
-1.  In `entity id`, enter the entityID for the Matching Service Adapter
-    in URI format. You create your own URI, possibly to reflect the name
-    of your service, for example: `https://<service name>/MSA`
+1. Enter the URIs for your matching service and Matching Service Adapter in `matchingServiceUri:` and `matchingServiceAdapterLocation:` respectively.
+1. If you're [creating new user accounts when a match is not found](#create-user-accounts), enter the user account creation URI in `unknownUserCreationServiceUri:`
+1. In `entity id`, enter the entityID for the Matching Service Adapter in URI format. You create your own URI, possibly to reflect the name of your service, for example: `https://<service name>/MSA`
 
     > **Note:** It's good practice to use the Matching Service Adapter's URI (that is,
     > the URI where the hub will send matching requests) as its entity ID,
     > but this isn't mandatory.
 
-1.  In `metadata:`, use the `uri:` parameter to specify the location
-    where the Matching Service Adapter accesses the SAML metadata:
+1. In `metadata:`, use the `uri:` parameter to specify the location where the Matching Service Adapter accesses the SAML metadata:
     * for the SAML compliance tool, your GOV.UK Verify engagement lead will give you the URL
     * for the integration environment, enter: `https://www.integration.signin.service.gov.uk/SAML2/metadata/federation`
     * for the production environment, enter: `https://www.signin.service.gov.uk/SAML2/metadata/federation`
 
-1.  In `metadata:`, use the `trustStorePath:` parameter to specify the
-    path to your metadata truststore for the appropriate environment:
+1. In `metadata:`, use the `trustStorePath:` parameter to specify the path to your metadata truststore for the appropriate environment:
     * for the SAML compliance tool and the integration environment, use `test_metadata_truststore.ts`
     * for the production environment, use `prod_metadata_truststore.ts`
 
-1.  In `clientTrustStoreConfiguration:`, use the `storeUri` parameter to
-    specify the path of your general truststore for the appropriate
-    environment:
+1. In `clientTrustStoreConfiguration:`, use the `storeUri` parameter to specify the path of your general truststore for the appropriate environment:
     * for the SAML compliance tool and the integration environment, use `test_ida_truststore.ts`
     * for the production environment, use `prod_ida_truststore.ts`
 
-1.  Enter the paths of the SAML signing and encryption private keys for
+1. Enter the paths of the SAML signing and encryption private keys for
     your Matching Service Adapter:
     * `privateSigningKeyConfiguration:` – PKCS\#8 DER formatted
     * `privateEncryptionKeyConfiguration:` – PKCS\#8 DER formatted
@@ -243,10 +224,7 @@ integration and production environments.
 
     You will use different keys and certificates for the integration and production environments. See [Request certificates](#request-certificates).
 
-1.  Enter the paths and names of the SAML signing and encryption
-    certificates for your Matching Service Adapter. The names are used
-    to identify the certificates in the metadata so should be meaningful
-    and unique: `signing_1` and `encryption_1` would be acceptable.
+1. Enter the paths and names of the SAML signing and encryption certificates for your Matching Service Adapter. The names are used to identify the certificates in the metadata so should be meaningful and unique: `signing_1` and `encryption_1` would be acceptable.
     * `publicSigningKeyConfiguration:` – public signing certificate, PEM formatted
     * `publicEncryptionKeyConfiguration:` – public encryption certificate, PEM formatted
 
@@ -291,11 +269,11 @@ For information on configuring HTTPS proxies, see
 GOV.UK Verify trusts the following root certificate authorities for
 HTTPS connections to your matching service:
 
-|Root certificate authority |Common name  |X509v3 subject key identifier  |
+|Root certificate authority |Common name |X509v3 subject key identifier |
 |:---|:---|:---|
-|AddTrust External CA Root  |AddTrust External CA Root  |AD:BD:98:7A:34:B4:26:F7:FA:C4:26:54:EF:03:BD:E0:24:CB:54:1A |
-|GeoTrust Global CA  |GeoTrust Global CA |C0:7A:98:68:8D:89:FB:AB:05:64:0C:11:7D:AA:7D:65:B8:CA:CC:4E  |
-|QuoVadis Root CA 2   | QuoVadis Root CA 2  |1A:84:62:BC:48:4C:33:25:04:D4:EE:D0:F6:03:C4:19:46:D1:94:6B|
+|AddTrust External CA Root |AddTrust External CA Root |AD:BD:98:7A:34:B4:26:F7:FA:C4:26:54:EF:03:BD:E0:24:CB:54:1A |
+|GeoTrust Global CA |GeoTrust Global CA |C0:7A:98:68:8D:89:FB:AB:05:64:0C:11:7D:AA:7D:65:B8:CA:CC:4E |
+|QuoVadis Root CA 2 | QuoVadis Root CA 2 |1A:84:62:BC:48:4C:33:25:04:D4:EE:D0:F6:03:C4:19:46:D1:94:6B|
 
 If you want to use a root certificate authority for your matching
 service that isn’t in the above table, raise a ticket with us by sending
@@ -327,8 +305,7 @@ Service Adapter, make sure your Matching Service Adapter:
   > weaknesses become known. Having multiple suites provides
   > resilience.
 
-* allows requests and health checks only from the IP addresses of hub
-    services provided by your engagement lead
+* allows requests and health checks only from the IP addresses of hub services provided by your engagement lead
 
   > **Note:** Each Matching Service Adapter should communicate with only 1 hub
   > service (SAML compliance tool, integration environment, or production environment).

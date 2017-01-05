@@ -10,7 +10,7 @@ user’s identity.
 
 Below is a high-level diagram of the GOV.UK Verify architecture.
 
-![Diagram showing GOV.UK Verify architecture. The hub is at the centre. It is connected to the government service, identity providers, and the Matching Service Adapter. Communication with the hub is via SAML with PKI. The Matching Service Adapter is connected to a local matching service, which is connected to a local matching datastore. Communication between these elements is not via SAML. The text below the image describes all elements in the architectur](/documentation/arch/arch_overview.svg)
+![Diagram showing GOV.UK Verify architecture. The hub is at the centre. It is connected to the government service, identity providers, and the Matching Service Adapter. Communication with the hub is via SAML with PKI. The Matching Service Adapter is connected to a local matching service, which is connected to a local matching datastore. Communication between these elements is not via SAML. The text below the image describes all elements in the architecture](/documentation/arch/arch_overview.svg)
 
 For more details, see the diagrams:
 
@@ -58,8 +58,8 @@ Cabinet Office and the [National Cyber Security Centre
 
 A transactional government service that needs proof of a person’s identity to complete a transaction, for example:
 
-  * view or share your driving licence information (Driver and Vehicle Licensing Agency)
-  * claim a redundancy payment (Insolvency Service)
+* view or share your driving licence information (Driver and Vehicle Licensing Agency)
+* claim a redundancy payment (Insolvency Service)
 
 
 **Matching Service**

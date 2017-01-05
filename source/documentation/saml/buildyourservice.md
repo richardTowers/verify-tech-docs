@@ -3,7 +3,6 @@
 
 ### Use extended validation certificates
 
-
 You must use extended validation (EV) certificates for all public
 interactions with your service. When you use EV certificates, the user's
 web browser clearly indicates the name of the organisation they are
@@ -16,7 +15,6 @@ data](https://www.ncsc.gov.uk/guidance/tls-external-facing-services)
 from the National Cyber Security Centre (NCSC).
 
 ### SAML integration
-
 
 #### Choose a product and framework
 
@@ -69,17 +67,13 @@ Your service must be able to consume SAML responses that are issued by
 the GOV.UK Verify hub. You must use the Matching Service Adapter
 metadata to do this.
 
-1.  Validate the signature on the response. This checks that the
-    response is correctly signed by the GOV.UK Verify hub (entityID:
-    `https://signin.service.gov.uk`).
+1. Validate the signature on the response. This checks that the response is correctly signed by the GOV.UK Verify hub (entityID: `https://signin.service.gov.uk`).
 
-    You can use the hub X509 signing certificates contained in the
-    federation metadata to validate this signature.
+   You can use the hub X509 signing certificates contained in the
+   federation metadata to validate this signature.
 
-1.  Decrypt the assertion.
-1.  Validate the signature on the assertion contained in the response.
-    This assertion is generated and signed by your Matching Service
-    Adapter.
+1. Decrypt the assertion.
+1. Validate the signature on the assertion contained in the response. This assertion is generated and signed by your Matching Service Adapter.
 
     You can use the X509 signing certificate contained in the Matching
     Service Adapter metadata to validate this signature.

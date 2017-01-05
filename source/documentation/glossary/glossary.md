@@ -82,7 +82,7 @@ Contains the receiver’s public key that the sender uses to encrypt a message. 
 
 **entityID**
 
-A unique identifier for each entity within the GOV.UK Verify federation. Government services, Matching Service Adapters, the GOV.UK Verify [hub](#glossary-hub), and identity providers all have their own entityIDs. The entityID is used within messages and metadata to refer to an entity. The entityID is formatted as a URL  but is not necessarily resolvable. For example, the entityID of the GOV.UK Verify hub is: https://signin.service.gov.uk.
+A unique identifier for each entity within the GOV.UK Verify federation. Government services, Matching Service Adapters, the GOV.UK Verify [hub](#glossary-hub), and identity providers all have their own entityIDs. The entityID is used within messages and metadata to refer to an entity. The entityID is formatted as a URL but is not necessarily resolvable. For example, the entityID of the GOV.UK Verify hub is: https://signin.service.gov.uk.
 
 <a name="glossary-data-matching"></a>
 
@@ -110,7 +110,7 @@ Documents that have been developed collaboratively with HMG departments, private
 
 **Good Practice Guide 43 (GPG 43)**
 
-Also known as Requirements for Secure Delivery of Online Public Services (RSDOPS).  This document sets out an approach to determining the components needed to securely deliver public services online to individuals and businesses.
+Also known as Requirements for Secure Delivery of Online Public Services (RSDOPS). This document sets out an approach to determining the components needed to securely deliver public services online to individuals and businesses.
 
 
 <a name="glossary-government-service"></a>
@@ -121,13 +121,13 @@ A service provided by a government department such as Check or update your compa
 
 <a name="glossary-hashed-PID"></a>
 
-**hashed persistent identifier**  
+**hashed persistent identifier**
 
 A unique identifier which refers to a combination of:
 
 * a user
 * the identity provider that verified the user’s identity
-* the government service that the user is trying to access.  
+* the government service that the user is trying to access.
 
 The [Matching Service Adapter](#glossary-MSA) generates the hashed persistent identifier from the [persistent identifier](#glossary-persistent-identifier). This ensures that identifiers for user identity are unique to specific services and can’t be used across multiple services.
 
@@ -231,7 +231,7 @@ Asks the user for some additional information, for example, driving licence numb
 
 <a name="glossary-matching-dataset"></a>
 
-**matching dataset**  
+**matching dataset**
 
 A dataset containing a verified user’s:
 
@@ -252,7 +252,7 @@ It’s optional for users to provide gender. Where provided, gender is not verif
 
 **matching service**
 
-The function of finding a local identifier for the individual (for example, an id for the user’s account) based on a match between a user’s verified identity and a record in a government service’s data sources. The matching service is composed of the Matching Service Adapter and the [local matching-service](#glossary-local-matching-service).  In the SAML profile used by GOV.UK Verify, the matching service is referred to as the service provider matching service (SPMS). 
+The function of finding a local identifier for the individual (for example, an id for the user’s account) based on a match between a user’s verified identity and a record in a government service’s data sources. The matching service is composed of the Matching Service Adapter and the [local matching-service](#glossary-local-matching-service). In the SAML profile used by GOV.UK Verify, the matching service is referred to as the service provider matching service (SPMS). 
 
 <a name="glossary-MSA"></a>
 
@@ -293,7 +293,7 @@ The initial version of a government service that is available to a small number 
 
 **private key**
 
-A long string of data used in  [cryptography](#glossary-cryptography). Generating a certificate signing request creates a corresponding [public key](#glossary-public-key).
+A long string of data used in [cryptography](#glossary-cryptography). Generating a certificate signing request creates a corresponding [public key](#glossary-public-key).
 
 **public beta**
 
@@ -325,7 +325,7 @@ An entity in a system of federated identity that relies on a response from anoth
 
 **SAML (Security Assertion Markup Language)**
 
-An Extensible Markup Language (XML) open standard for the exchange of authentication and authorisation data between parties such as identity providers and government services. [OASIS](<https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=security)  governs the SAML standards. 
+An Extensible Markup Language (XML) open standard for the exchange of authentication and authorisation data between parties such as identity providers and government services. [OASIS](<https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=security) governs the SAML standards. 
 
 <a name="glossary-SAML-profile"></a>
 

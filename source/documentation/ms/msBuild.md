@@ -6,8 +6,7 @@ build a local matching service because it also:
 
 * creates the [hashed persistent identifier](#glossary-hashed-PID)
 * creates and signs the final assertion sent to your service - for more information, see [How SAML works with GOV.UK Verify](#how-saml-works-with-gov-uk-verify)
-* acts as the [trust anchor](#glossary-trust-anchor) for your service because the final assertion is created in your service's security
-    domain
+* acts as the [trust anchor](#glossary-trust-anchor) for your service because the final assertion is created in your service's security domain
 
 ### Define your matching strategy
 
@@ -28,45 +27,26 @@ many reasons:
 Your local matching service must be able to handle these issues. You may
 decide to:
 
-* widen the initial query to make sure that relevant records are not
-    missed, then narrow the query on the results to make sure false
-    positives are not returned; for example, search for last name, date
-    of birth, and postcode, then run further matching on the results and
-    apply a confidence score
-* try synonym matching against combinations of first name and last
-    name, possibly transposing them to maximise the chances of finding a
-    match
+* widen the initial query to make sure that relevant records are not missed, then narrow the query on the results to make sure false positives are not returned; for example, search for last name, date of birth, and postcode, then run further matching on the results and apply a confidence score
+* try synonym matching against combinations of first name and last name, possibly transposing them to maximise the chances of finding a match
 
 **Matching considerations**
 
 When you define your matching strategy you need to:
 
-* prepare for matching with customer data aggregation and data
-    cleansing
-* define the confidence level required for a successful match and how
-    to score the confidence level, for example:
-    * 100% match confidence means that all elements from the matching
-        dataset fully match the local record
-    * 80% match confidence might mean that the first name, last name,
-        and date of birth match, but the address is showing a mismatch
-* define the rules for successful matching, which may include what to
-    do with:
+* prepare for matching with customer data aggregation and data cleansing
+* define the confidence level required for a successful match and how to score the confidence level, for example:
+    * 100% match confidence means that all elements from the matching dataset fully match the local record
+    * 80% match confidence might mean that the first name, last name, and date of birth match, but the address is showing a mismatch
+* define the rules for successful matching, which may include what to do with:
     * synonyms for first names, for example, **William** and **Bill**
-    * transpositions of multiple part names, for example,
-        **Anna-Marie**, **Jane** and **Anna, Marie-Jane**
-    * transpositions errors of day and month in the date of birth, for
-        example, **04/10/78** and **10/04/78**
-* define the level of 'fuzzy matching' that is acceptable when an
-    exact match is not found – this allows a match that, although not
-    100%, is above a service-defined threshold
+    * transpositions of multiple part names, for example, **Anna-Marie**, **Jane** and **Anna, Marie-Jane**
+    * transpositions errors of day and month in the date of birth, for example, **04/10/78** and **10/04/78**
+* define the level of 'fuzzy matching' that is acceptable when an exact match is not found – this allows a match that, although not 100%, is above a service-defined threshold
 * manage the risk of incorrect matching by defining what happens when:
-    * there's no match – you can [create a new account](#create-user-accounts) for
-        the user
-    * there are multiple matches – you can implement
-        [matching cycle 3](#cycle-3-user-asserted-match)
-* analyse your data sources in the light of your matching strategy, so
-    you can test and refine your strategy before launching alpha or beta
-    services
+    * there's no match – you can [create a new account](#create-user-accounts) for the user
+    * there are multiple matches – you can implement [matching cycle 3](#cycle-3-user-asserted-match)
+* analyse your data sources in the light of your matching strategy, so you can test and refine your strategy before launching alpha or beta services
 
 > **Note:** We recommend that you discuss your matching strategy with your
 > engagement lead. They can organise technical support if needed.

@@ -19,8 +19,7 @@ contains:
 
 * a copy of the certificate owner's public key
 * information about the identity of the certificate owner
-* an indication of the purpose of the certificate, for example,
-    encryption or signing
+* an indication of the purpose of the certificate, for example, encryption or signing
 
 Certificates are issued and signed by a certificate authority. The
 certificate authority acts as the [trust anchor](#glossary-trust-anchor) in
@@ -38,19 +37,13 @@ and signs certificates. As a government service using GOV.UK Verify, you
 need to request 4 certificates:
 
 * encryption and signing certificates for your service
-* encryption and signing certificates for your Matching Service
-    Adapter
+* encryption and signing certificates for your Matching Service Adapter
 
 To obtain a certificate:
 
-1.  Generate pair of keys ([private](#generate-private-keys) and
-    [public](#generate-certificate-signing-requests)). You must generate a pair of encryption
-    keys for each encryption certificate request and a pair of signing
-    keys for each signing certificate request.
-1.  [Submit a certificate signing request](#submit-certificate-signing-requests) to the
-    IDAP certificate authority.
-1.  The certificate authority generates your certificate and sends it to
-    you.
+1. Generate pair of keys ([private](#generate-private-keys) and [public](#generate-certificate-signing-requests)). You must generate a pair of encryption keys for each encryption certificate request and a pair of signing keys for each signing certificate request.
+1. [Submit a certificate signing request](#submit-certificate-signing-requests) to the IDAP certificate authority.
+1. The certificate authority generates your certificate and sends it to you.
 
 ![Diagram with an overview of how to generate certificates. Generate a private key. Generate a public key from the private key. Generate a certificate signing request containing the public key. Send the certificate signing request to the IDAP certificate authority. The certificate authority generates the certificate and sends it to you](/documentation/pki/pkiIssueCertsGraphic.svg)
 

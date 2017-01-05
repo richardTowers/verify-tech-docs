@@ -67,14 +67,7 @@
 </table>
 
 
-
-
-
-
-
-
 ## Integration
-
 
 <table>
   <tbody>
@@ -163,7 +156,6 @@
 </table>
 
 ## Maintenance
-
 
 <table>
   <tbody>

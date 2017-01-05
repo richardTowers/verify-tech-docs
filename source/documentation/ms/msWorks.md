@@ -108,44 +108,28 @@ For more details, see the diagrams:
 > identity. For more details of this process, see the
 > [SAML message flow diagram](#saml-flow-diagram).
 
-1.  The identity provider sends the following information to the hub:
+1. The identity provider sends the following information to the hub:
     * the user's identity information, known as the [matching dataset](#glossary-matching-dataset)
     * a unique [persistent identifier](#glossary-persistent-identifier) for the identity, created by the identity provider
 
-1.  The hub forwards the matching dataset and persistent identifier to
-    the Matching Service Adapter.
-1.  The Matching Service Adapter hashes the persistent identifier to
-    make it meaningless to other services.
-1.  The Matching Service Adapter sends the
-    [hashed persistent identifier](#glossary-hashed-PID) and the matching
-    dataset to the local matching service.
-1.  The local matching service runs cycle 0:
+1. The hub forwards the matching dataset and persistent identifier to the Matching Service Adapter.
+1. The Matching Service Adapter hashes the persistent identifier to make it meaningless to other services.
+1. The Matching Service Adapter sends the [hashed persistent identifier](#glossary-hashed-PID) and the matching dataset to the local matching service.
+1. The local matching service runs cycle 0:
 
     The local matching service tries to find a match between the user's hashed persistent identifier and a hashed persistent identifier in the local matching datastore. If cycle 0 finds a match, go to step 9.
 
-1.  If cycle 0 finds no match the local matching service runs
+1. If cycle 0 finds no match the local matching service runs
     cycle 1:
     
     The local matching service tries to find a match between the user's matching dataset and a record in government service data sources. If cycle 1 finds a match, go to step 8.
 
-1.  If cycle 1 finds no match, a `no-match` response is returned to the
-    Matching Service Adapter (7a) and the local matching service runs
-    cycle 3 (7b):
+1. If cycle 1 finds no match, a `no-match` response is returned to the Matching Service Adapter (7a) and the local matching service runs cycle 3 (7b):
 
     The hub asks the user to provide additional information, for example, their driving licence number and sends it to the Matching Service Adapter. If cycle 3 finds no match, the matching service can [create a new account](#create-user-accounts) for the user, provided your matching service supports this feature and your user journey seeks explicit user consent.
 
-1.  If cycle 1 or cycle 3 finds a match, the local matching service
-    saves the hashed persistent identifier in the matching datastore
-    along with the user's record. Future matches with cycle 0 will use
-    this data when the same user returns, having been verified by the
-    same identity provider.
-1.  The local matching service returns a JSON response, `match`, to the
-    Matching Service Adapter to indicate that a match was found.
-1. The Matching Service Adapter creates a SAML response based on the
-    JSON response, and forwards it to the government service via the
-    GOV.UK Verify hub. The SAML response contains the hashed persistent
-    identifier.
-1. The government service recovers the user's record from the matching
-    datastore using the the user's persistent identifier. This allows
-    the government service to interact with the user.
+1. If cycle 1 or cycle 3 finds a match, the local matching service saves the hashed persistent identifier in the matching datastore along with the user's record. Future matches with cycle 0 will use this data when the same user returns, having been verified by the same identity provider.
+1. The local matching service returns a JSON response, `match`, to the Matching Service Adapter to indicate that a match was found.
+1. The Matching Service Adapter creates a SAML response based on the JSON response, and forwards it to the government service via the GOV.UK Verify hub. The SAML response contains the hashed persistentidentifier.
+1. The government service recovers the user's record from the matching datastore using the the user's persistent identifier. This allows the government service to interact with the user.
 

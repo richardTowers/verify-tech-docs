@@ -21,9 +21,7 @@ You can create a new account for the user based on the [hashed persistent identi
     [request access to an environment](#request-access-to-environments). This form is
     available from your engagement lead.
 
-1.  Make sure the local matching service's user account creation URI
-    endpoint returns the following JSON, choosing success or failure as
-    appropriate:
+1.  Make sure the local matching service's user account creation URI endpoint returns the following JSON, choosing success or failure as appropriate:
 
     ```
     "result": "success | failure"
@@ -101,8 +99,8 @@ For more details, see the diagrams:
     > **Note:** The Matching Service Adapter must send this data via the GOV.UK
     > Verify hub, to respect the following identity assurance principles:
     
-    >  * user control - the user must give their informed consent to the information being sent
-    >  * data minimisation – the service receives only the restricted set of attributes it needs, not the full matching dataset.
+    > * user control - the user must give their informed consent to the information being sent
+    > * data minimisation – the service receives only the restricted set of attributes it needs, not the full matching dataset.
     
     > For more information see the [Identity Assurance Principles](https://www.gov.uk/government/consultations/draft-identity-assurance-principles/privacy-and-consumer-advisory-group-draft-identity-assurance-principles#the-nine-identity-assurance-principles).
 
