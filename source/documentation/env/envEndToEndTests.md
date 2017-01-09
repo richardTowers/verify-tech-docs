@@ -140,7 +140,7 @@ Possible values are shown in the following table.
           <li>LEVEL_1</li>
           <li>LEVEL_2</li>          
           <li>LEVEL_3</li>
-          <li>LEVEL_3</li>
+          <li>LEVEL_4</li>
          </ul>
       </td>
     </tr>

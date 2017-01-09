@@ -83,7 +83,7 @@ Use the procedure below if your service does not support 2 encryption keys simul
 
 ### Rotate your Matching Service Adapter signing key
 
-There are 3 methods to rotate your Matching Service Adapter signing key. We recommend that you use SAML metadata as this minimises service downtime and reduces the complexity of the the key rotation procedure. For more information, see [Use the SAML metadata](#use-the-saml-metadata).
+There are 3 methods to rotate your Matching Service Adapter signing key. We recommend that you use SAML metadata as this minimises service downtime and reduces the complexity of the the key rotation procedure. For more information, see [Use the SAML metadata](#saml-metadata).
 
 ### Use SAML metadata
 

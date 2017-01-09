@@ -38,7 +38,7 @@ matching service.
 
 We recommend that you use the Matching Service Adapter. If you do not
 want to, please contact the [GOV.UK Verify support
-team](idasupport+onboarding@digital.cabinet-office.gov.uk) to discuss
+team](mailto:idasupport+onboarding@digital.cabinet-office.gov.uk) to discuss
 your alternatives.
 
 To use the Matching Service Adapter, you need to:
