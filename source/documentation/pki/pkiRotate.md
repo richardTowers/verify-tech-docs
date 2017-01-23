@@ -1,6 +1,6 @@
 ## Rotate your keys
 
-When the certificates containing your public keys are due to expire, run the key rotation process to replace the keys and certificates.
+When the certificates containing your public keys are due to expire, run the key rotation process to replace the keys and certificates. This allows you to introduce a new set of keys and certificates with no service interruption.
 
 As a government service you are responsible for maintaining the following keys:
 
@@ -20,59 +20,41 @@ You'll probably need to renew them all together.
 
 ### Rotate your service encryption key
 
-Use the procedure below if your service supports 2 encryption keys simultaneously.
-
-1. Add the new private encryption key to your service endpoint. This means that your service can use the new and old private keys to decrypt SAML messages.
+1. Add the new private encryption key to your service endpoint. Your service can now use the new and old private keys to decrypt SAML messages.
 1. Send the new certificate to the GOV.UK Verify operations team.
-1. The GOV.UK Verify operations team installs the new certificate on the hub. This means that the GOV.UK Verify hub uses the new key to encrypt SAML messages for your service.
+1. The GOV.UK Verify operations team installs the new certificate on the hub. The GOV.UK Verify hub now uses the new key to encrypt SAML messages for your service.
 1. Remove the old encryption key from your service endpoint.
-
-Use the procedure below if your service does not support 2 encryption keys simultaneously.
-
-1. Send the new encryption certificate to the the GOV.UK Verify operations team.
-1. Take your service offline.
-1. The GOV.UK Verify operations team installs the new certificate on the hub. This means that the GOV.UK Verify hub uses the new key to encrypt SAML messages for your service.
-1. Replace the old private encryption key with the new key on your service endpoint. This means that your service uses only the new key to decrypt SAML messages.
-1. Put your service back online.
 
 
 ### Rotate your service signing key
 
 1. Send the new signing certificate to the the GOV.UK Verify operations team.
-1. The GOV.UK Verify operations team installs the new certificate on the GOV.UK Verify hub. This means that the GOV.UK Verify hub trusts SAML messages signed with the new and old keys.
-1. Replace the old private signing key with the new key on your service endpoint. This means that your service signs SAML messages with the new key only.
+1. The GOV.UK Verify operations team installs the new certificate on the GOV.UK Verify hub. The GOV.UK Verify hub now trusts SAML messages signed with the new and old keys.
+1. Replace the old private signing key with the new key on your service endpoint. Your service now signs SAML messages with the new key only.
 1. Inform the GOV.UK Verify operations team that new key is live.
-1. The GOV.UK Verify operations team removes the old certificate from the GOV.UK Verify hub. This means that the GOV.UK Verify hub trusts SAML messages signed with the new key only.
+1. The GOV.UK Verify operations team removes the old certificate from the GOV.UK Verify hub. The GOV.UK Verify hub now trusts SAML messages signed with the new key only.
 
 ### Rotate your Matching Service Adapter encryption key
 
-1. First install the new private encryption key on the Matching Service Adapter. Then configure the Matching Service Adapter for 2 encryption keys. To do this, add the new private encryption key to the Matching Service Adapter configuration file as indicated in the bold section below:
+1. Install the new private encryption key and encryption certificate on the Matching Service Adapter. To do this, add the fields `privateSecondaryEncryptionKeyConfiguration` and `publicSecondaryEncryptionKeyConfiguration` to the [YAML configuration file](#create-a-yaml-configuration-file) as indicated in the highlighted sections below:
 
     <pre>
-       privateSigningKeyConfiguration:
-        keyUri: deploy/keys/test_rp_msa_signing.pk8
+      privateEncryptionKeyConfiguration:
+       keyUri: deploy/keys/test_rp_msa_encryption_old.pk8
 
-       <b>privateEncryptionKeyConfiguration:
-        keyUri: deploy/keys/test_rp_msa_encryption_new.pk8
+      <b>privateSecondaryEncryptionKeyConfiguration:
+       keyUri: deploy/keys/test_rp_msa_encryption_new.pk8</b>
 
-       privateSecondaryEncryptionKeyConfiguration:
-        keyUri: deploy/keys/test_rp_msa_encryption_old.pk8</b>
-   
-       publicSigningKeyConfiguration:
-        keyUri: deploy/keys/test_rp_msa_signing.crt
-        keyName: http://www.test-rp-ms.gov.uk/SAML2/MD
+      publicEncryptionKeyConfiguration:
+       keyUri: deploy/keys/test_rp_msa_encryption_old.crt
+       keyName: http://www.test-rp-ms.gov.uk/SAML2/MD
 
-       publicEncryptionKeyConfiguration:
-        keyUri: deploy/keys/test_rp_msa_encryption.crt
-        keyName: http://www.test-rp-ms.gov.uk/SAML2/MD
+      <b>publicSecondaryEncryptionKeyConfiguration:
+       keyUri: deploy/keys/test_rp_msa_encryption_new.crt
+       keyName: http://www.test-rp-ms.gov.uk/SAML2/MD</b>
     </pre>
 
     The Matching Service Adapter can now use both the new and old keys to decrypt SAML messages.
-
-
-1. Send the new certificate to the GOV.UK Verify operations team.
-1. The GOV.UK Verify operations team replaces the old certificate with the new certificate on the GOV.UK Verify hub. This means that the GOV.UK Verify hub uses the new key to encrypt SAML messages for your service.
-1. Remove the old private encryption key from the Matching Service Adapter. The Matching Service Adapter can no longer use the old key to decrypt SAML messages.
 
     > **Note:** While both keys are in use, you may see error messages in the logs
     > with the description "Unwrapping failed". These messages appear
@@ -81,67 +63,52 @@ Use the procedure below if your service does not support 2 encryption keys simul
     > However, do not ignore any other error messages related to SAML
     > decryption.
 
+
+1. Send the new certificate to the GOV.UK Verify operations team.
+1. The GOV.UK Verify operations team replaces the old certificate with the new certificate on the GOV.UK Verify hub. The GOV.UK Verify hub now uses the new key to encrypt SAML messages for your service.
+1. Promote the secondary private encryption key and encryption certificate to the primary position.
+1. Remove the old private encryption key and encryption certificate:
+
+        privateEncryptionKeyConfiguration:
+         keyUri: deploy/keys/test_rp_msa_encryption_new.pk8
+        
+        publicEncryptionKeyConfiguration:
+         keyUri: deploy/keys/test_rp_msa_encryption_new.crt
+         keyName: http://www.test-rp-ms.gov.uk/SAML2/MD
+
 ### Rotate your Matching Service Adapter signing key
 
-There are 3 methods to rotate your Matching Service Adapter signing key. We recommend that you use SAML metadata as this minimises service downtime and reduces the complexity of the the key rotation procedure. For more information, see [Use the SAML metadata](#saml-metadata).
-
-### Use SAML metadata
-
-This procedure allows zero service downtime when you rotate your
-Matching Service Adapter signing key. It involves publishing 2 SAML
-signing certificates in the Matching Service Adapter SAML metadata.
-
-> **Important:** To use this procedure you must be using version 493 or later of the
-> Matching Service Adapter. Contact your engagement lead if you want to
-> update your Matching Service Adapter.
+This procedure involves publishing 2 SAML signing certificates in the Matching Service Adapter SAML metadata.
 
 1. Send the new signing certificate to the GOV.UK Verify operations team.
-1. Configure your Matching Service Adapter to support 2 signing certificates. To do this, add the field `publicSecondarySigningKeyConfiguration` to the Matching Service Adapter configuration file as indicated in the bold section below:
+1. Install the new signing certificate on the Matching Service Adapter. To do this, add the field `publicSecondarySigningKeyConfiguration` to the [YAML configuration file](#create-a-yaml-configuration-file) as indicated in the bold section below:
 
     <pre>
       privateSigningKeyConfiguration:
-        keyUri: deploy/keys/test_rp_msa_signing.pk8
+       keyUri: deploy/keys/test_rp_msa_signing.pk8
 
-      <b>publicSigningKeyConfiguration:
-        keyUri: deploy/keys/test_rp_msa_signing.crt
-        keyName: http://www.test-rp-ms.gov.uk/SAML2/MD
+      publicSigningKeyConfiguration:
+       keyUri: deploy/keys/test_rp_msa_signing.crt
+       keyName: http://www.test-rp-ms.gov.uk/SAML2/MD
 
-      publicSecondarySigningKeyConfiguration:
-        keyUri: deploy/keys/test_rp_msa_signing_new_cert.crt
-        keyName: http://www.test-rp-ms.gov.uk/SAML2/MD/Secondary</b>
-
-      publicEncryptionKeyConfiguration:
-        keyUri: deploy/keys/test_rp_msa_encryption.crt
-        keyName: http://www.test-rp-ms.gov.uk/SAML2/MD
+      <b>publicSecondarySigningKeyConfiguration:
+       keyUri: deploy/keys/test_rp_msa_signing_new_cert.crt
+       keyName: http://www.test-rp-ms.gov.uk/SAML2/MD/Secondary</b>
     </pre>
 
-1. Check that your service endpoint has loaded the newly generated Matching Service Adapter metadata from: /matching-service/SAML2/metadata. This means the service endpoint trusts assertions signed with the new key.
-1. Update the field `privateSigningKeyConfiguration` with the new private signing key and restart the Matching Service Adapter. This means that SAML messages are now signed with the new key.
+1. Check that your service endpoint has loaded the newly generated Matching Service Adapter metadata from: /matching-service/SAML2/metadata. The service endpoint now trusts assertions signed with the new key.
+1. Update the field `privateSigningKeyConfiguration` with the new private signing key.
+1. Promote the secondary signing certificate to the primary position.
+1. Remove the old signing certificate:
+
+        privateSigningKeyConfiguration:
+         keyUri: deploy/keys/test_rp_msa_signing_new.pk8
+
+        publicSigningKeyConfiguration:
+         keyUri: deploy/keys/test_rp_msa_signing_new.crt
+         keyName: http://www.test-rp-ms.gov.uk/SAML2/MD
+
+1. Restart the Matching Service Adapter. SAML messages are now signed with the new key.
 1. Inform the GOV.UK Verify operations team that the new key is live.
-1. Remove the old signing certificate from the Matching Service Adapter configuration file.
 
-#### Your service supports 2 Matching Service Adapter signing keys
-
-Use the procedure below if your service supports 2 Matching Service
-Adapter signing keys simultaneously but you are not using SAML metadata
-from your Matching Service Adapter.
-
-1. Send the new signing certificate to the GOV.UK Verify operations team.
-1. The GOV.UK Verify operations team installs the new certificate on the GOV.UK Verify hub. This means that the GOV.UK hub trusts SAML messages signed with the new and old certificates.
-1. Add the new certificate to your service endpoint. This means that your service trusts SAML messages signed with the new and old keys.
-1. Replace the old private signing key with the new key on the Matching Service Adapter. This means that SAML is now signed with the new key.
-1. Remove the old certificate from your service endpoint. This means that your service trusts SAML messages signed with the new private signing key only.
-1. Inform the GOV.UK Verify operations team that the new key is live.
-1. The GOV.UK Verify operations team removes the old certificate from the GOV.UK Verify hub. This means that the GOV.UK Verify hub trusts SAML messages signed with the new private signing key only.
-
-#### Your service does not support 2 Matching Service Adapter signing keys
-
-Use the procedure below if your service does not support 2 Matching Service Adapter signing keys simultaneously. This involves service downtime during key rotation.
-
-1. Take your service offline.
-1. Replace the old certificate with the new certificate on your service endpoint. This means that your service trusts SAML messages signed with the new key.
-1. Replace the old private signing key with the new key on the Matching Service Adapter. This means that SAML is now signed with the new key.
-1. Inform the GOV.UK Verify operations team that the new key is live.
-1. The GOV.UK Verify operations team removes the old certificate from the GOV.UK Verify hub. This means that the GOV.UK Verify hub trusts SAML messages signed with the new private signing key only.
-1. Put your service back online.
 

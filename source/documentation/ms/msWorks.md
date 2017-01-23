@@ -70,7 +70,7 @@ a disabled badge holder, to enhance the matching process.
 
 > **Note:** Cycle 2 isn't currently implemented.
 
-#### Cycle 3: user-asserted match
+#### Cycle 3: additional information match
 
 If cycle 1 finds more than 1 potential match, cycle 3 asks the user for
 some additional information, for example driving licence number. The hub
@@ -93,10 +93,10 @@ Use this cycle to enhance cycle 1 and not as an alternative to cycle 1.
 <a name="matching-cycles-diagram"></a>
 
 This diagram shows the message flow for matching cycles 0, 1, and 3. The
-numbers identify each stage in the flow. See below for explanations.
+numbers identify each stage in the flow. See below for explanations. 
 
 
-![Diagram showing the three matching cycles, 0, 1 and 3. The Matching Service Adapter converts between SAML and JSON. The text below the image describes the steps](/documentation/ms/matchingcyclesGraphics.svg)
+![Diagram showing the three matching cycles, 0, 1 and 3. The Matching Service Adapter converts between SAML and JSON. The text below the image describes the steps](/documentation/ms/matchingcyclesIO.svg)
 
 For more details, see the diagrams:
 
@@ -112,24 +112,36 @@ For more details, see the diagrams:
     * the user's identity information, known as the [matching dataset](#glossary-matching-dataset)
     * a unique [persistent identifier](#glossary-persistent-identifier) for the identity, created by the identity provider
 
-1. The hub forwards the matching dataset and persistent identifier to the Matching Service Adapter.
-1. The Matching Service Adapter hashes the persistent identifier to make it meaningless to other services.
-1. The Matching Service Adapter sends the [hashed persistent identifier](#glossary-hashed-PID) and the matching dataset to the local matching service.
+    The hub forwards the matching dataset and persistent identifier to the Matching Service Adapter.
+1. The Matching Service Adapter hashes the persistent identifier to make it meaningless to other services. The Matching Service Adapter sends the [hashed persistent identifier](#glossary-hashed-PID) and the matching dataset to the local matching service.
 1. The local matching service runs cycle 0:
 
-    The local matching service tries to find a match between the user's hashed persistent identifier and a hashed persistent identifier in the local matching datastore. If cycle 0 finds a match, go to step 9.
+    The local matching service tries to find a match between the user's hashed persistent identifier and a hashed persistent identifier in the local matching datastore. 
+
+1. If cycle 0 finds a match, the local matching service sends a `match` response to the Matching Service adapter, which creates a SAML response based on the JSON response, and forwards it to the government service via the GOV.UK Verify hub. The SAML response contains the hashed persistentidentifier.
 
 1. If cycle 0 finds no match the local matching service runs
     cycle 1:
     
-    The local matching service tries to find a match between the user's matching dataset and a record in government service data sources. If cycle 1 finds a match, go to step 8.
+    The local matching service tries to find a match between the user's matching dataset and a record in government service data sources. 
 
-1. If cycle 1 finds no match, a `no-match` response is returned to the Matching Service Adapter (7a) and the local matching service runs cycle 3 (7b):
+1. If cycle 1 finds a match, the local matching service saves the hashed persistent identifier in a datastore along with the user's record. Future matches with cycle 0 will use this data when the same user returns, having been verified by the same identity provider.
 
-    The hub asks the user to provide additional information, for example, their driving licence number and sends it to the Matching Service Adapter. If cycle 3 finds no match, the matching service can [create a new account](#create-user-accounts) for the user, provided your matching service supports this feature and your user journey seeks explicit user consent.
+1. The local matching service sends a `match` response to the Matching Service adapter, which creates a SAML response based on the JSON response, and forwards it to the government service via the GOV.UK Verify hub. The SAML response contains the hashed persistentidentifier.
 
-1. If cycle 1 or cycle 3 finds a match, the local matching service saves the hashed persistent identifier in the matching datastore along with the user's record. Future matches with cycle 0 will use this data when the same user returns, having been verified by the same identity provider.
-1. The local matching service returns a JSON response, `match`, to the Matching Service Adapter to indicate that a match was found.
-1. The Matching Service Adapter creates a SAML response based on the JSON response, and forwards it to the government service via the GOV.UK Verify hub. The SAML response contains the hashed persistentidentifier.
-1. The government service recovers the user's record from the matching datastore using the the user's persistent identifier. This allows the government service to interact with the user.
+1. If cycle 1 finds no match, the local matching service sends a `no-match` response to the Matching Service Adapter, which creates a SAML response based on the JSON response, and forwards it to the GOV.UK Verify hub.
+
+1. The hub asks the user to provide additional information, for example, their driving licence number and sends it to the Matching Service Adapter. 
+
+1. The local matching service runs cycle 3:
+
+    The local matching service tries to find a match between the user's additinal information and a record in government service data sources. 
+
+1. If cycle 3 finds a match, the local matching service saves the hashed persistent identifier in a datastore along with the user's record. Future matches with cycle 0 will use this data when the same user returns, having been verified by the same identity provider.
+
+1. The local matching service sends a `match` response to the Matching Service adapter, which creates a SAML response based on the JSON response, and forwards it to the government service via the GOV.UK Verify hub. The SAML response contains the hashed persistentidentifier.
+
+
+13. If cycle 3 finds no match, the local matching service sends a `no-match` response to the Matching Service Adapter, which creates a SAML response based on the JSON response, and forwards it to the GOV.UK Verify hub.  In this case, the matching service can [create a new account](#create-user-accounts) for the user, provided your matching service supports this feature and your user journey seeks explicit user consent.
+
 
