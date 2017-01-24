@@ -19,8 +19,6 @@ For more details, see the diagrams:
 * [create user accounts](#create-user-accounts-diagram)
 
 
-##Elements in GOV.UK Verify architecture
-
 The main elements in GOV.UK Verify architecture are listed below.
 
 **GOV.UK Verify hub**

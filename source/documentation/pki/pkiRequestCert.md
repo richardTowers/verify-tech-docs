@@ -115,11 +115,11 @@ Some prompts appear in the terminal. Enter the following information:
 * **Country Name**: 2-letter code for your country, for example, GB for Great Britain
 * **State**: county or city
 * **Locality**: city or town
-* **Organisation Name**: this must match your contractual or programme status
-* **Organisation Unit**: your unit within the organisation, for example, the name of your government service
+* **Organisation Name**: the name of your government department, for example, DVLA
+* **Organisation Unit**: the name of your government service, for example, View your driving licence
 * **Common Name**: one of the following, depending on the type of certificate.
-  * SAML [encryption](#encryption-certificates) certificate: `<servicename> SAML Encryption <version>`
-  * SAML [signing](#signing-certificates) certificate: `<servicename> SAML Signing <version>`
+  * SAML [encryption](#encryption-certificates) certificate: `<servicename> SAML Encryption <version of your certificate>`
+  * SAML [signing](#signing-certificates) certificate: `<servicename> SAML Signing <version of your certificate>`
 
     > **Note:** **Common Name** must not contain underscores.
 
