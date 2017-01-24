@@ -9,24 +9,30 @@
     this.start = function start($element) {
       $tocPane = $element.find('.app-pane__toc');
       $contentPane = $element.find('.app-pane__content');
-      $tocItems = $tocPane.find('a');
+      $tocItems = $('.js-toc-list').find('a');
 
-      $contentPane.on('scroll', _.debounce(handleScrollEvent, 250, { maxWait: 250 }));
+      $contentPane.on('scroll', _.debounce(handleScrollEvent, 100, { maxWait: 100 }));
 
-      // Popstate is triggered when using the back button to navigate 'within'
-      // the page, i.e. changing the anchor part of the URL.
-      $(window).on('popstate', function (event) {
-        restoreScrollPosition(event.originalEvent.state);
-      });
-
-      // Restore state when e.g. using the back button to return to this page
       if (Modernizr.history) {
-        restoreScrollPosition(history.state);
+        // Popstate is triggered when using the back button to navigate 'within'
+        // the page, i.e. changing the anchor part of the URL.
+        $(window).on('popstate', function (event) {
+          restoreScrollPosition(event.originalEvent.state);
+        });
+
+        if (history.state && history.state.scrollTop) {
+          // Restore existing state when e.g. using the back button to return to
+          // this page
+          restoreScrollPosition(history.state);
+        } else {
+          // Store initial position so we can restore it when using back button
+          handleScrollEvent();
+        }
       }
     };
 
     function restoreScrollPosition(state) {
-      if (state && state.scrollTop) {
+      if (state && typeof state.scrollTop !== 'undefined') {
         $contentPane.scrollTop(state.scrollTop);
       }
     }
@@ -39,7 +45,7 @@
     }
 
     function storeCurrentPositionInHistoryApi($activeTocItem) {
-      if (Modernizr.history) {
+      if (Modernizr.history && $activeTocItem) {
         history.replaceState(
           { scrollTop: $contentPane.scrollTop() },
           "",
@@ -53,7 +59,28 @@
 
       if ($activeTocItem) {
         $activeTocItem.addClass('toc-link--in-view');
+        scrollTocToActiveItem($activeTocItem);
       }
+    }
+
+    function scrollTocToActiveItem($activeTocItem) {
+      var paneHeight = $tocPane.height();
+      var linkTop = $activeTocItem.position().top;
+      var linkBottom = linkTop + $activeTocItem.outerHeight();
+
+      var offset = null;
+
+      if (linkTop < 0) {
+        offset = linkTop;
+      } else if (linkBottom >= paneHeight) {
+        offset = -(paneHeight - linkBottom);
+      } else {
+        return;
+      }
+
+      var newScrollTop = $tocPane.scrollTop() + offset;
+
+      $tocPane.scrollTop(newScrollTop);
     }
 
     function tocItemForFirstElementInView() {
