@@ -21,7 +21,7 @@ authored it.
 
 The Identity Assurance Programme (IDAP) runs a PKI to enable secure
 communication between the entities in the GOV.UK Verify federation, for
-example, between government services and the [GOV.UK Verify hub](#what-does-the-gov-uk-verify-hub-do).
+example, between government services and the GOV.UK Verify hub.
 For an outline of the technical steps in the onboarding process, see
 [Stage 4: Build and integration
 testing](http://alphagov.github.io/identity-assurance-documentation/stage4/Stage4.html)

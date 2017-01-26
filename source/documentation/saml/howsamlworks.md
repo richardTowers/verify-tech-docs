@@ -30,7 +30,7 @@ For more details, see the diagrams:
 * [create user accounts](#create-user-accounts-diagram)
 
 
-1. The government service sends a SAML authentication request to the [GOV.UK Verify hub](#what-does-the-gov-uk-verify-hub-do). The request indicates that a user wants to access the service and needs to prove their identity using GOV.UK Verify.
+1. The government service sends a SAML authentication request to the GOV.UK Verify hub. The request indicates that a user wants to access the service and needs to prove their identity using GOV.UK Verify.
 
     ![Diagram showing a SAML authentication request signed by the government service](/documentation/saml/step1Graphic.svg)
 

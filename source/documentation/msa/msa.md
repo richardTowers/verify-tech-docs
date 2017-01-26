@@ -2,7 +2,7 @@
 
 The [Matching Service Adapter](#glossary-MSA) is a software tool supplied
 free of charge by GOV.UK Verify. It simplifies communication between
-your local matching service and the [GOV.UK Verify hub](#what-does-the-gov-uk-verify-hub-do).
+your local matching service and the GOV.UK Verify hub.
 
 A matching service is composed of the Matching Service Adapter and a
 [local matching service](#local-matching-service). Government services host their matching
