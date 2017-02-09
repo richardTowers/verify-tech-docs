@@ -2,6 +2,14 @@
 
 ## Development
 
+Prerequisites:
+
+* <a href="#choose-a-product-and-framework">choose a product and framework</a> to integrate your service with GOV.UK Verify
+* decide how to <a href="#store-private-keys">store and manage keys</a> and certificates so you can <a href="#rotate-your-keys">rotate your keys</a> when needed
+
+> **Note:**
+> You only need to deploy your code to an environment at the end of the development phase, when you test your matching service with the SAML compliance tool. You can do all development steps until this point on a development machine.
+
 <table>
   <tbody>
     <tr>
@@ -10,17 +18,16 @@
     </tr>
     <tr>
       <td>1</td>
-      <td align="center"><b>Build a service that produces and consumes SAML.</b> <br><br>
+      <td align="center"><b>Set up the Matching Service Adapter for the SAML compliance tool.</b> <br><br>
          To do this:<br><br>
          <ol>
-          <li>Read the SAML specifications described in the <a href="https://www.gov.uk/government/publications/identity-assurance-hub-service-saml-20-profile">  'Identity Assurance Hub Service SAML 2.0 Profile'</a>.</li>
-          <li><a href="#choose-a-product-and-framework">Choose a product and framework</a> to integrate your service with GOV.UK Verify.</li>
-          <li><a href="#configure-and-adapt-your-technology-to-respect-the-saml-profile">Configure and adapt your chosen technology</a> to respect the SAML profile.</li>
-          <li>Decide how to <a href="#store-private-keys">store and manage keys</a> and certificates so you can <a href="#rotate-your-keys">rotate your keys</a> when needed.</li>
+          <li><a href="#install-the-matching-service-adapter">Download and install the Matching Service Adapter.</a></li>
+          <li><a href="#generate-self-signed-certificates">Generate self-signed certificates for the SAML compliance tool.</a> </li>
+          <li><a href="#configure-the-matching-service-adapter">Configure the Matching Service Adapter for the SAML compliance tool.</a> </li>  
         </ol><br>
-        Outcome: your service can send SAML authentication requests to, and receive SAML responses from, the GOV.UK Verify hub.<br><br>
+        Outcome: you can start building your service.<br><br>
 
-        For more information, see <a href="#how-saml-works-with-gov-uk-verify">How SAML works with GOV.UK Verify</a>.
+        For more information, see <a href="#matching-service-adapter">Matching Service Adapter.</a>.
       </td>
     </tr>
     <tr>
@@ -38,16 +45,16 @@
     </tr>
     <tr>
       <td>3</td>
-       <td align="center"><b>Set up the Matching Service Adapter for the SAML compliance tool.</b> <br><br>
+       <td align="center"><b>Build a service that produces and consumes SAML.</b> <br><br>
          To do this:<br><br>
          <ol>
-          <li><a href="#install-the-matching-service-adapter">Download and install the Matching Service Adapter.</a></li>
-          <li><a href="#generate-self-signed-certificates">Generate self-signed certificates for the SAML compliance tool.</a> </li>
-          <li><a href="#configure-the-matching-service-adapter">Configure the Matching Service Adapter for the SAML compliance tool.</a> </li>  
+          <li><a href="#connect-your-service-to-the-matching-service-adapter-metadata">Connect your service to the Matching Service Adapter metadata</a>.</li>
+          <li><a href="#send-a-saml-authentication-request-to-the-gov-uk-verify-hub">Send an authentication request to the GOV.UK Verify hub.</a> </li>
+          <li><a href="#handle-responses-using-saml-metadata">Handle the SAML response from the GOV.UK Verify hub.</a> </li>  
          </ol><br>
         Outcome: you’re ready to run SAML compliance tests.<br><br>
 
-        For more information, see <a href="#matching-service-adapter">Matching Service Adapter.</a>.
+        For more information, see <a href="#how-saml-works-with-gov-uk-verify">How SAML works with GOV.UK Verify</a> and the <a href="https://www.gov.uk/government/publications/identity-assurance-hub-service-saml-20-profile">  'Identity Assurance Hub Service SAML 2.0 Profile'</a>.
       </td>
     </tr>
     <tr>
@@ -144,7 +151,6 @@
          <ol>
           <li><a href="#install-the-matching-service-adapter">Download and install the Matching Service Adapter.</a></li>
           <li><a href="#configure-the-matching-service-adapter">Configure the Matching Service Adapter for the production environment.</a> </li>  
-          <li>Connect your service to the production environment by <a href="#access-the-saml-metadata">accessing the federation metadata.</a>.</li>  
         </ol><br>
         Outcome: your service is ready to go live.<br><br>
 

@@ -9,7 +9,7 @@ government service's data sources:
 
 * [Cycle 0: persistent identifier match](#cycle-0-persistent-identifier-match)
 * [Cycle 1: matching dataset match](#cycle-1-matching-dataset-match)
-* [Cycle 3: user-asserted match](#cycle-3-user-asserted-match)
+* [Cycle 3: additional information match](#cycle-3-additional-information-match)
 
 > **Note:** Cycle 2 isn't currently implemented.
 
@@ -17,7 +17,7 @@ The GOV.UK Verify hub issues a single call for matching cycles 0 and 1,
 then a subsequent call for matching cycle 3. In your
 [matching strategy](#define-your-matching-strategy), you can run cycle 0 first. Then, if
 there is no match, you can run cycle 1 before returning the response to
-the Matching Service Adapter.
+the Matching Service Adapter (MSA).
 
 If there's no match after the 3 cycles, you can
 [create a new account](#create-user-accounts) for the user. Some services may decide
@@ -36,15 +36,15 @@ This cycle works when a user has previously verified their identity with
 the same identity provider.
 
 When an identity provider verifies a user's identity, they assign a
-unique persistent identifier to that user. The identity provider sends
-the persistent identifier to the Matching Service Adapter, via the hub.
-The Matching Service Adapter then hashes the persistent identifier.
+unique persistent identifier (PID) to that user. The identity provider sends
+the PID to the MSA, via the hub.
+The MSA then hashes the PID.
 
 Cycle 0 matches the user's [hashed persistent identifier](#glossary-hashed-PID) to an existing
-hashed persistent identifier in the local matching datastore. This
+hashed PID in your datastore. This
 succeeds only if the user has previously been matched by your service
 with the same identity provider. The first time a new user is matched
-(with cycle 1), the hashed persistent identifier is written to the local
+(with cycle 1), the hashed PID is written to the local
 matching datastore. It is then used for subsequent cycle 0 matches.
 
 #### Cycle 1: matching dataset match
@@ -60,7 +60,7 @@ service's [matching strategy](#define-your-matching-strategy) specifies which de
 use.
 
 If the local matching service finds a match, it creates a correlation
-between the hashed persistent identifier and the existing record. This
+between the hashed PID and the existing record. This
 enables cycle 0 matching to occur during subsequent transactions.
 
 #### Cycle 2: (not used)
@@ -77,7 +77,7 @@ some additional information, for example driving licence number. The hub
 collects the additional information and sends it to the matching
 service. The local matching service then uses it to refine the match.
 When the local matching service finds a match, it saves the hashed
-persistent identifier in the matching datastore.
+PID in the datastore.
 
 This cycle is defined in the government service policy and may not be
 required for all matches. The government service defines the information
@@ -112,36 +112,42 @@ For more details, see the diagrams:
     * the user's identity information, known as the [matching dataset](#glossary-matching-dataset)
     * a unique [persistent identifier](#glossary-persistent-identifier) for the identity, created by the identity provider
 
-    The hub forwards the matching dataset and persistent identifier to the Matching Service Adapter.
-1. The Matching Service Adapter hashes the persistent identifier to make it meaningless to other services. The Matching Service Adapter sends the [hashed persistent identifier](#glossary-hashed-PID) and the matching dataset to the local matching service.
+    The hub forwards the matching dataset and PID to the MSA.
+1. The MSA hashes the PID to make it meaningless to other services. The MSA sends the [hashed persistent identifier](#glossary-hashed-PID) and the matching dataset to the local matching service.
 1. The local matching service runs cycle 0:
 
-    The local matching service tries to find a match between the user's hashed persistent identifier and a hashed persistent identifier in the local matching datastore. 
+    The local matching service tries to find a match between the user's hashed PID and a hashed PID in the your datastore. 
 
-1. If cycle 0 finds a match, the local matching service sends a `match` response to the Matching Service adapter, which creates a SAML response based on the JSON response, and forwards it to the government service via the GOV.UK Verify hub. The SAML response contains the hashed persistentidentifier.
+    **If cycle 0 finds a match go to step 4, otherwise go to step 5.**
 
-1. If cycle 0 finds no match the local matching service runs
-    cycle 1:
+1. The local matching service sends a `match` response to the MSA and forwards it and the hashed PID to the government service via the GOV.UK Verify hub.
+
+1. The local matching service runs cycle 1:
     
     The local matching service tries to find a match between the user's matching dataset and a record in government service data sources. 
+    
+    **If cycle 1 finds a match go to step 6, otherwise go to step 8.**
 
-1. If cycle 1 finds a match, the local matching service saves the hashed persistent identifier in a datastore along with the user's record. Future matches with cycle 0 will use this data when the same user returns, having been verified by the same identity provider.
 
-1. The local matching service sends a `match` response to the Matching Service adapter, which creates a SAML response based on the JSON response, and forwards it to the government service via the GOV.UK Verify hub. The SAML response contains the hashed persistentidentifier.
+1. The local matching service saves the hashed PID in a datastore along with the user's record. Future matches with cycle 0 will use this data when the same user returns, having been verified by the same identity provider.
 
-1. If cycle 1 finds no match, the local matching service sends a `no-match` response to the Matching Service Adapter, which creates a SAML response based on the JSON response, and forwards it to the GOV.UK Verify hub.
+1. The local matching service sends a `match` response to the MSA and forwards it and the hashed PID to the government service via the GOV.UK Verify hub.
 
-1. The hub asks the user to provide additional information, for example, their driving licence number and sends it to the Matching Service Adapter. 
+1. The local matching service sends a `no-match` response to the MSA, which forwards it to the GOV.UK Verify hub.
+
+1. The hub asks the user to provide additional information, for example, their driving licence number and sends it to the MSA. 
 
 1. The local matching service runs cycle 3:
 
     The local matching service tries to find a match between the user's additinal information and a record in government service data sources. 
 
-1. If cycle 3 finds a match, the local matching service saves the hashed persistent identifier in a datastore along with the user's record. Future matches with cycle 0 will use this data when the same user returns, having been verified by the same identity provider.
+    **If cycle 3 finds a match, go to step 11, otherwise go to step 13.**
 
-1. The local matching service sends a `match` response to the Matching Service adapter, which creates a SAML response based on the JSON response, and forwards it to the government service via the GOV.UK Verify hub. The SAML response contains the hashed persistentidentifier.
+1. The local matching service saves the hashed PID in a datastore along with the user's record. Future matches with cycle 0 will use this data when the same user returns, having been verified by the same identity provider.
+
+1. The local matching service sends a `match` response to the MSA, which forwards it and the hashed PID to the government service via the GOV.UK Verify hub.
 
 
-13. If cycle 3 finds no match, the local matching service sends a `no-match` response to the Matching Service Adapter, which creates a SAML response based on the JSON response, and forwards it to the GOV.UK Verify hub.  In this case, the matching service can [create a new account](#create-user-accounts) for the user, provided your matching service supports this feature and your user journey seeks explicit user consent.
+13. The local matching service sends a `no-match` response to the MSA, which forwards it to the GOV.UK Verify hub.  In this case, the matching service can [create a new account](#create-user-accounts) for the user, provided your matching service supports this feature and your user journey seeks explicit user consent.
 
 

@@ -5,74 +5,120 @@
     var $tocPane;
     var $contentPane;
     var $tocItems;
+    var $targets;
 
     this.start = function start($element) {
       $tocPane = $element.find('.app-pane__toc');
       $contentPane = $element.find('.app-pane__content');
-      $tocItems = $tocPane.find('a');
+      $tocItems = $('.js-toc-list').find('a');
+      $targets = $contentPane.find('[id]');
 
-      $contentPane.on('scroll', _.debounce(handleScrollEvent, 250, { maxWait: 250 }));
+      $contentPane.on('scroll', _.debounce(handleScrollEvent, 100, { maxWait: 100 }));
 
-      // Popstate is triggered when using the back button to navigate 'within'
-      // the page, i.e. changing the anchor part of the URL.
-      $(window).on('popstate', function (event) {
-        restoreScrollPosition(event.originalEvent.state);
-      });
-
-      // Restore state when e.g. using the back button to return to this page
       if (Modernizr.history) {
-        restoreScrollPosition(history.state);
+        // Popstate is triggered when using the back button to navigate 'within'
+        // the page, i.e. changing the anchor part of the URL.
+        $(window).on('popstate', function (event) {
+          restoreScrollPosition(event.originalEvent.state);
+        });
+
+        if (history.state && history.state.scrollTop) {
+          // Restore existing state when e.g. using the back button to return to
+          // this page
+          restoreScrollPosition(history.state);
+        } else {
+          // Store the initial position so that we can restore it even if we
+          // never scroll.
+          handleInitialLoadEvent();
+        }
       }
     };
 
     function restoreScrollPosition(state) {
-      if (state && state.scrollTop) {
+      if (state && typeof state.scrollTop !== 'undefined') {
         $contentPane.scrollTop(state.scrollTop);
       }
     }
 
-    function handleScrollEvent() {
-      var $activeTocItem = tocItemForFirstElementInView();
+    function handleInitialLoadEvent() {
+      var fragment = fragmentForTargetElement();
 
-      storeCurrentPositionInHistoryApi($activeTocItem);
-      highlightActiveItemInToc($activeTocItem);
+      if (!fragment) {
+        fragment = fragmentForFirstElementInView();
+      }
+
+      handleChangeInActiveItem(fragment);
     }
 
-    function storeCurrentPositionInHistoryApi($activeTocItem) {
-      if (Modernizr.history) {
+    function handleScrollEvent() {
+      handleChangeInActiveItem(fragmentForFirstElementInView());
+    }
+
+    function handleChangeInActiveItem(fragment) {
+      storeCurrentPositionInHistoryApi(fragment);
+      highlightActiveItemInToc(fragment);
+    }
+
+    function storeCurrentPositionInHistoryApi(fragment) {
+      if (Modernizr.history && fragment) {
         history.replaceState(
           { scrollTop: $contentPane.scrollTop() },
           "",
-          $activeTocItem.attr('href')
+          fragment
         );
       }
     }
 
-    function highlightActiveItemInToc($activeTocItem) {
-      $tocItems.removeClass('toc-link--in-view');
+    function highlightActiveItemInToc(fragment) {
+      var $activeTocItem = $tocItems.filter('[href="' + fragment + '"]');
 
-      if ($activeTocItem) {
+      if ($activeTocItem.get(0)) {
+        $tocItems.removeClass('toc-link--in-view');
         $activeTocItem.addClass('toc-link--in-view');
+        scrollTocToActiveItem($activeTocItem);
       }
     }
 
-    function tocItemForFirstElementInView() {
-      var target = null;
+    function scrollTocToActiveItem($activeTocItem) {
+      var paneHeight = $tocPane.height();
+      var linkTop = $activeTocItem.position().top;
+      var linkBottom = linkTop + $activeTocItem.outerHeight();
 
-      $($tocItems.get().reverse()).each(function checkIfInView(index) {
-        if (target) {
+      var offset = null;
+
+      if (linkTop < 0) {
+        offset = linkTop;
+      } else if (linkBottom >= paneHeight) {
+        offset = -(paneHeight - linkBottom);
+      } else {
+        return;
+      }
+
+      var newScrollTop = $tocPane.scrollTop() + offset;
+
+      $tocPane.scrollTop(newScrollTop);
+    }
+
+    function fragmentForTargetElement() {
+      return window.location.hash;
+    }
+
+    function fragmentForFirstElementInView() {
+      var result = null;
+
+      $($targets.get().reverse()).each(function checkIfInView(index) {
+        if (result) {
           return;
         }
 
         var $this = $(this);
-        var $heading = $contentPane.find($this.attr('href'));
 
-        if ($heading.position().top <= 0) {
-          target = $this;
+        if (Math.floor($this.position().top) <= 0) {
+          result = $this;
         }
       });
 
-      return target;
+      return '#' + result.attr('id');
     }
   };
 })(jQuery, window.GOVUK.Modules);
