@@ -96,7 +96,7 @@ Fill in the form as indicated below:
 1. **Requested cycle 3 attribute name**
 
     Enter the name of the additional information you want the hub to send 
-    for [matching cycle 3](#cycle-3-user-asserted-match), for example, driving licence number. 
+    for [matching cycle 3](#cycle-3-additional-information-match), for example, driving licence number. 
     Matching cycle 3 is used if [matching cycle 1](#cycle-1-matching-dataset-match) fails. Make
     sure that your GOV.UK Verify engagement lead pre-approves this field
     as it requires development.

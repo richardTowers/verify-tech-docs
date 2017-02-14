@@ -23,7 +23,7 @@ You must [build a government service](#build-your-service) that sends SAML
 authentication requests to, and receives SAML responses from, the GOV.UK
 Verify hub. To do this, you need to understand
 [how SAML works with GOV.UK Verify](#how-saml-works-with-gov-uk-verify) and
-decide [how to add the SAML funcionality to your service](#saml-integration).
+decide [how to add the SAML funcionality to your service](#choose-a-product-and-framework).
 
 When you build your service, you must
 [run SAML compliance tests](#run-saml-compliance-tests).

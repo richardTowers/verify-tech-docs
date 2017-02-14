@@ -45,7 +45,7 @@ When you define your matching strategy you need to:
 * define the level of 'fuzzy matching' that is acceptable when an exact match is not found – this allows a match that, although not 100%, is above a service-defined threshold
 * manage the risk of incorrect matching by defining what happens when:
     * there's no match – you can [create a new account](#create-user-accounts) for the user
-    * there are multiple matches – you can implement [matching cycle 3](#cycle-3-user-asserted-match)
+    * there are multiple matches – you can implement [matching cycle 3](#cycle-3-additional-information-match)
 * analyse your data sources in the light of your matching strategy, so you can test and refine your strategy before launching alpha or beta services
 
 > **Note:** We recommend that you discuss your matching strategy with your

@@ -221,7 +221,7 @@ As a minimum, test the following end-to-end user scenarios:
 * authentication success and authentication failure
 * match and no-match
 * all the possible outcomes of your matching service, including
-    [cycle 3](#cycle-3-user-asserted-match) and [user account creation](#create-user-accounts), if
+    [cycle 3](#cycle-3-additional-information-match) and [user account creation](#create-user-accounts), if
     implemented
 
 ### Tear down
