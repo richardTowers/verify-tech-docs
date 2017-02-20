@@ -1,31 +1,31 @@
 ## Install the Matching Service Adapter
 
-**Prerequisite:** The Matching Service Adapter requires Java 8. Make
-sure you have the latest version of the JRE (Java Runtime Environment)
-installed.
+**Prerequisite:** The Matching Service Adapter (MSA) requires Java 8. Make sure you have the latest version of the Java Runtime Environment (JRE) installed.
 
 1. When you have successfully completed a gate review for [Stage 3: Planning](http://alphagov.github.io/identity-assurance-documentation/stage3/Stage3.html), email [<idasupport+onboarding@digital.cabinet-office.gov.uk>](mailto:idasupport+onboarding@digital.cabinet-office.gov.uk) to request access to the secure site where you can download the Matching Service Adapter.
-1. Download the Matching Service Adapter to your host. It contains:
+1. Download the MSA zip file to your host. It contains:
     * a jar (java archive) file
-    * a [truststore](#glossary-truststore) file and a metadata truststore file for non-production environments (the SAML compliance tool and the integration environment)
-    * a truststore file and a metadata truststore file for the production environment
+    * [truststore](#glossary-truststore) files for non-production environments (the SAML compliance tool and the integration environment) - `test_ida_hub.ts` and `test_ida_metadata.ts`
+ * truststore files for the production environment - `prod_ida_hub.ts` and `prod_ida_metadata.ts`
+ * a sample YAML configuration file for non-production environments  - `test-config.yml`
+ * a sample YAML configuration file for the production environment  - `prod-config.yml`
 
-1. To extract the files and move the truststore files to the environment where you want to use the Matching Service Adapter, run the following commands:
 
-        tar -xf [filename].tar.gz
-        unzip ida-msa-[xxx].zip
-        mv prod_ida_truststore.ts prod_ida_metadata_truststore.ts [path to truststore directory in the production environment]
-        mv test_ida_truststore.ts test_ida_metadata_truststore.ts [path to truststore directory in the integration environment]
+1. To extract the files, run the following command:
 
-    where:
-    * `[filename]` is the name of the tar file
-    * `[xxx]` is the build number
-    * `[path to truststore directory...]` is the location of the truststore – you specify this when configuring the Matching Service Adapter (see the configuration options `storeUri:` and `trustStorePath:` in the [YAML file](#yaml-configuration-file))
+        unzip ida-msa-[MSA build number].zip
+
+1. Optionally, move the truststore files to the environment where you want to use the MSA:
+
+        mv prod_ida_hub.ts prod_ida_metadata.ts [path to truststore directory in the production environment]
+        mv test_ida_hub.ts test_ida_metadata.ts [path to truststore directory in the integration environment]
+
+
+    where `[path to truststore directory...]` is the location of the truststore – you specify this when configuring the MSA (see the  `trustStore:` fields in the [YAML file](#yaml-configuration-file)).
 
 ### Versioning
 
-Typically, GOV.UK Verify releases a new version of the Matching Service
-Adapter every 2 or 3 months. Some releases are essential updates, and we
+Typically, GOV.UK Verify releases a new version of the MSA every 2 or 3 months. Some releases are essential updates and we
 may remove support for older versions. To keep updated, contact the
 [GOV.UK Verify support
 team](mailto:idasupport+onboarding@digital.cabinet-office.gov.uk) to
@@ -33,7 +33,7 @@ ensure you are on the Matching Service Adapter email distribution list.
 
 ## Obtain certificates for your Matching Service Adapter
 
-Your Matching Service Adapter needs a signing certificate and an
+Your MSA needs a signing certificate and an
 encryption certificate. You must use different certificates for each
 environment.
 
@@ -46,195 +46,176 @@ To obtain certificates:
 
 ### Create a YAML configuration file
 
-When you [start the Matching Service Adapter](#start-the-matching-service-adapter), you need
+When you [start the MSA](#start-the-matching-service-adapter), you need
 to supply a YAML configuration file.
+
+The MSA zip file contains two sample YAML configuration files:
+
+* `test-config.yml` for the SAML compliance tool and the integration environment
+* `prod-config.yml` for the production environment 
+
 
 <a name="yaml-configuration-file"></a>
 
-Create a YAML configuration file based on the example below. Then
-[adapt it](#adapt-the-yaml-configuration-file) for the SAML compliance tool or
-appropriate environment.
+[Adapt the YAML configuration file](#adapt-the-yaml-configuration-file) where required. Below is the `test-config.yml` file:
 
+
+    # Configure the matching service adapter's server settings here.
+    # See http://www.dropwizard.io/1.0.5/docs/manual/configuration.html#servers 
+    # for more information.
     server:
-     applicationConnectors:
-       - type: http
-         port: 50210
-     adminConnectors:
-       - type: http
-         port: 50211
-     requestLog:
-       appenders:
-         - type: file
-           currentLogFilename: apps-home/msa.log
-           archivedLogFilenamePattern: apps-home/msa.log.%d.gz
-           logFormat: '%-5p [%d{ISO8601,UTC}] %c: %m%n%xEx'
-         - type: logstash-file
-           currentLogFilename: apps-home/logstash/msa.log
-           archivedLogFilenamePattern: apps-home/logstash/msa.log.%d.gz
-           archivedFileCount: 7
-         - type: console
+      # Ports on which to listen for normal connections.
+      # See http://www.dropwizard.io/1.0.5/docs/manual/configuration.html#connectors
+      # for information on HTTPS and TLS connections.
+      applicationConnectors:
+        - type: http
+          port: 8080
+      # Ports on which to listen for admin tasks.
+      # This can probably be set to the above port+1.
+      adminConnectors:
+        - type: http
+          port: 8081
 
-    logging:
-     level: INFO
-     appenders:
-       - type: file
-         currentLogFilename: apps-home/msa.log
-         archivedLogFilenamePattern: apps-home/msa.log.%d.gz
-         logFormat: '%-5p [%d{ISO8601,UTC}] %c: %X{logPrefix}%m%n%xEx'
-       - type: logstash-file
-         currentLogFilename: apps-home/logstash/msa.log
-         archivedLogFilenamePattern: apps-home/logstash/msa.log.%d.gz
-         archivedFileCount: 7
-       - type: console
-         logFormat: '%-5p [%d{ISO8601,UTC}] %c: %X{logPrefix}%m%n%xEx'
+    # Add information about your matching service adapter (MSA) here.
+    matchingServiceAdapter:
+      # The entityId is used for SAML communication with Verify.
+      entityId: my-entity-id
+      # The externalUrl is the internet-facing URL for your MSA.
+      externalUrl: http://service.gov.uk/matching-service/POST
 
-    assertionLifetime: 60m
-    matchingServiceUri: http://local-matching-service.my.service.gov.uk/matching-request
-    unknownUserCreationServiceUri: http://local-matching-service.my.service.gov.uk/unknown-user-request
+    # Configure the URLs for your local matching service here.
+    localMatchingService:
+      # The matchUrl is where the MSA should post user attributes on a successful match
+      matchUrl: http://service.gov.uk/local-matching/match
+      # The accountCreationUrl is where the MSA should post attributes for unknown users
+      accountCreationUrl: http://service.gov.uk/local-matching/create-account
 
-    matchingServiceAdapterLocation: http://matching-service-adapter.my.service.gov.uk/matching-service/POST
+    # Configure the key pairs used by your MSA for signing SAML messages here.
+    signingKeys:
+      # The primary signing key is used to sign all messages to Verify.
+      primary:
+        publicKey:
+          # The certificate (.crt) containing the primary public signing key:
+          certFile: test_primary_signing.crt
+          # The common name (CN) of that certificate:
+          name: Test MSA Signing
+        privateKey:
+          # The PK8 (.pk8) containing the primary private signing key:
+          keyFile: test_primary_signing.pk8
+      # The public part of the secondary signing key is published in the MSA's metadata 
+      # during key rollovers but is otherwise unused by the MSA.
+      secondary:
+        publicKey:
+          certFile: test_secondary_signing.crt
+          name: Test Another MSA Signing
+        privateKey:
+          keyFile: test_secondary_signing.pk8
 
-    saml:
-     entityId: http://matching-service-adapter.my.service.gov.uk/matching-service
+    # Configure the key pairs used by your MSA for encrypting and decrypting SAML
+    # messages here. You can configure up to 2 encryption keys at a time and the MSA
+    # will attempt decryption with both. Only the first key will be used for encryption.
+    encryptionKeys:
+      - publicKey:
+          certFile: test_msa_encryption_1.crt
+          name: Test MSA Encryption 1
+        privateKey:
+          keyFile: test_msa_encryption_1.pk8
+      - publicKey:
+          certFile: test_msa_encryption_2.crt
+          name: Test MSA Encryption 2
+        privateKey:
+          keyFile: test_msa_encryption_2.pk8
 
-    matchingServiceClient:
-     timeout: 2s
-     timeToLive: 10m
-     cookiesEnabled: false
-     connectionTimeout: 1s
+    # Settings for connecting with the hub can be configured here
+    # if necessary.
+    hub:
+      ssoUrl: https://compliance-tool-reference.ida.digital.cabinet-office.gov.uk/SAML2/SSO
+      trustStore:
+        path: test_ida_hub.ts
+        password: puppet
 
+    # Settings for obtaining Verify's metadata can be configured here.
     metadata:
-     uri: https://www.[your-env].signin.service.gov.uk/SAML2/metadata/federation
-     trustStorePath: [path to truststore directory...]/ida_metadata_truststore.ts
-     trustStorePassword: puppet
-     expectedEntityId: https://signin.service.gov.uk
-     maxRefreshDelay: 100000
-     minRefreshDelay: 10000
-     client:
-       timeout: 2s
-       timeToLive: 10m
-       cookiesEnabled: false
-       connectionTimeout: 1s
-       retries: 3
-       keepAlive: 60s
-       chunkedEncodingEnabled: false
-       validateAfterInactivityPeriod: 5s
-       tls:
-         protocol: TLSv1.2
-         verifyHostname: true
-         trustSelfSignedCertificates: false
+      url: https://compliance-tool-reference.ida.digital.cabinet-office.gov.uk/SAML2/metadata/federation
+      trustStore:
+        path: test_ida_metadata.ts
+        password: puppet
 
-    hubSSOUri: https://www.[your-env].signin.service.gov.uk/SAML2/SSO
-
-    requireHubCertificates: false
-
-    serviceInfo:
-     name: matching-service-adapter
-
-    # If you would like the Matching Service Adapter to report to a Graphite instance.
-    metrics:
-     reporters:
-       - type: graphite
-         host: [graphite host]
-         port: [graphite port]
-         prefix: [some prefix of your choosing]
-         frequency: 30s
-
-    privateSigningKeyConfiguration:
-     keyUri: [path to your keys directory...]/msa_signing.pk8
-
-    privateEncryptionKeyConfiguration:
-     keyUri: [path to your keys directory...]/msa_encryption.pk8
-
-    publicSigningKeyConfiguration:
-     keyUri: [path to your keys directory...]/msa_signing.crt
-     keyName: http://matching-service-adapter.my.service.gov.uk/matching-service
-
-    publicEncryptionKeyConfiguration:
-     keyUri: [path to your keys directory...]/msa_encryption.crt
-     keyName: http://matching-service-adapter.my.service.gov.uk/matching-service
-
-    publicSecondarySigningKeyConfiguration
-     keyUri: [path to your keys directory...]/msa_signing_secondary.crt
-     keyName: http://matching-service-adapter.my.service.gov.uk/matching-service-secondary-sigining
-
-    publicSecondaryEncryptionKeyConfiguration
-     keyUri: [path to your keys directory...]/msa_encryption_secondary.crt
-     keyName: http://matching-service-adapter.my.service.gov.uk/matching-service-secondary-encryption
-
-    returnStackTraceInResponse: false
-
-    clientTrustStoreConfiguration:
-     storeUri: [path to truststore directory...]/ida_truststore.ts
-     password: puppet
-
-    featureFlagConfiguration:
-     isCertificateChainValidationRequired: true
-     encryptionDisabled: false
+    ## Options to add additional logging. By default, logs will be output to console.
+    ## See http://www.dropwizard.io/1.0.5/docs/manual/configuration.html#logging
+    ## for more information.
+    #logging:
+    #  level: INFO
+    #  appenders:
+    #    - type: file
+    #      currentLogFilename: apps-home/test-rp-msa.log
+    #      archivedLogFilenamePattern: apps-home/test-rp-msa.log.%d.gz
+    #      logFormat: '%-5p [%d{ISO8601,UTC}] %c: %X{logPrefix}%m%n%xEx'
+    #    - type: console
+    #      logFormat: '%-5p [%d{ISO8601,UTC}] %c: %X{logPrefix}%m%n%xEx'
 
 ### Adapt the YAML configuration file
 
-Make the following changes to the YAML configuration file. Variations
-are indicated where appropriate for the SAML compliance tool and
-integration and production environments.
+Make the following changes to the YAML configuration file according to the environment where you want to use the MSA. Variations are indicated for the SAML compliance tool and integration and production environments.
 
-1. Enter port numbers for the server application and admin ports.
 
-    > **Note:** If the Matching Service Adapter will be handling SSL termination
-    > (typically this will be handled by a proxy/load balancer like
-    > HAProxy), or if you don't trust the network between the SSL
-    > termination endpoint and the Matching Service Adapter, then specify
-    > `https` rather than `http` for the type of connection. For more
-    > information, see the guidance in the [DropWizard configuration
-    > manual](http://dropwizard.github.io/dropwizard/0.8.2/docs/manual/configuration.html#https).
+#### In the field `server:`
 
-1. Enter the URIs for your matching service and Matching Service Adapter in `matchingServiceUri:` and `matchingServiceAdapterLocation:` respectively.
-1. If you're [creating new user accounts when a match is not found](#create-user-accounts), enter the user account creation URI in `unknownUserCreationServiceUri:`
-1. In `entity id`, enter the entityID for the Matching Service Adapter in URI format. You create your own URI, possibly to reflect the name of your service, for example: `https://<service name>/MSA`
+1. Enter port numbers for the server application (`applicationConnectors`) and admin ports (`adminConnectors`).
 
-    > **Note:** It's good practice to use the Matching Service Adapter's URI (that is,
-    > the URI where the hub will send matching requests) as its entity ID,
-    > but this isn't mandatory.
+   > **Note:** If the MSA will be handling SSL termination (typically this will be handled by a proxy or load balancer like HAProxy), or if you don't trust the network between the SSL termination endpoint and the MSA, then specify `https` rather than `http` for the type of connection. For more information, see the guidance in the [DropWizard configuration manual](<http://dropwizard.github.io/dropwizard/1.0.5/docs/manual/configuration.html#https>).
 
-1. In `metadata:`, use the `uri:` parameter to specify the location where the Matching Service Adapter accesses the SAML metadata:
-    * for the SAML compliance tool, your GOV.UK Verify engagement lead will give you the URL
-    * for the integration environment, enter: `https://www.integration.signin.service.gov.uk/SAML2/metadata/federation`
-    * for the production environment, enter: `https://www.signin.service.gov.uk/SAML2/metadata/federation`
 
-1. In `metadata:`, use the `trustStorePath:` parameter to specify the path to your metadata truststore for the appropriate environment:
-    * for the SAML compliance tool and the integration environment, use `test_metadata_truststore.ts`
-    * for the production environment, use `prod_metadata_truststore.ts`
+#### In the field `matchingServiceAdapter:`
 
-1. In `clientTrustStoreConfiguration:`, use the `storeUri` parameter to specify the path of your general truststore for the appropriate environment:
-    * for the SAML compliance tool and the integration environment, use `test_ida_truststore.ts`
-    * for the production environment, use `prod_ida_truststore.ts`
 
-1. Enter the paths of the SAML signing and encryption private keys for
-    your Matching Service Adapter:
-    * `privateSigningKeyConfiguration:` – PKCS\#8 DER formatted
-    * `privateEncryptionKeyConfiguration:` – PKCS\#8 DER formatted
+1. Enter the [entityID](#glossary-entityID) for the MSA in `entityId`. This should reflect the name of your service, for example `https://<service name>/MSA`
 
-    > **Note:** To convert a private key to PKCS\#8 DER format, run the following command:
-    
-    >```
-    > `openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pk8 -outform DER`
-    >``` 
+   > **Note:** It's good practice to use the MSA's URI (where the hub will send matching requests) as its entityID, but this isn't mandatory.
 
-    For the compliance tool, [generate self-signed certificates](#generate-self-signed-certificates).
 
-    You will use different keys and certificates for the integration and production environments. See [Request certificates](#request-certificates).
+3. Enter the URI for your MSA in `externalUrl:`
 
-1. Enter the paths and names of the SAML signing and encryption certificates for your Matching Service Adapter. The names are used to identify the certificates in the metadata so should be meaningful and unique: `signing_1` and `encryption_1` would be acceptable.
-    * `publicSigningKeyConfiguration:` – public signing certificate, PEM formatted
-    * `publicEncryptionKeyConfiguration:` – public encryption certificate, PEM formatted
+#### In the field `localMatchingService:`
 
-1. If you want to use Graphite software to monitor the Matching Service
-    Adapter’s performance (optional), supply the required metrics: type,
-    host, port, prefix and frequency of the reporter.
+4. Enter the URI for your local matching service in `matchUrl:`
+
+5. If you're creating new user accounts when a match isn't found (see [create user accounts](#create-user-accounts)), enter the user account creation URI in `accountCreationUrl:`
+
+#### In the field `signingKeys:`
+
+6. Enter the paths of the primary SAML signing keys and certificates for your MSA in `primary:`
+   * for the compliance tool, [generate self-signed certificates](#generate-self-signed-certificates)
+   * you'll use different keys and certificates for the integration and production environments - see [Request certificates](#request-certificates).
+
+   > **Note:** To convert a private key to PKCS#8 DER format, run the following command: `openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pk8 -outform DER`
+
+
+#### In the field `encryptionKeys:`
+
+7. Enter the paths and names of the encryption keys and certificates for your MSA in `encryptionKeys`.  The names are used to identify the certificates in the metadata so should be meaningful and unique, for example, `signing_1` and `encryption_1`.
+
+#### In the field `hub:`
+
+8. In `trustStore:` `path:` , specify the path to your hub truststore file for the appropriate environment:
+  * for the SAML compliance tool and the integration environment, use the provided `test_ida_hub.ts` file (this is the default setting in the `test-config.yml` file)
+  * for the production environment, use the provided `prod_ida_hub.ts` file (this is the default setting in the `prod-config.yml` file)
+
+#### In the field `metadata:`
+
+9. Edit the `url:` value and specify the location where the MSA accesses the SAML metadata:
+  * for the SAML compliance tool, use the default setting in the `test-config.yml` file
+  * for the integration environment, enter: `https://www.integration.signin.service.gov.uk/SAML2/metadata/federation` in the `test-config.yml` file
+  * for the production environment, use the default setting in the `prod-config.yml` file
+
+10. In `trustStore:` `path:`, specify the path to your metadata truststore file for the appropriate environment:
+  * for the SAML compliance tool and the integration environment, use the provided `test_ida_metadata.ts` file (this is the default setting in the `test-config.yml` file)
+  * for the production environment, use the provided `prod_ida_metadata.ts` file (this is the default setting in the `prod-config.yml` file)
+
 
 ## Start the Matching Service Adapter
 
-To start using the Matching Service Adapter, run the following command,
+To start using the MSA, run the following command,
 supplying the path to your configuration file:
 
     java -jar [filename].jar server [path to configuration file].yml
