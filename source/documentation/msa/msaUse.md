@@ -171,10 +171,9 @@ Make the following changes to the YAML configuration file according to the envir
 
 1. Enter the [entityID](#glossary-entityID) for the MSA in `entityId`. This should reflect the name of your service, for example `https://<service name>/MSA`
 
-   > **Note:** It's good practice to use the MSA's URI (where the hub will send matching requests) as its entityID, but this isn't mandatory.
+    > **Note:** It's good practice to use the MSA's URI (where the hub will send matching requests) as its entityID, but this isn't mandatory.
 
-
-3. Enter the URI for your MSA in `externalUrl:`
+2. Enter the URI for your MSA in `externalUrl:`
 
 #### In the field `localMatchingService:`
 

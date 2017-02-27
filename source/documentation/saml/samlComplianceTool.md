@@ -19,10 +19,7 @@ iterative development of your service. We advise you to use the
 compliance tool as part of your continuous integration pipeline. This
 ensures that any changes maintain backwards compatibility.
 
-Prerequisites:
-
-* [build your local matching service](#build-a-local-matching-service) – you can use the [example of the JSON request](#json-request) that the Matching Service Adapter posts to your service and the [JSON schema](#json-schema) for a matching request
-* [install](#install-the-matching-service-adapter) and [configure](#configure-the-matching-service-adapter) your Matching Service Adapter
+Before running SAML compliance tests, [install](#install-the-matching-service-adapter) and [configure](#configure-the-matching-service-adapter) your MSA.
 
 Use the SAML compliance test to:
 
@@ -44,7 +41,7 @@ Generate a new set of configuration data for every test run.
     <a name="generate-self-signed-certificates"></a>
 
 
-1. Generate self-signed certificates for use with the compliance tool only. You can use OpenSSL to generate self-signed certificates using the [guidelines provided by the Heroku Dev Center](https://devcenter.heroku.com/articles/ssl-certificate-self#prerequisites).
+1. Generate self-signed certificates for use with the compliance tool only.
 1. POST the following JSON (via curl, or similar) to the `URI compliance-tool.RPPostUri` provided by your GOV.UK Verify engagement lead:
     
     ```
@@ -87,8 +84,37 @@ Generate a new set of configuration data for every test run.
     tool's SSO URI. Follow the redirect in the response to retrieve the
     result.
 
-    > **Note:** You may want to use an off-the-shelf tool to generate an
-    > authentication request.
+    > **Note:** The SAML authentication requests signed by the government service must use RSA-SHA256 for the [signature method algorithm](<https://www.w3.org/TR/xmldsig-core/#sec-SignatureMethod>) and SHA256 for the [digest method algorithm](<https://www.w3.org/TR/xmldsig-core/#sec-DigestMethod>). These are required to comply with the [Identity Assurance Hub Service SAML 2.0 Profile](<https://www.gov.uk/government/publications/identity-assurance-hub-service-saml-20-profile>).
+
+    Below is an example of a SAML authentication request:  
+
+    ```
+      <?xml version="1.0" encoding="UTF-8"?>
+      <saml2p:AuthnRequest ...>
+        <saml2:Issuer xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">http://www.test-rp.gov.uk/SAML2/MD</saml2:Issuer>
+        <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+          <ds:SignedInfo>
+            <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><
+            <ds:Reference URI="#_60f75dc5-f9eb-43cf-adfc-5814016a626c">
+              <ds:Transforms>
+                <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+              </ds:Transforms>
+              <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+              <ds:DigestValue>O+LkTbydEWNPSLThcblzSqd/BvlGAI0dWwGVgd6ixkE=</ds:DigestValue>
+            </ds:Reference>
+          </ds:SignedInfo>
+          <ds:SignatureValue>
+      O8x8ILlqoiCKg8LMSqlajyX5JhLDxHSltUXYAalGnFb0L41Up5hQuFrEXBNxfNiUo3ChlZA+FIWw
+      WkK5OSSqqJQ9IqgUFUapDVZUewerOGLQ/Qw80linrbc24w21JIWDnpoT8qrdt+c9EgkQTvKrwDmf
+      JfXUcbTCvuhnOTVrG/5Fv64sruBu9CVTSnvj/Jvy1bwK2HsvMmxrAO8og+iFvMx1KB7YCG1Puj/Z
+      frJRKYU3QgAehUR0hrUj1ReVGV4cx1Yy7FhUKnYpdsYRVxpv1McwkDXHVs5iao+0vv7rLGLw9U1d
+      a7lBaFhC2AT1wi+ogaO8nzZ/d3G6p0tHrMSqQA==
+          </ds:SignatureValue>
+        </ds:Signature>
+      </saml2p:AuthnRequest>
+    ```
 
 1.  If the result contains `PASSED`, access the URI provided in
     `responseGeneratorLocation`. A list of test scenarios is displayed.
