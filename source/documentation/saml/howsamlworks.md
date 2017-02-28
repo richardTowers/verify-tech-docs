@@ -32,15 +32,15 @@ For more details, see the diagrams:
 
 1. The government service sends a SAML authentication request to the GOV.UK Verify hub. The request indicates that a user wants to access the service and needs to prove their identity using GOV.UK Verify.
 
-    ![Diagram showing a SAML authentication request signed by the government service](/documentation/saml/step1Graphic.svg)
+    ![Diagram showing a SAML authentication request signed by the government service](/documentation/saml/saml-step1.svg)
 
 1. The GOV.UK Verify hub prompts the user to select an identity provider to authenticate them. The GOV.UK Verify hub forwards the SAML authentication request to the chosen identity provider.
 
-    ![Diagram showing a SAML authentication request signed by the hub](/documentation/saml/step2Graphic.svg)
+    ![Diagram showing a SAML authentication request signed by the hub](/documentation/saml/saml-step2.svg)
 
 1. The chosen identity provider authenticates the user based on the required [level of assurance](#glossary-level-of-assurance). The identity provider then sends a SAML response to the GOV.UK Verify hub:
 
-    ![Diagram showing a SAML response signed by the identity provider. It contains an authentication context assertion signed by the identity provider and encrypted for the hub. It also contains an identity assertion signed by the identity provider and encrypted for the hub](/documentation/saml/step3Graphic.svg)
+    ![Diagram showing a SAML response signed by the identity provider. It contains an authentication context assertion signed by the identity provider and encrypted for the hub. It also contains an identity assertion signed by the identity provider and encrypted for the hub](/documentation/saml/saml-step3.svg)
      * SAML response [signed](#signing-certificates) by the identity provider
      * authentication context assertion signed by the identity provider and [encrypted](#encryption-certificates) for the GOV.UK Verify hub –  this asserts that the user's identity is authenticated; it also contains contextual information, including the [level of assurance](#glossary-level-of-assurance)
      * identity assertion signed by the identity provider and encrypted for the GOV.UK Verify hub – this contains the user's [matching dataset](#glossary-matching-dataset) and the [persistent identifier](#glossary-persistent-identifier)
@@ -50,7 +50,7 @@ For more details, see the diagrams:
 
 1. The GOV.UK Verify hub sends a SAML attribute query to the government service’s Matching Service Adapter:
 
-    ![Diagram showing a SAML attribute query signed by the hub. It contains an identity assertion signed by the identity provider and encrypted for the Matching Service Adapter](/documentation/saml/step4Graphic.svg)
+    ![Diagram showing a SAML attribute query signed by the hub. It contains an identity assertion signed by the identity provider and encrypted for the Matching Service Adapter](/documentation/saml/saml-step4.svg)
     * SAML attribute query signed by the GOV.UK Verify hub
     * identity assertion signed by identity provider and encrypted for the Matching Service Adapter
 
@@ -62,13 +62,13 @@ For more details, see the diagrams:
 1. The local matching service returns a JSON response (`match` or `no match`) to the Matching Service Adapter.
 1. In the case of a `match` response, the Matching Service Adapter translates the JSON response into a SAML attribute query response and forwards it to the GOV.UK Verify hub:
 
-    ![Diagram showing a SAML attribute query response signed by the Matching Service Adapter. It contains an assertion signed by the Matching Service Adapter and encrypted for the hub](/documentation/saml/step7Graphic.svg)
+    ![Diagram showing a SAML attribute query response signed by the Matching Service Adapter. It contains an assertion signed by the Matching Service Adapter and encrypted for the hub](/documentation/saml/saml-step7.svg)
     * SAML attribute query response signed by the Matching Service Adapter
     * assertion signed by the Matching Service Adapter and encrypted for the GOV.UK Verify hub – this assertion contains the [hashed persistent identifier](#glossary-hashed-PID)
 
 1. The GOV.UK Verify hub sends a SAML response to the service, authenticating the user:
 
-    ![Diagram showing a SAML response signed by the hub. It contains an assertion signed by the Matching Service Adapter and encrypted for the government ](/documentation/saml/step8Graphic.svg)
+    ![Diagram showing a SAML response signed by the hub. It contains an assertion signed by the Matching Service Adapter and encrypted for the government ](/documentation/saml/saml-step8.svg)
     * assertion signed by the Matching Service Adapter and encrypted for the government service
 
 1. The government service retrieves the user's record from the datastore. This allows the government service to interact with the user.
