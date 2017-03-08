@@ -4,36 +4,12 @@ You can create a new account for the user based on the [hashed persistent identi
 
 > **Important:** Before creating a user account you must request explicit user consent.
 
-1.  Make sure your Matching Service Adapter exposes its user account
-    creation URI endpoint. This is the fully qualified URI to which the
-    hub makes unknown user attribute queries (see step 4 in the
-    [diagram showing user account creation](#create-user-accounts-diagram). The
-    Matching Service Adapter then POSTs the following JSON to the local
-    matching service's user account creation URI endpoint:
-    
-    ```
-    "hashedPid": "<a string value>",
-    "levelOfAssurance": "<the level of assurance, for example, LEVEL_1>"
-    ``` 
-    
-    You must specify the Matching Service Adapter's user account creation
-    URI endpoint on the form you fill in when you
-    [request access to an environment](#request-access-to-environments). This form is
-    available from your engagement lead.
+### Prerequisites
 
-1.  Make sure the local matching service's user account creation URI endpoint returns the following JSON, choosing success or failure as appropriate:
 
-    ```
-    "result": "success | failure"
-    ```
- 
-    > **Note:** As shown in the above example, `success` and `failure` must be in
-    > lower case.
-
-1.  Configure your Matching Service Adapter to create new user accounts.
-    To do this, supply the local matching service's user account
-    creation URI for the attribute `unknownUserCreationServiceUri:` in
-    the configuration file. See [Configure the Matching Service Adapter](#configure-the-matching-service-adapter) for more information.
+1.  Configure your MSA to create new user accounts. To do this, supply the local matching service's account
+    creation URI in `accountCreationUrl:` in
+    the [YAML configuration file](#configure-the-matching-service-adapter).
 
     <a name="list-attributes"></a>
 
@@ -56,7 +32,9 @@ You can create a new account for the user based on the [hashed persistent identi
 
     > **Note:** You cannot use historical data to create user accounts.
 
-### Create user accounts: message flow
+
+
+### Message flow
 
 <a name="create-user-accounts-diagram"></a>
 
@@ -71,44 +49,68 @@ For more details, see the diagrams:
 * [SAML message flow](#saml-flow-diagram)
 * [matching cycles](#matching-cycles-diagram)
 
-> **Note:** In this example, all 3 [matching cycles](#matching-cycles) failed to
+> **Note:** In this example, all 3 [matching cycles](#matching-cycles) previously failed to
 > find a match for the user in the government service records. See the
 > [diagram for matching cycles](#matching-cycles-diagram).
 
-1.  Your local matching service sends a `no-match` response to the
-    Matching Service Adapter.
-1.  The Matching Service Adapter forwards the `no-match` response to the
-    GOV.UK Verify hub.
+1.  Your local matching service sends a `no-match` response to the hub via the MSA.
 1.  The GOV.UK Verify hub:
-      * checks that your matching service supports the creation of new user accounts
-      * identifies the attributes you previously specified as necessary to create a new user account
+   * checks that your matching service supports the creation of user accounts 
+   * identifies the attributes you previously said your service needs to create a user account
+1. If your service supports the creation of user accounts, the hub sends a query to the MSA. It contains the:
+   * [matching dataset](#glossary-local-matching-datastore)
+   * [hashed PID](#glossary-hashed-PID)
+   * [level of assurance](#glossary-level-of-assurance)
+   * list of attributes to extract from the matching dataset
+1. The MSA POSTs the following JSON to the local matching service's account creation URI endpoint:
 
-1.  If your service supports the creation of new user accounts, the hub
-    sends an unknown user attribute query to the Matching Service
-    Adapter. It contains the:
-     * [hashed persistent identifier](#glossary-hashed-PID)
-     * [matching dataset](#glossary-matching-dataset) 
-     * list of attributes to extract from the matching dataset
+    ```
+    "hashedPid": "<string value>",
+    "levelOfAssurance": "<the level of assurance, for example, LEVEL_1>"
+    ``` 
 
-1.  The Matching Service Adapter extracts the required attributes from
-    the matching dataset (if available).
-1.  The Matching Service Adapter sends the extracted attributes and the
+1. Optionally, the local matching service stores the hashed PID and level of assurance in the local matching datastore. 
+
+    You'll need to create a correlation between the user account and the hashed PID, so a returning user can match with [cycle 0](#cycle-0-persistent-identifier-match). You can choose to store the hashed PID at this point and create a correlation between the user account and the hashed PID at step 9. Alternatively, you can create the user account, store the hashed PID and set up the correlation at step 9.
+
+1. The local matching service sends a JSON response to the MSA: 
+
+
+    ```
+    '{ "result": "success" }'
+    ```
+    or
+
+    ```
+    '{ "result": "failure" }'
+    ```
+ 
+    > **Notes:** 
+    
+    > * As shown above, `success` and `failure` must be in lower case
+    > * A user account isn't created at this point. The final response the hub sends to your service will contain the attributes you need to create a user account.
+
+1.  The MSA extracts the required attributes from
+    the matching dataset.
+1.  The MSA sends the extracted attributes and the
     hashed persistent identifier to your service via the GOV.UK Verify
     hub.
 
     > **Note:** The Matching Service Adapter must send this data via the GOV.UK
     > Verify hub, to respect the following identity assurance principles:
     
-    > * user control - the user must give their informed consent to the information being sent
+    > * user control - the user must give informed consent for their information to be used to create an account; they must also be allowed to check their information before you create the account
     > * data minimisation – the service receives only the restricted set of attributes it needs, not the full matching dataset.
     
     > For more information see the [Identity Assurance Principles](https://www.gov.uk/government/consultations/draft-identity-assurance-principles/privacy-and-consumer-advisory-group-draft-identity-assurance-principles#the-nine-identity-assurance-principles).
 
-1.  Optionally, the government service creates a correlation between the
-    matching dataset and the hashed persistent identifier in its matching
-    datastore. This will be used for matching cycle 0 when the same user
-    returns.
-1.  Optionally, the government service creates a new account based on
-    the attributes extracted from the matching dataset.
+1. The government service:
 
-    > **Important:** If you create a new account you must gain consent from the user first.
+   * creates a user account using the attributes extracted from the matching dataset
+   * sets up a correlation between the user account and the user's hashed PID
+   
+ > **Important:** If you create a new account you must gain consent from the user first.
+
+
+
+
