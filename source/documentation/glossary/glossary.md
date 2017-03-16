@@ -117,7 +117,7 @@ Also known as Requirements for Secure Delivery of Online Public Services (RSDOPS
 
 **government service**
 
-A service provided by a government department such as Check or update your company car tax (HMRC) or Claim your redundancy payment (BIS), that needs proof of a user’s identity to complete a transaction.
+A service provided by a government organisation such as Check or update your company car tax (HMRC) or Claim your redundancy payment (BIS), that needs proof of a user’s identity to complete a transaction.
 
 <a name="glossary-hashed-PID"></a>
 

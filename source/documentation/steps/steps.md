@@ -8,7 +8,7 @@ Prerequisites:
 * decide how to <a href="#store-private-keys">store and manage keys</a> and certificates so you can <a href="#rotate-your-keys">rotate your keys</a> when needed
 
 > **Note:**
-> You only need to deploy your code to an environment at the end of the development phase, when you test your matching service with the SAML compliance tool. You can do all development steps until this point on a development machine.
+> You only need to deploy your code to a server at the end of the development phase, when you test your matching service with the SAML compliance tool. You can do all development steps until this point on a development machine.
 
 <table>
   <tbody>

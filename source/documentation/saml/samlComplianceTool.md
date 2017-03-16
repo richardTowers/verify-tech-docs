@@ -76,10 +76,7 @@ Generate a new set of configuration data for every test run.
 
         Status 200 Created
 
-1.  Consume the GOV.UK Verify hub's metadata from the URL
-    `compliance-tool.MetadataUri` provided by your GOV.UK Verify
-    engagement lead. This metadata contains the compliance tool single
-    sign-on (SSO) URI.
+1.  Make sure that your MSA is pointing at the URLs for the compliance tool (`metadata:` `url`) and the hub (`hub:` `ssoUrl`). These are the defaults in the `test-config.yml` file for non-production environments.
 1.  Generate an authentication request and POST it to the compliance
     tool's SSO URI. Follow the redirect in the response to retrieve the
     result.

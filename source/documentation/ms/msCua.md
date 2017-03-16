@@ -13,6 +13,10 @@ You can create a new account for the user based on the [hashed persistent identi
 
     <a name="list-attributes"></a>
 
+1. On the '[request access to an environment](#request-access-to-environments)' form,
+    enter the fully qualified URL to which the hub will make unknown user attribute query requests.
+
+
 1.  On the '[request access to an environment](#request-access-to-environments)' form,
     enter the list of attributes you want the hub to return to your
     service when creating new user accounts. The options are:
@@ -30,7 +34,7 @@ You can create a new account for the user based on the [hashed persistent identi
     CYCLE_3
     ```
 
-    > **Note:** You cannot use historical data to create user accounts.
+    > **Note:** You can't use historical data to create user accounts.
 
 
 
@@ -41,7 +45,7 @@ You can create a new account for the user based on the [hashed persistent identi
 This diagram shows the message flow for creating user accounts. The
 numbers identify each stage in the flow. See below for explanations.
 
-![Diagram showing user account creation. The Matching Service Adapter converts between SAML and JSON. The Matching Service Adapter contains a fully qualified URL to which the hub makes unknown user attribute query requests. The text below the image describes the steps](/documentation/ms/accountcreationGraphic.svg)
+![Diagram showing user account creation. The Matching Service Adapter converts between SAML and JSON. The Matching Service Adapter contains a fully qualified URL to which the hub makes unknown user attribute query requests. The text below the image describes the steps](/documentation/ms/accountcreation.svg)
 
 For more details, see the diagrams:
 
@@ -90,6 +94,10 @@ For more details, see the diagrams:
     > * As shown above, `success` and `failure` must be in lower case
     > * A user account isn't created at this point. The final response the hub sends to your service will contain the attributes you need to create a user account.
 
+    The local matching service may return `'{ "result": "failure" }'` if:
+    * the level of assurance in the JSON request sent by the MSA is lower than the level of assurance required by the service
+    * there are exceptional circumstances, such as maintenance, when you want to suspend user account creation
+
 1.  The MSA extracts the required attributes from
     the matching dataset.
 1.  The MSA sends the extracted attributes and the
@@ -105,9 +113,8 @@ For more details, see the diagrams:
     > For more information see the [Identity Assurance Principles](https://www.gov.uk/government/consultations/draft-identity-assurance-principles/privacy-and-consumer-advisory-group-draft-identity-assurance-principles#the-nine-identity-assurance-principles).
 
 1. The government service:
-
-   * creates a user account using the attributes extracted from the matching dataset
-   * sets up a correlation between the user account and the user's hashed PID
+    * creates a user account using the attributes extracted from the matching dataset
+    * sets up a correlation between the user account and the user's hashed PID
    
  > **Important:** If you create a new account you must gain consent from the user first.
 

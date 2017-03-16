@@ -19,6 +19,8 @@ For more details, see the diagrams:
 * [matching cycles](#matching-cycles-diagram)
 * [create user accounts](#create-user-accounts-diagram)
 
+The MSA is a stateless service. It runs on Java 8 using [Dropwizard](http://www.dropwizard.io/).
+
 **Why does GOV.UK Verify use the Matching Service Adapter?**
 
 The hub uses SAML as its

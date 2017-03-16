@@ -2,7 +2,7 @@
 
 **Prerequisite:** The Matching Service Adapter (MSA) requires Java 8. Make sure you have the latest version of the Java Runtime Environment (JRE) installed.
 
-1. When you have successfully completed a gate review for [Stage 3: Planning](http://alphagov.github.io/identity-assurance-documentation/stage3/Stage3.html), email [<idasupport+onboarding@digital.cabinet-office.gov.uk>](mailto:idasupport+onboarding@digital.cabinet-office.gov.uk) to request access to the secure site where you can download the Matching Service Adapter.
+1. When you have successfully completed a gate review for [Stage 3: Planning](http://alphagov.github.io/identity-assurance-documentation/stage3/Stage3.html), you can download and install the MSA. If you don't already have a link to the secure site where you can download the MSA, email [<idasupport+onboarding@digital.cabinet-office.gov.uk>](mailto:idasupport+onboarding@digital.cabinet-office.gov.uk).
 1. Download the MSA zip file to your host. It contains:
     * a jar (java archive) file
     * [truststore](#glossary-truststore) files for non-production environments (the SAML compliance tool and the integration environment) - `test_ida_hub.ts` and `test_ida_metadata.ts`
@@ -227,8 +227,9 @@ Adapter posts to your service.
 
 ## Monitoring
 
-Health checks run every 60 seconds to ensure that the Matching Service
-Adapter is functioning correctly. They test:
+
+
+When the MSA is installed in your [integration or production environment](#gov-uk-verify-environments), health checks run every 60 seconds to ensure that the Matching Service Adapter is functioning correctly. They test:
 
 * connectivity
 * that the Matching Service Adapter accepts the hub signature
@@ -246,14 +247,15 @@ For information on configuring HTTPS proxies, see
 
 ### Matching Service Adapter TLS certificates
 
-GOV.UK Verify trusts the following root certificate authorities for
-HTTPS connections to your matching service:
+The table below shows the root certificate authorities that GOV.UK Verify trusts for HTTPS connections to your matching service in the [integration and production environments](#gov-uk-verify-environments).
 
 |Root certificate authority |Common name |X509v3 subject key identifier |
 |:---|:---|:---|
 |AddTrust External CA Root |AddTrust External CA Root |AD:BD:98:7A:34:B4:26:F7:FA:C4:26:54:EF:03:BD:E0:24:CB:54:1A |
 |GeoTrust Global CA |GeoTrust Global CA |C0:7A:98:68:8D:89:FB:AB:05:64:0C:11:7D:AA:7D:65:B8:CA:CC:4E |
 |QuoVadis Root CA 2 | QuoVadis Root CA 2 |1A:84:62:BC:48:4C:33:25:04:D4:EE:D0:F6:03:C4:19:46:D1:94:6B|
+
+> **Note:** For the SAML compliance tool, use [self-signed certificates](#generate-self-signed-certificates).
 
 If you want to use a root certificate authority for your matching
 service that isn’t in the above table, raise a ticket with us by sending
