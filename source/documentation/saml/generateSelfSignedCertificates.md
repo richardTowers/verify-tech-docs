@@ -14,7 +14,7 @@ The GOV.UK Verify team generally use the OpenSSL tool to do this using the guida
 Install OpenSSL if it isn't already installed:
 
 * OS X (with homebrew) - `brew install openssl`
-* Windows - download the "Complete package, except sources" from [http://gnuwin32.sourceforge.net/packages/openssl.htm](http://gnuwin32.sourceforge.net/packages/openssl.htm). 
+* Windows - download the 'Complete package, except sources' from [http://gnuwin32.sourceforge.net/packages/openssl.htm](http://gnuwin32.sourceforge.net/packages/openssl.htm). 
 * Ubuntu Linux - `apt-get install openssl`
 
 Run the following commands in order, replacing:

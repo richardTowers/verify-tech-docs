@@ -70,7 +70,7 @@ Generate a new set of configuration data for every test run.
 
         openssl pkcs8 -nocrypt -in server.pem -out server.pk8.pem -outform PEM -topk8
         ```
-     * `userAccountCreationAttributes`: provide this only if you want to test [new user account creation](#create-user-accounts-message-flow) – select from the [full list of attributes](#list-attributes)
+     * `userAccountCreationAttributes`: provide this only if you want to test [new user account creation](#create-user-accounts) – select from the [full list of attributes](#list-attributes)
 
 1. You receive a response similar to the following:
 
