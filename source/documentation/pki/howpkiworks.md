@@ -91,8 +91,7 @@ assurance that the message originated from the government service.
 
 When a user has verified their identity, the identity provider sends
 a signed message to the hub containing the user's encrypted personal
-information. This ensures the confidentiality of the message and its
-origin.
+information. This ensures the confidentiality of the message and that the message originated from the identity provider.
 
 A message can contain embedded messages which may be encrypted and/or
 signed by different entities within the GOV.UK Verify federation. For

@@ -71,5 +71,5 @@ For more details, see the diagrams:
     ![Diagram showing a SAML response signed by the hub. It contains an assertion signed by the Matching Service Adapter and encrypted for the government ](/documentation/saml/saml-step8.svg)
     * assertion signed by the Matching Service Adapter and encrypted for the government service
 
-1. The government service retrieves the user's record from the datastore. This allows the government service to interact with the user.
+1. The government service gets the user's record from the datastore. This allows the government service to interact with the user.
 
