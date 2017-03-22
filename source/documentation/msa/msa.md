@@ -45,7 +45,7 @@ your alternatives.
 
 To use the Matching Service Adapter, you need to:
 
-1. [Build your local matching service](#build-a-local-matching-service) – you can use the [example of the JSON request](#example-of-a-json-request-to-your-local-matching-service) that the Matching Service Adapter posts to your service and the [JSON schema](#respond-to-json-matching-requests) for a matching request.
+1. [Build your local matching service](#build-a-local-matching-service) – you can use the [example of the JSON request](#json-request) that the Matching Service Adapter posts to your service and the [JSON schema](#json-request) for a matching request.
 2. [Install the Matching Service Adapter](#install-the-matching-service-adapter).
 3. [Configure the Matching Service Adapter](#configure-the-matching-service-adapter).
 

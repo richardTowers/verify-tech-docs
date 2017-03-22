@@ -228,7 +228,7 @@ supplying the path to your configuration file:
 You can now run
 [SAML compliance tests between the hub and your Matching Service Adapter](#test-your-matching-service-with-the-saml-compliance-tool).
 To help [build your local matching service](#build-a-local-matching-service), you can use the
-[example of the JSON request](#example-of-a-json-request-to-your-local-matching-service) that the Matching Service
+[example of the JSON request](#json-request) that the Matching Service
 Adapter posts to your service.
 
 ## Monitoring
