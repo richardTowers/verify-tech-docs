@@ -42,7 +42,7 @@ Generate a new set of configuration data for every test run.
 
 
 1. Generate self-signed certificates for use with the compliance tool only.
-1. POST the following JSON (via curl, or similar) to the `URI compliance-tool.RPPostUri` provided by your GOV.UK Verify engagement lead:
+1. POST the following JSON to the SAML compliance tool URL ([https://compliance-tool-reference.ida.digital.cabinet-office.gov.uk/rp-test-data](https://compliance-tool-reference.ida.digital.cabinet-office.gov.uk/rp-test-data)):
     
     ```
         Content-Type: application/json
@@ -63,12 +63,10 @@ Generate a new set of configuration data for every test run.
      * the keys and certificates in the configuration data must be single-line strings of Base64-encoded data without the header and footer `BEGIN CERTIFICATE` and `END CERTIFICATE`
      * `matchingServiceSigningPrivateCert`: this is required because the compliance tool sends a response to your service which contains an assertion signed by the Matching Service Adapter
 
-        This key must be in PKCS\#8 PEM format:
+        This key must be a Base-64 encoded version of your PKCS#8 signing key. To convert a key named `test_primary_signing.pk8`, run:
         
         ```
-        cat server.crt server.key > server.pem
-
-        openssl pkcs8 -nocrypt -in server.pem -out server.pk8.pem -outform PEM -topk8
+        base64 test_primary_signing.pk8
         ```
      * `userAccountCreationAttributes`: provide this only if you want to test [new user account creation](#create-user-accounts) – select from the [full list of attributes](#list-attributes)
 
@@ -81,9 +79,12 @@ Generate a new set of configuration data for every test run.
     tool's SSO URI. Follow the redirect in the response to retrieve the
     result.
 
-    > **Note:** The SAML authentication requests signed by the government service must use RSA-SHA256 for the [signature method algorithm](<https://www.w3.org/TR/xmldsig-core/#sec-SignatureMethod>) and SHA256 for the [digest method algorithm](<https://www.w3.org/TR/xmldsig-core/#sec-DigestMethod>). These are required to comply with the [Identity Assurance Hub Service SAML 2.0 Profile](<https://www.gov.uk/government/publications/identity-assurance-hub-service-saml-20-profile>).
+    > **Note:** The SAML authentication requests signed by the government service must use RSA-SHA256 for the [signature method algorithm](<https://www.w3.org/TR/xmldsig-core/#sec-SignatureMethod>) and SHA256 for the [digest method algorithm](<https://www.w3.org/TR/xmldsig-core/#sec-DigestMethod>). These are required to comply with the [Identity Assurance Hub Service SAML 2.0 Profile](<https://www.gov.uk/government/publications/identity-assurance-hub-service-saml-20-profile>). 
 
-    Below is an example of a SAML authentication request:  
+    <details>
+    <summary>
+    Example of a SAML authentication request
+    </summary>
 
     ```
       <?xml version="1.0" encoding="UTF-8"?>
@@ -112,6 +113,7 @@ Generate a new set of configuration data for every test run.
         </ds:Signature>
       </saml2p:AuthnRequest>
     ```
+    </details>
 
 1.  If the result contains `PASSED`, access the URI provided in
     `responseGeneratorLocation`. A list of test scenarios is displayed.
@@ -147,7 +149,10 @@ Generate a new set of configuration data for every test run.
         Status 201 Created
         Location: .../ms-test-run/8fd7782f-efac-48b2-8171-3e4da9553d19
 
-1. POST your test [matching dataset](#glossary-matching-dataset) (see example below) to the `Location` field in the above response (`.../ms-test-run/8fd7782f-efac-48b2-8171-3e4da9553d19` in the above example).
+1. POST your test [matching dataset](#glossary-matching-dataset) (see example below) to the `Location` field in the above response (`.../ms-test-run/8fd7782f-efac-48b2-8171-3e4da9553d19` in the above example). <details>
+   <summary>
+   Example of a test matching dataset
+   </summary>
 
         {
             "levelOfAssurance": "LEVEL_2",
@@ -217,13 +222,14 @@ Generate a new set of configuration data for every test run.
         }
 
     where:
-    * `persistentId` is mandatory
-    * you must supply at least one other value in addition to `persistentId`
-    * the values of `addresses` and `surnames` are arrays
-    * fields have optional `from` and `to` attributes in which you can capture historical values – for example, if the user has changed their surname, there's an additional entry for the old surname with the `from` and `to` values defining the period for which the name was valid; the new surname only has the `from` attribute, containing the date from which it was valid
-    * the `addresses` field that holds the current address contains a `fromDate` attribute for the date from which the address is valid; past addresses also contain the `toDate` attribute
-    * the `cycle3Dataset` field is only present for a cycle 3 matching attempt
-    * the `uprn` (Unique Property Reference Number) is a unique reference for each property in Great Britain, ensuring accuracy of address data. This is an optional attribute that can contain up to 12 characters and should not have any leading zeros
+      * `persistentId` is mandatory
+      * you must supply at least one other value in addition to `persistentId`
+      * the values of `addresses` and `surnames` are arrays
+      * fields have optional `from` and `to` attributes in which you can capture historical values – for example, if the user has changed their surname, there's an additional entry for the old surname with the `from` and `to` values defining the period for which the name was valid; the new surname only has the `from` attribute, containing the date from which it was valid
+      * the `addresses` field that holds the current address contains a `fromDate` attribute for the date from which the address is valid; past addresses also contain the `toDate` attribute
+      * the `cycle3Dataset` field is only present for a cycle 3 matching attempt
+      * the `uprn` (Unique Property Reference Number) is a unique reference for each property in Great Britain, ensuring accuracy of address data. This is an optional attribute that can contain up to 12 characters and should not have any leading zeros
+   </details>
 
 1. When the SAML compliance tool receives your test matching dataset, it will POST an attribute query to your Matching Service Adapter. This corresponds to step 4 in the [SAML message flow](#how-saml-works-with-gov-uk-verify).
 1. Your Matching Service Adapter validates the query and sends a POST with a JSON request containing your test matching dataset to your local matching service. This corresponds to step 5 in the [SAML message flow](#how-saml-works-with-gov-uk-verify).

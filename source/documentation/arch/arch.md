@@ -100,3 +100,33 @@ Verify federation.
 
 [PKI](#public-key-infrastructure) implements secure electronic transactions between the
 entities in the GOV.UK Verify federation.
+
+
+
+
+
+<details>
+<summary>
+Response
+</summary>
+
+If the request is successful, `response` will be a `dict`:
+
+```python
+{
+        "id": "bfb50d92-100d-4b8b-b559-14fa3b091cda",
+        "reference": None,
+        "content": {
+                    "body": "Some words",
+                    "from_number": "40604"
+                    },
+        "uri": "https://api.notifications.service.gov.uk/v2/notifications/ceb50d92-100d-4b8b-b559-14fa3b091cd",
+        "template": {
+                     "id": "ceb50d92-100d-4b8b-b559-14fa3b091cda",
+                     "version": 1,
+                     "uri": "https://api.notifications.service.gov.uk/v2/templates/bfb50d92-100d-4b8b-b559-14fa3b091cda"
+                     }
+}
+```
+</details>
+

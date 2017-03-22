@@ -20,7 +20,7 @@ Install OpenSSL if it isn't already installed:
 Run the following commands in order, replacing:
 
 * `$name` with the filename of the key or certificate you're generating - see [Keys and certificates for your MSA](#keys-and-certificates-for-your-msa) and [Keys and certificates for your service](#keys-and-certificates-for-your-service)
-* `$commonName` with a description of how the certificate will be used (for example "My Service MSA Signing Primary").
+* `$commonName` with a description of how the certificate will be used (for example 'My Service MSA Signing Primary').
 
 ```
     # Generate a private key:

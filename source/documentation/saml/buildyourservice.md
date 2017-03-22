@@ -48,7 +48,12 @@ Your service must poll the Matching Service Adapter metadata every 10 minutes.
 
 ### Send a SAML authentication request to the GOV.UK Verify hub
 
-1. Use your <a href="#choose-a-product-and-framework">chosen product and framework</a> to build a SAML authentication request in XML:
+1. Use your <a href="#choose-a-product-and-framework">chosen product and framework</a> to build a SAML authentication request in XML.
+
+    <details>
+    <summary>
+    Example of a SAML authentication request
+    </summary>
 
     ```
       <?xml version="1.0" encoding="UTF-8"?>
@@ -77,6 +82,8 @@ Your service must poll the Matching Service Adapter metadata every 10 minutes.
         </ds:Signature>
       </saml2p:AuthnRequest>
     ```
+    </details>
+
 1. Send the authentication request to the URL indicated in the element `SingleSignonService` in the MSA metadata.
 
 ### Handle responses using SAML metadata

@@ -57,7 +57,12 @@ The MSA zip file contains two sample YAML configuration files:
 
 <a name="yaml-configuration-file"></a>
 
-[Adapt the YAML configuration file](#adapt-the-yaml-configuration-file) where required. Below is the `test-config.yml` file:
+[Adapt the YAML configuration file](#adapt-the-yaml-configuration-file) where required. 
+
+<details>
+<summary>
+Example of the `test-config.yml` file.
+</summary>
 
 
     # Configure the matching service adapter's server settings here.
@@ -153,6 +158,7 @@ The MSA zip file contains two sample YAML configuration files:
     #      logFormat: '%-5p [%d{ISO8601,UTC}] %c: %X{logPrefix}%m%n%xEx'
     #    - type: console
     #      logFormat: '%-5p [%d{ISO8601,UTC}] %c: %X{logPrefix}%m%n%xEx'
+</details>
 
 ### Adapt the YAML configuration file
 
