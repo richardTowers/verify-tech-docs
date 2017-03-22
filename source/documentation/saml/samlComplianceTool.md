@@ -113,7 +113,7 @@ Generate a new set of configuration data for every test run.
         </ds:Signature>
       </saml2p:AuthnRequest>
     ```
-    </details>
+
 
 1.  If the result contains `PASSED`, access the URI provided in
     `responseGeneratorLocation`. A list of test scenarios is displayed.
@@ -233,85 +233,3 @@ Generate a new set of configuration data for every test run.
 
 1. When the SAML compliance tool receives your test matching dataset, it will POST an attribute query to your Matching Service Adapter. This corresponds to step 4 in the [SAML message flow](#how-saml-works-with-gov-uk-verify).
 1. Your Matching Service Adapter validates the query and sends a POST with a JSON request containing your test matching dataset to your local matching service. This corresponds to step 5 in the [SAML message flow](#how-saml-works-with-gov-uk-verify).
-
-### Example of a JSON request to your local matching service
-
-Below is a formatted example of a cycle 3 matching request that the
-Matching Service Adapter sends to your local matching service:
-
-    {
-        "cycle3Dataset": {
-            "attributes": {
-                "drivers_licence": "4C22DA90A18A4B88BE460E0A3D975F68"
-            }
-        },
-        "hashedPid": "8a5db0ad424efe4e09622cc4a876cc4c338558384752b483ff69dda4dca1ef04",
-        "levelOfAssurance": "LEVEL_2",
-        "matchId": "default-request-id",
-        "matchingDataset": {
-            "addresses": [
-                {
-                    "fromDate": "1980-05-24T00:00:00.000Z",
-                    "internationalPostCode": "GB1 2PP",
-                    "lines": [
-                        "123 George Street"
-                    ],
-                    "postCode": "GB1 2PP",
-                    "toDate": "2005-05-14T00:00:00.000Z",
-                    "uprn": "7D68E096-5510-B3844C0BA3FD",
-                    "verified": true
-                },
-                {
-                    "fromDate": "2005-05-14T00:00:00.000Z",
-                    "internationalPostCode": "GB1 2PF",
-                    "lines": [
-                        "10 George Street"
-                    ],
-                    "postCode": "GB1 2PF",
-                    "uprn": "833F1187-9F33-A7E27B3F211E",
-                    "verified": true
-                }
-            ],
-            "dateOfBirth": {
-                "value": "1980-05-24",
-                "verified": true
-            },
-            "firstName": {
-                "value": "Joe",
-                "verified": true
-            },
-            "gender": {
-                "value": "MALE",
-                "verified": true
-            },
-            "middleNames": {
-                "value": "Bob Rob",
-                "verified": true
-            },
-            "surnames": [
-                {
-                    "from": "1980-05-24T00:00:00.000Z",
-                    "to": "2010-01-20T00:00:00.000Z",
-                    "value": "Fred",
-                    "verified": true
-                },
-                {
-                    "from": "2010-01-20T00:00:00.000Z",
-                    "value": "Dou",
-                    "verified": true
-                }
-            ]
-        }
-    }
-
-where the `matchId` field is unique to a user's journey in the GOV.UK
-Verify hub – you can log this for future reference.
-
-Below is an example of a response from your local matching service:
-
-    200 {
-     result : match|no-match
-     }`
-
-This response corresponds to step 6 in the
-[SAML message flow](#how-saml-works-with-gov-uk-verify).

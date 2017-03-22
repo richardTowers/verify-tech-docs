@@ -61,7 +61,7 @@ The MSA zip file contains two sample YAML configuration files:
 
 <details>
 <summary>
-Example of the `test-config.yml` file.
+Example of the `test-config.yml` file
 </summary>
 
 
