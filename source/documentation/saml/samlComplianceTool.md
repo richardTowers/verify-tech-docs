@@ -86,33 +86,33 @@ Generate a new set of configuration data for every test run.
     Example of a SAML authentication request
     </summary>
 
-    ```
-      <?xml version="1.0" encoding="UTF-8"?>
-      <saml2p:AuthnRequest ...>
-        <saml2:Issuer xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">http://www.test-rp.gov.uk/SAML2/MD</saml2:Issuer>
-        <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-          <ds:SignedInfo>
-            <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-            <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><
-            <ds:Reference URI="#_60f75dc5-f9eb-43cf-adfc-5814016a626c">
-              <ds:Transforms>
-                <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
-                <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-              </ds:Transforms>
-              <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
-              <ds:DigestValue>O+LkTbydEWNPSLThcblzSqd/BvlGAI0dWwGVgd6ixkE=</ds:DigestValue>
-            </ds:Reference>
-          </ds:SignedInfo>
-          <ds:SignatureValue>
+    <pre>
+      &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+      &lt;saml2p:AuthnRequest ...&gt;
+        &lt;saml2:Issuer xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity"&gt;http://www.test-rp.gov.uk/SAML2/MD&lt;/saml2:Issuer&gt;
+        &lt;ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"&gt;
+          &lt;ds:SignedInfo&gt;
+            &lt;ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/&gt;
+            <b>&lt;ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/&gt;</b>
+            &lt;ds:Reference URI="#_60f75dc5-f9eb-43cf-adfc-5814016a626c"&gt;
+              &lt;ds:Transforms&gt;
+                &lt;ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/&gt;
+                &lt;ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/&gt;
+              &lt;/ds:Transforms&gt;
+              <b>&lt;ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/&gt;</b>
+              &lt;ds:DigestValue&gt;O+LkTbydEWNPSLThcblzSqd/BvlGAI0dWwGVgd6ixkE=&lt;/ds:DigestValue&gt;
+            &lt;/ds:Reference&gt;
+          &lt;/ds:SignedInfo&gt;
+          &lt;ds:SignatureValue&gt;
       O8x8ILlqoiCKg8LMSqlajyX5JhLDxHSltUXYAalGnFb0L41Up5hQuFrEXBNxfNiUo3ChlZA+FIWw
       WkK5OSSqqJQ9IqgUFUapDVZUewerOGLQ/Qw80linrbc24w21JIWDnpoT8qrdt+c9EgkQTvKrwDmf
       JfXUcbTCvuhnOTVrG/5Fv64sruBu9CVTSnvj/Jvy1bwK2HsvMmxrAO8og+iFvMx1KB7YCG1Puj/Z
       frJRKYU3QgAehUR0hrUj1ReVGV4cx1Yy7FhUKnYpdsYRVxpv1McwkDXHVs5iao+0vv7rLGLw9U1d
       a7lBaFhC2AT1wi+ogaO8nzZ/d3G6p0tHrMSqQA==
-          </ds:SignatureValue>
-        </ds:Signature>
-      </saml2p:AuthnRequest>
-    ```
+          &lt;/ds:SignatureValue&gt;
+        &lt;/ds:Signature&gt;
+      &lt;/saml2p:AuthnRequest&gt;
+    </pre>
 
 
 1.  If the result contains `PASSED`, access the URI provided in
