@@ -133,23 +133,19 @@ The MSA sends one matching request for both cycle 0 and cycle 1 to your local ma
 Your local matching service first runs cycle 0. If no match is found, it runs cycle 1. It then sends either a `match` or a `no-match` response to the MSA. This response corresponds to step 6 in the [SAML message flow](#saml-flow-diagram).
 
 
-Below is a ``match`` response:
+Below is a ``match`` response (it should have the status code `200 OK`):
 
 ```
-  200 {
-   result : match
-   }
+  {"result":"match"}
 ```
 
-Below is a ``no-match`` response:
+Below is a ``no-match`` response (it should have the status code `200 OK`):
 
 ```
-  200 {
-   result : no-match
-   }
+  {"result":"no-match"}
 ```
 
-If you are using cycle 3 and your local matching service returned a `no-match` response to the MSA, the MSA sends a cycle 3 matching request.  Below is a formatted example:
+If you're using cycle 3 and your local matching service returned a `no-match` response to the MSA, the MSA sends a cycle 3 matching request.  Below is a formatted example:
 
 
    <details>

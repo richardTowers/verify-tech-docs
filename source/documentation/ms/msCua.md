@@ -42,7 +42,7 @@ You can create a new account for the user based on the [hashed persistent identi
 
 <a name="create-user-accounts-diagram"></a>
 
-This diagram shows the message flow for creating user accounts. In this example, the service has been set up to create user accounts when matching fails. The numbers identify each stage in the flow. See below for explanations. 
+This diagram shows the message flow for creating user accounts. In this example, the service has been set up to create user accounts when matching fails. 
 
 ![Diagram showing user account creation. The Matching Service Adapter converts between SAML and JSON. The Matching Service Adapter contains a fully qualified URL to which the hub makes unknown user attribute query requests. The text below the image describes the steps](/documentation/ms/createanaccount.svg)
 

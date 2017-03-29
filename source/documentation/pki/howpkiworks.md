@@ -72,7 +72,7 @@ signature, and then send the signed message. The receivers check the
 digital signature using your public signing key from your signing
 certificate.
 
-![Diagram with an overview of how data signing works. The government service signs data using their private signing key. The government service sends the signed data to the GOV.UK Verify hub. The hub checks the signature using the government service public signing key](/documentation/pki/pkiSigningGraphic.svg)
+![Diagram with an overview of how data signing works. The government service signs data using their private signing key. The government service sends the signed data to the GOV.UK Verify hub. The hub checks the signature using the government service public signing key](/documentation/pki/pkisigning.svg)
 
 You can use encryption and signing together or alone.
 

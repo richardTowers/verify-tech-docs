@@ -21,7 +21,7 @@ This diagram shows the SAML message flow within the GOV.UK Verify
 federation. The numbers identify each stage in the flow. See below for
 explanations.
 
-![Diagram showing a SAML message flow in GOV.UK Verify architecture. Communication between government service, the hub, and identity providers is via SAML and passes through the user's browser. Communication between the hub and the Matching Service Adapter is via SAML using SOAP. Communication between the Matching Service Adapter, the local matching service, and the local matching data store is not SAML. The text below the image describes the SAML messages sent between entities in the federation](/documentation/saml/samlflow.svg)
+![Diagram showing a SAML message flow in GOV.UK Verify architecture. Communication between government service, the hub, and identity providers is via SAML and passes through the user's browser. Communication between the hub and the Matching Service Adapter is via SAML using SOAP. Communication between the Matching Service Adapter, the local matching service, and the local matching data store is not SAML. The text below the image describes the SAML messages sent between entities in the federation](/documentation/saml/samlFlow.svg)
 
 For more details, see the diagrams:
 
