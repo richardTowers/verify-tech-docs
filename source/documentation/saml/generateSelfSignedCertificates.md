@@ -6,7 +6,7 @@ must be <a href="#request-certificates">issued by the IDAP certificate authority
 
 ### Generate self-signed certificates with OpenSSL
 
-You can generate keys and self-signed certificates in whatever way is most convenient and familiar for you.
+You can generate keys and self-signed certificates in whatever way is most convenient and familiar for you. There are many different formats of keys and certificates. The Matching Service Adapter (MSA) uses PKCS#8 formatted keys (.pk8) and PEM encoded X509 certificates (.crt).
 
 The GOV.UK Verify team generally use the OpenSSL tool to do this using the guidance from the [Heroku Dev Center](<https://devcenter.heroku.com/articles/ssl-certificate-self#prerequisites>`_). 
 

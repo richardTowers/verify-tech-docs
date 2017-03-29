@@ -45,8 +45,6 @@ To obtain a certificate:
 1. [Submit a certificate signing request](#submit-certificate-signing-requests) to the IDAP certificate authority.
 1. The certificate authority generates your certificate and sends it to you.
 
-![Diagram with an overview of how to generate certificates. Generate a private key. Generate a public key from the private key. Generate a certificate signing request containing the public key. Send the certificate signing request to the IDAP certificate authority. The certificate authority generates the certificate and sends it to you](/documentation/pki/pkiIssueCertsGraphic.svg)
-
 The certificate authority also issues certificates for the GOV.UK Verify
 hub and identity providers.
 
@@ -61,7 +59,7 @@ The sender extracts the public encryption key from the receiver's
 encryption certificate and uses it to encrypt a message. The receiver
 decrypts the message using their corresponding private encryption key.
 
-![Diagram with an overview of how data encryption works. The GOV.UK Verify hub extracts the Matching Service Adapter public encryption key from the Matching Service Adapter encryption certificate.  The GOV.UK Verify hub encrypts data and sends it to the Matching Service Adapter. The Matching Service Adapter decrypts the data using the Matching Service Adapter private encryption key](/documentation/pki/pkiEncryptionGraphic.svg)
+![Diagram with an overview of how data encryption works. The GOV.UK Verify hub extracts the Matching Service Adapter public encryption key from the Matching Service Adapter encryption certificate.  The GOV.UK Verify hub encrypts data and sends it to the Matching Service Adapter. The Matching Service Adapter decrypts the data using the Matching Service Adapter private encryption key](/documentation/pki/pkiencryption.svg)
 
 <a name="signing-certificates"></a>
 

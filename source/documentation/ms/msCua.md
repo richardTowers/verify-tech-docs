@@ -34,7 +34,7 @@ You can create a new account for the user based on the [hashed persistent identi
     CYCLE_3
     ```
 
-    > **Note:** You can't use historical data to create user accounts.
+    > **Note:** You can't use historical data to create user accounts. For example, you can't use an out of date address to create a new user account. 
 
 
 
@@ -42,10 +42,9 @@ You can create a new account for the user based on the [hashed persistent identi
 
 <a name="create-user-accounts-diagram"></a>
 
-This diagram shows the message flow for creating user accounts. The
-numbers identify each stage in the flow. See below for explanations.
+This diagram shows the message flow for creating user accounts. In this example, the service has been set up to create user accounts when matching fails. The numbers identify each stage in the flow. See below for explanations. 
 
-![Diagram showing user account creation. The Matching Service Adapter converts between SAML and JSON. The Matching Service Adapter contains a fully qualified URL to which the hub makes unknown user attribute query requests. The text below the image describes the steps](/documentation/ms/accountcreation.svg)
+![Diagram showing user account creation. The Matching Service Adapter converts between SAML and JSON. The Matching Service Adapter contains a fully qualified URL to which the hub makes unknown user attribute query requests. The text below the image describes the steps](/documentation/ms/createanaccount.svg)
 
 For more details, see the diagrams:
 

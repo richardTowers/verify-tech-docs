@@ -131,7 +131,7 @@ Generate a new set of configuration data for every test run.
 ### Test your matching service with the SAML compliance tool
 
 
-1. To set up the SAML compliance tool for matching service tests, POST the following JSON (via curl or similar) to the URL `<compliance-tool-host>/ms-test-run` provided by your GOV.UK Verify engagement lead:
+1. To set up the SAML compliance tool for matching service tests, POST the following JSON (via curl or Postman, for example) to the URL `<compliance-tool-host>/ms-test-run` provided by your GOV.UK Verify engagement lead:
     
     ```
      Content-Type: application/json

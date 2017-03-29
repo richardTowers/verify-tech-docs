@@ -12,7 +12,7 @@ domain. A matching service is composed of the
 
 <a name="matching-service-diagram"></a>
 
-![Diagram showing that a matching service is composed of a Matching Service Adapter and a local matching service](/documentation/ms/matchingserviceGraphics.svg)
+![Diagram showing that a matching service is composed of a Matching Service Adapter and a local matching service](/documentation/ms/matchingservice.svg)
 
 For more details, see the diagrams:
 
