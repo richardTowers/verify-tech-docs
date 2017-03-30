@@ -57,7 +57,7 @@ You'll probably need to renew them all together.
     The Matching Service Adapter can now use both the new and old keys to decrypt SAML messages.
 
     > **Note:** While both keys are in use, you may see error messages in the logs
-    > with the description "Unwrapping failed". These messages appear
+    > with the description 'Unwrapping failed'. These messages appear
     > because the Matching Service Adapter attempts to decrypt the SAML
     > message using each key in turn. You can safely ignore these messages.
     > However, do not ignore any other error messages related to SAML

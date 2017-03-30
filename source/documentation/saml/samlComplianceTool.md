@@ -70,11 +70,8 @@ Generate a new set of configuration data for every test run.
         ```
      * `userAccountCreationAttributes`: provide this only if you want to test [new user account creation](#create-user-accounts) – select from the [full list of attributes](#list-attributes)
 
-1. You receive a response similar to the following:
-
-        Status 200 Created
-
-1.  Make sure that your MSA is pointing at the URLs for the compliance tool (`metadata:` `url`) and the hub (`hub:` `ssoUrl`). These are the defaults in the `test-config.yml` file for non-production environments.
+1. You receive an empty response with ```200 OK``` status.
+1. Make sure that your MSA is pointing at the URLs for the compliance tool (`metadata:` `url`) and the hub (`hub:` `ssoUrl`). These are the defaults in the `test-config.yml` file for non-production environments.
 1.  Generate an authentication request and POST it to the compliance
     tool's SSO URI. Follow the redirect in the response to retrieve the
     result.
@@ -131,7 +128,7 @@ Generate a new set of configuration data for every test run.
 ### Test your matching service with the SAML compliance tool
 
 
-1. To set up the SAML compliance tool for matching service tests, POST the following JSON (via curl or Postman, for example) to the URL `<compliance-tool-host>/ms-test-run` provided by your GOV.UK Verify engagement lead:
+1. To set up the SAML compliance tool for matching service tests, POST the following JSON (via curl or Postman, for example) to the SAML compliance tool URL ([https://compliance-tool-reference.ida.digital.cabinet-office.gov.uk/rp-test-data](https://compliance-tool-reference.ida.digital.cabinet-office.gov.uk/rp-test-data)):
     
     ```
      Content-Type: application/json

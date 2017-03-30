@@ -10,7 +10,7 @@ user’s identity.
 
 Below is a high-level diagram of the GOV.UK Verify architecture.
 
-![Diagram showing GOV.UK Verify architecture. The hub is at the centre. It is connected to the government service, identity providers, and the Matching Service Adapter. Communication with the hub is via SAML with PKI. The Matching Service Adapter is connected to a local matching service, which is connected to a local matching datastore. Communication between these elements is not via SAML. The text below the image describes all elements in the architecture](/documentation/arch/arch_overview.svg)
+![Diagram showing GOV.UK Verify architecture. The hub is at the centre. It is connected to the government service, identity providers, and the Matching Service Adapter (MSA). Communication with the hub is via SAML with PKI. The Matching Service Adapter is connected to a local matching service, which is connected to a local matching datastore. Communication between these elements is not via SAML. The text below the image describes all elements in the architecture](/documentation/arch/arch_overview.svg)
 
 For more details, see the diagrams:
 
@@ -60,15 +60,15 @@ A transactional government service that needs proof of a person’s identity to 
 
 The function of finding a match between a user’s verified identity and
 a record in a government service’s data sources. The matching service
-is composed of the Matching Service Adapter and the local matching
+is composed of the Matching Service Adapter (MSA) and the local matching
 service.
 
 
-**Matching Service Adapter**
+**Matching Service Adapter (MSA)**
 
-The [Matching Service Adapter](#matching-service-adapter) is a software tool provided by
+The [MSA](#matching-service-adapter) is a software tool provided by
 GOV.UK Verify. It simplifies communication between your local matching
-service and the GOV.UK Verify hub. The Matching Service Adapter
+service and the GOV.UK Verify hub. The MSA
 converts Security Assertion Markup Language (SAML) into JavaScript Object Notation (JSON) and vice versa.
 
 
@@ -92,7 +92,7 @@ For more information, see the
 diagram showing the [SAML message flow](#saml-flow-diagram) within the GOV.UK
 Verify federation.
 
-**PKI (Public Key Infrastructure)**
+**Public key infrastructure (PKI)**
 
 [PKI](#public-key-infrastructure) implements secure electronic transactions between the
 entities in the GOV.UK Verify federation.

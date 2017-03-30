@@ -80,12 +80,12 @@ For more details, see the diagrams:
 
 
     ```
-    '{ "result": "success" }'
+    { "result": "success" }
     ```
     or
 
     ```
-    '{ "result": "failure" }'
+    { "result": "failure" }
     ```
  
     > **Notes:** 
@@ -93,7 +93,7 @@ For more details, see the diagrams:
     > * As shown above, `success` and `failure` must be in lower case
     > * A user account isn't created at this point. The final response the hub sends to your service will contain the attributes you need to create a user account.
 
-    The local matching service may return `'{ "result": "failure" }'` if:
+    The local matching service may return `{ "result": "failure" }` if:
     * the level of assurance in the JSON request sent by the MSA is lower than the level of assurance required by the service
     * there are exceptional circumstances, such as maintenance, when you want to suspend user account creation
 
